@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet the Experts (MTE) - Computer Maintenance, GIS, and Data Visualization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&family=Lato:wght@400;700&family=Raleway:wght@400;700&family=Exo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Link to your CSS file for additional styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Link to Bootstrap CSS -->
+    <style>
+        /* Custom styles for color scheme */
+        /* :root {
+            --primary-color: #2D3436;
+            /* Dark Gray or Black */
+        /*--accent-color-blue: #3498DB;
+            /* Blue */
+        /*--accent-color-green: #27AE60;
+            /* Green */
+        /*--accent-color-orange: #E67E22;
+            /* Orange */
+        /*--neutral-color-white: #FFFFFF;
+            /* White */
+        /*--neutral-color-light-gray: #F5F5F5;
+            /* Light Gray */
+        /*--neutral-color-gray: #CCCCCC;
+            /* Gray */
+        /*} */
+        /* Custom styles for color scheme */
+        /* Custom styles for color scheme */
+        /* Custom styles for educational color scheme */
+        
+         :root {
+            --primary-color: #3F51B5;
+            /* Royal Blue */
+            --accent-color-red: #E53935;
+            /* Red */
+            --accent-color-green: #43A047;
+            /* Green */
+            --accent-color-yellow: #FFB300;
+            /* Yellow */
+            --neutral-color-white: #FFFFFF;
+            /* White */
+            --neutral-color-light-gray: #F5F5F5;
+            /* Light Gray */
+            --neutral-color-gray: #CCCCCC;
+            /* Gray */
+        }
+        /* Update the necessary CSS classes with the new color variables */
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--primary-color);
+        }
+        
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        a {
+            font-family: 'Montserrat', sans-serif;
+            /* Additional styles for links */
+        }
+        
+        h2 {
+            font-family: 'Lato', sans-serif;
+            /* Additional styles for h2 headings */
+        }
+        
+        p {
+            font-family: 'Roboto', sans-serif;
+            /* Additional styles for paragraphs */
+        }
+        
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            /* Additional styles for navbar-brand */
+        }
+        
+        .navbar-dark .navbar-nav .nav-link {
+            color: var(--neutral-color-white);
+        }
+        
+        .jumbotron {
+            background-color: var(--neutral-color-light-gray);
+        }
+        
+        section#about {
+            background-color: var(--neutral-color-white);
+        }
+        
+        section#skills,
+        section#social-proof,
+        section#contact {
+            background-color: var(--neutral-color-light-gray);
+        }
+        
+        .testimonial blockquote {
+            color: var(--primary-color);
+        }
+        
+        .case-study h3 {
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--neutral-color-white);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Meet the Experts (MTE)</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section id="hero" class="jumbotron" style="position: relative; overflow: hidden;">
+        <div class="container text-light" style="position: relative; z-index: 1;">
+            <h3>Your Trusted Partner for Computer Maintenance, GIS, and Data Visualization</h3>
+            <p>Unlock the power of technology and data with our expert services. From computer troubleshooting and software installations to geospatial analysis and stunning visualizations, we have you covered.</p>
+            <a href="#contact" class="btn btn-primary">Get Started</a>
+        </div>
+        <img id="heroImage" src="hero.jpg" alt="Hero Image" class="img-fluid" style="position: absolute; top: -5%; left: 0; z-index: 0; width: 100%; height: auto; filter: brightness(70%);">
+    </section>
+
+
+
+
+
+
+    <section id="about" class="bg-light">
+        <div class="container">
+            <h2>About Meet the Experts (MTE)</h2>
+            <p>We are a team of dedicated professionals passionate about providing top-notch computer maintenance, GIS, and data visualization services. With years of experience in the industry, we have honed our skills and expertise to meet the unique needs
+                of our clients.</p>
+            <p>At MTE, we believe in delivering high-quality solutions tailored to your requirements. Whether you need assistance with computer repairs, software installations, geospatial analysis, or creating compelling data visualizations, our team is
+                here to help.</p>
+        </div>
+        <img src="about-image.jpg" alt="About Image" class="img-fluid">
+    </section>
+
+    <section id="skills" class="bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Our Skills and Expertise</h2>
+                    <ul>
+                        <li>Computer Maintenance: Windows, macOS, Linux</li>
+                        <li>Software Installation and Troubleshooting</li>
+                        <li>Virus and Malware Protection</li>
+                        <li>Hardware Troubleshooting and Repair</li>
+                        <li>Data Backup and Recovery</li>
+                        <li>Networking Basics and Configuration</li>
+                        <li>System Optimization and Performance Tuning</li>
+                        <li>Remote Support and Troubleshooting</li>
+                        <li>GIS (Geographic Information Systems)</li>
+                        <li>Data Visualization and Presentation</li>
+                        <li>Computer Skilling for Individuals and Organizations</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <section id="skill" class="jumbotron" style="position: relative; overflow: hidden;height: 100%;">
+                        <div class="container text-light">
+                            <div class="overlay" id="overlay1" style="position: relative; z-index: 1;">
+                                <h4>Unleash the full potential of your organization with integrated software, cutting-edge hardware, and secure network solutions</h4>
+                            </div>
+                            <div class="overlay" id="overlay2" style="position: relative; z-index: 1;display: none;">
+                                <h4>Building a solid technological backbone for your organization. Explore our software, hardware, and network solutions to drive growth and productivity</h4>
+                            </div>
+                            <div class="overlay" id="overlay3" style="position: relative; z-index: 1;display: none;">
+                                <h4>Elevate your organization's capabilities with our tailored computer solutions. Let us transform your software, hardware, and networks into a competitive advantage</h4>
+                            </div>
+                        </div><img id="skillsImageid" src="skill.jpg" alt="Hero Image" class="img-fluid" style="position: absolute; top: -5%; left: 0; z-index: 0; width: 100%; height: auto; filter: brightness(70%);">
+                    </section>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p>At Meet the Experts (MTE), we offer comprehensive computer skilling services for individuals and organizations. Whether you're a beginner looking to enhance your computer literacy or an organization in need of specialized training
+                        for your employees, we have the expertise to meet your requirements.</p>
+                    <p>Our computer skilling services cover a wide range of topics, including:</p>
+                    <ul>
+                        <li>Basic computer skills and operating system navigation</li>
+                        <li>Microsoft Office suite training (Word, Excel, PowerPoint, etc.)</li>
+                        <li>Internet and email usage</li>
+                        <li>Web browsing and online research</li>
+                        <li>File management and organization</li>
+                        <li>Collaboration tools and software</li>
+                        <li>Computer security and data protection</li>
+                        <li>Specialized software and tools for specific industries or tasks</li>
+                    </ul>
+                    <p>Our skilled trainers are experienced in delivering engaging and interactive computer skilling sessions. We tailor the training programs to suit your skill level, learning objectives, and schedule. Whether you prefer one-on-one sessions
+                        or group workshops, we can accommodate your needs.</p>
+                    <p>Contact us today to discuss your computer skilling requirements and take a step towards enhancing your digital proficiency!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="case-studies">
+        <div class="container">
+            <h2>Case Studies</h2>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">BTS Points Project - QGIS Implementation</h3>
+                            <p class="card-text">We partnered with Meet the Experts to implement a BTS (Base Transceiver Station) points project using QGIS. Their GIS expertise and attention to detail resulted in accurate spatial data representation, enabling us to optimize
+                                our network coverage and improve service quality.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">ePayment System for Public Transport - Academic Project</h3>
+                            <p class="card-text">Meet the Experts collaborated with our academic institution to develop an ePayment system for public transport. Their team's proficiency in embedded systems and software development ensured a secure and efficient payment solution,
+                                contributing to the advancement of smart transportation systems.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Computer Maintenance at Saviour Developments</h3>
+                            <p class="card-text">Meet the Experts provided exceptional computer maintenance services to our organization. Their prompt response and thorough troubleshooting skills helped us overcome technical challenges, ensuring uninterrupted operations.
+                                We highly appreciate their professionalism and expertise.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">OpenStreetMap Mapping Activities with JOSM</h3>
+                            <p class="card-text">As an active contributor to OpenStreetMap, Meet the Experts organized mapping activities using JOSM. Their knowledge and guidance in data collection and mapping techniques have significantly improved the accuracy and completeness
+                                of our geographic data. It's been a pleasure collaborating with their team.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section id="team" class="jumbotron" style="position: relative; overflow: hidden;">
+        <div class="container text-light">
+            <div class="overlay" id="overlay1" style="position: relative; z-index: 1;">
+                <h4>Collaboration fuels innovation. Together, we build remarkable software solutions</h4>
+            </div>
+            <div class="overlay" id="overlay2" style="position: relative; z-index: 1;display: none;">
+                <h4>Code with confidence, create with passion. We are a team driven by excellence</h4>
+            </div>
+            <div class="overlay" id="overlay3" style="position: relative; z-index: 1;display: none;">
+                <h4>Behind every great software, there's a team of brilliant minds</h4>
+            </div>
+        </div>
+        <img id="teamimg" src="team.jpg" alt="Hero Image" class="img-fluid" style="position: absolute; top: -5%; left: 0; z-index: 0; width: 100%; height: auto; filter: brightness(70%);">
+    </section>
+
+    <section id="social-proof" class="bg-light">
+        <div class="container">
+            <h2>Our Popular Products and Technologies</h2>
+            <p>Discover some of the top-rated products and technologies we offer:</p>
+            <div class="social-proof-gallery">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="product">
+                            <img src="microsoft-office.png" alt="Microsoft Office">
+                            <h3>Microsoft Office</h3>
+                            <p>Boost productivity and streamline your work with Microsoft Office suite.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="product">
+                            <img src="qgis.png" alt="QGIS">
+                            <h3>QGIS</h3>
+                            <p>Utilize QGIS software for advanced geographic information system (GIS) analysis.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="product">
+                            <img src="power-bi.png" alt="Power BI">
+                            <h3>Power BI</h3>
+                            <p>Visualize and gain insights from your data with Power BI analytics tool.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p>In addition to our products, we specialize in the following programming languages:</p>
+
+            <div class="programming-languages">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Python</li>
+                            <li>C</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li>JavaScript</li>
+                            <li>Java</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <p>Furthermore, we actively contribute to OpenStreetMap, a collaborative mapping project:</p>
+
+            <div class="openstreetmap">
+                <img src="openstreetmap.png" alt="OpenStreetMap">
+                <p>Through our activities with OpenStreetMap, we help improve map data and contribute to the community-driven project.</p>
+            </div>
+        </div>
+        <img src="social-proof-image.jpg" alt="Social Proof Image" class="img-fluid">
+    </section>
+
+
+    <section id="contact" class="bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Contact Us</h2>
+                    <p>Get in touch with us to discuss your specific needs or to schedule a consultation. We are here to help!</p>
+                    <div class="contact-info">
+                        <h4>Contact Information:</h4>
+                        <ul>
+                            <li><strong>Phone:</strong> +1 123-456-7890</li>
+                            <li><strong>Email:</strong> info@example.com</li>
+                            <li><strong>Address:</strong> 123 Main Street, City, State, Zip Code</li>
+                        </ul>
+                    </div>
+                    <div class="availability">
+                        <h4>Availability:</h4>
+                        <p>We strive to provide prompt assistance and excellent customer service. Our availability and response times are as follows:</p>
+                        <ul>
+                            <li><strong>Monday-Friday:</strong> 9:00 AM - 5:00 PM (EST)</li>
+                            <li><strong>Weekends:</strong> Closed</li>
+                            <li><strong>Response Time:</strong> Within 24 hours</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <section id="makecontact" class="jumbotron" style="position: relative; overflow: hidden;height: 100%;">
+                        <div class="container text-light">
+                            <div class="overlay" id="overlay1" style="position: relative; z-index: 1;">
+                                <h4>Unlock your potential in the world of technology. Reach out to us and embark on a transformative ICT skilling journey</h4>
+                            </div>
+                            <div class="overlay" id="overlay2" style="position: relative; z-index: 1;display: none;">
+                                <h4>Have a question or need guidance on ICT skilling? Drop us a line, and we'll be there to provide the support and expertise you need</h4>
+                            </div>
+                            <div class="overlay" id="overlay3" style="position: relative; z-index: 1;display: none;">
+                                <h4>we believe in continuous learning. Contact us to join a community of tech enthusiasts and embark on a journey of growth</h4>
+                            </div>
+                        </div><img id="contactsImageid" src="contacts.jpg" alt="Hero Image" class="img-fluid" style="position: absolute; top: -5%; left: 0; z-index: 0; width: 100%; height: auto; filter: brightness(70%);">
+                    </section>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Send us a message:</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message:</label>
+                            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>About Meet the Experts (MTE)</h5>
+                    <p>Meet the Experts (MTE) is a professional service provider specializing in computer maintenance, GIS, and data visualization. We offer high-quality solutions to help businesses optimize their operations and make informed decisions based
+                        on data.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact Information</h5>
+                    <ul class="footer-links">
+                        <li><i class="fa fa-phone"></i> +1 123-456-7890</li>
+                        <li><i class="fa fa-envelope"></i> info@mte.com</li>
+                        <li><i class="fa fa-map-marker"></i> 123 Main St, City, Country</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2023 Meet the Experts (MTE). All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <p>Designed and developed by Your Company Name</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Link to Bootstrap JS -->
+
+    <script>
+        var imageNames = ['hero1.jpg', 'hero2.jpg', 'hero3.jpg']; // Replace with your array of image names
+        var skillImages = ['skill.jpg', 'skill1.jpg', 'skill2.jpg']; // Replace with your array of image names
+        var contactsImage = ['contacts.jpg', 'contacts1.jpg', 'contacts2.jpg']; // Replace with your array of image names
+        var teamImages = ['team.jpg', 'team1.jpg', 'team2.jpg']; // Replace with your array of image names
+
+        var currentIndex = 0;
+
+        function getNextImageName(arr) {
+            currentIndex = (currentIndex + 1) % arr.length;
+            return arr[currentIndex];
+        }
+
+        function changeImage(elementId, arr) {
+            var imageElement = document.getElementById(elementId);
+            imageElement.src = getNextImageName(arr);
+        }
+
+        function toggleOverlay(sectioid, overlayId) {
+            var section = document.getElementById(sectioid);
+            var overlays = section.querySelectorAll('.overlay');
+            var currentoverlay = 0;
+            for (var i = 0; i < overlays.length; i++) {
+                if (overlays[i].style.display === 'block') {
+                    overlays[i].style.display = 'none';
+
+                    currentoverlay = i + 1 < overlays.length ? i + 1 : 0;
+                } else {
+                    overlays[i].style.display = 'none';
+                }
+            }
+            overlays[currentoverlay].style.display = 'block';
+        }
+
+
+
+
+        // Change the images and overlays every 6 seconds (6000 milliseconds)
+        setInterval(function() {
+            changeImage('heroImage', imageNames);
+
+        }, 6000);
+
+        setInterval(function() {
+            changeImage('skillsImageid', skillImages);
+            toggleOverlay('skill', 'overlay1');
+        }, 8000);
+
+        setInterval(function() {
+            changeImage('contactsImageid', contactsImage);
+            toggleOverlay('makecontact', 'overlay1');
+        }, 6000);
+
+        setInterval(function() {
+            changeImage('teamimg', teamImages);
+            toggleOverlay('team', 'overlay1');
+        }, 6000);
+    </script>
+</body>
+
+</html>
