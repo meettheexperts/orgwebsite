@@ -59,6 +59,7 @@
         
         h1 {
             font-family: 'Montserrat', sans-serif;
+            font-weight: 10px;
         }
         
         a {
@@ -153,39 +154,44 @@
 
 
 
-    <section id="about" class="bg-light">
+    <section id="about" class="jumbotron bg-light">
         <div class="container">
-            <h2>About Meet the Experts (MTE)</h2>
-            <p>We are a team of dedicated professionals passionate about providing top-notch computer maintenance, GIS, and data visualization services. With years of experience in the industry, we have honed our skills and expertise to meet the unique needs
-                of our clients.</p>
-            <p>At MTE, we believe in delivering high-quality solutions tailored to your requirements. Whether you need assistance with computer repairs, software installations, geospatial analysis, or creating compelling data visualizations, our team is
-                here to help.</p>
+
+
+            <p class="lead">Welcome to [Your Company Name] - Your Partner for Cutting-Edge IT Solutions! At [Your Company Name], we're dedicated to providing top-notch IT solutions tailored to your needs. With years of experience, we offer proactive systems maintenance,
+                expert software support, robust data security, efficient networking, advanced GIS capabilities, and innovative web and system development. Experience comprehensive IT solutions with us today! Let's elevate your organization's capabilities
+                together.
+            </p>
         </div>
-        <img src="about-image.jpg" alt="About Image" class="img-fluid">
+
     </section>
 
     <section id="skills" class="bg-white">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h2>Our Skills and Expertise</h2>
-                    <ul>
-                        <li>Computer Maintenance: Windows, macOS, Linux</li>
-                        <li>Software Installation and Troubleshooting</li>
-                        <li>Virus and Malware Protection</li>
-                        <li>Hardware Troubleshooting and Repair</li>
-                        <li>Data Backup and Recovery</li>
-                        <li>Networking Basics and Configuration</li>
-                        <li>System Optimization and Performance Tuning</li>
-                        <li>Remote Support and Troubleshooting</li>
-                        <li>GIS (Geographic Information Systems)</li>
-                        <li>Data Visualization and Presentation</li>
-                        <li>Computer Skilling for Individuals and Organizations</li>
-                    </ul>
+                    <section id="skills" class="jumbotron" style="position: relative; overflow: hidden;height: 100%;">
+                        <div class="container">
+                            <!-- Use the following text to give a captivating introduction to your skills and expertise -->
+                            <h1 class="">Empowering Your Organization with Cutting-Edge IT Solutions</h1>
+                            <p class="lead">At MTE, we are a team of dedicated professionals committed to elevating your organization's IT capabilities. With a wide range of skills and expertise, we offer comprehensive services tailored to meet your specific needs:
+                            </p>
+                        </div>
+                        <ul>
+                            <li>Proactive Systems Maintenance for Windows, macOS, and Linux</li>
+                            <li>Expert Software Installation, Troubleshooting, and Repair</li>
+                            <li>Robust Data Backup, Recovery, and Security Solutions</li>
+                            <li>Efficient Networking Setup, Configuration, and Support</li>
+                            <li>Optimized System Performance Tuning</li>
+                            <li>Advanced GIS (Geographic Information Systems) and Data Visualization</li>
+                            <li>Innovative Web & System Development</li>
+                        </ul>
+                    </section>
                 </div>
                 <div class="col-md-6">
                     <section id="skill" class="jumbotron" style="position: relative; overflow: hidden;height: 100%;">
                         <div class="container text-light">
+                            <!-- Use the following text to give a brief description of the services -->
                             <div class="overlay" id="overlay1" style="position: relative; z-index: 1;">
                                 <h4>Unleash the full potential of your organization with integrated software, cutting-edge hardware, and secure network solutions</h4>
                             </div>
@@ -195,32 +201,13 @@
                             <div class="overlay" id="overlay3" style="position: relative; z-index: 1;display: none;">
                                 <h4>Elevate your organization's capabilities with our tailored computer solutions. Let us transform your software, hardware, and networks into a competitive advantage</h4>
                             </div>
-                        </div><img id="skillsImageid" src="skill.jpg" alt="Hero Image" class="img-fluid" style="position: absolute; top: -5%; left: 0; z-index: 0; width: 100%; height: auto; filter: brightness(70%);">
+                        </div>
+                        <!-- Replace 'skill.jpg' with an image that visually represents your IT services -->
+                        <img id="skillsImageid" src="skill.jpg" alt="Hero Image" class="img-fluid" style="position: absolute; top: -5%; left: 0; z-index: 0; width: 100%; height: auto; filter: brightness(70%);">
                     </section>
-
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <p>At Meet the Experts (MTE), we offer comprehensive computer skilling services for individuals and organizations. Whether you're a beginner looking to enhance your computer literacy or an organization in need of specialized training
-                        for your employees, we have the expertise to meet your requirements.</p>
-                    <p>Our computer skilling services cover a wide range of topics, including:</p>
-                    <ul>
-                        <li>Basic computer skills and operating system navigation</li>
-                        <li>Microsoft Office suite training (Word, Excel, PowerPoint, etc.)</li>
-                        <li>Internet and email usage</li>
-                        <li>Web browsing and online research</li>
-                        <li>File management and organization</li>
-                        <li>Collaboration tools and software</li>
-                        <li>Computer security and data protection</li>
-                        <li>Specialized software and tools for specific industries or tasks</li>
-                    </ul>
-                    <p>Our skilled trainers are experienced in delivering engaging and interactive computer skilling sessions. We tailor the training programs to suit your skill level, learning objectives, and schedule. Whether you prefer one-on-one sessions
-                        or group workshops, we can accommodate your needs.</p>
-                    <p>Contact us today to discuss your computer skilling requirements and take a step towards enhancing your digital proficiency!</p>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -231,7 +218,7 @@
             <h2>Case Studies</h2>
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="card">
+                    <div class="card shadow-sm h-100">
                         <div class="card-body">
                             <h3 class="card-title">BTS Points Project - QGIS Implementation</h3>
                             <p class="card-text">We partnered with Meet the Experts to implement a BTS (Base Transceiver Station) points project using QGIS. Their GIS expertise and attention to detail resulted in accurate spatial data representation, enabling us to optimize
@@ -240,7 +227,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="card">
+                    <div class="card shadow-sm h-100">
                         <div class="card-body">
                             <h3 class="card-title">ePayment System for Public Transport - Academic Project</h3>
                             <p class="card-text">Meet the Experts collaborated with our academic institution to develop an ePayment system for public transport. Their team's proficiency in embedded systems and software development ensured a secure and efficient payment solution,
@@ -249,7 +236,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="card">
+                    <div class="card shadow-sm h-100">
                         <div class="card-body">
                             <h3 class="card-title">Computer Maintenance at Saviour Developments</h3>
                             <p class="card-text">Meet the Experts provided exceptional computer maintenance services to our organization. Their prompt response and thorough troubleshooting skills helped us overcome technical challenges, ensuring uninterrupted operations.
@@ -258,7 +245,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="card">
+                    <div class="card shadow-sm h-100">
                         <div class="card-body">
                             <h3 class="card-title">OpenStreetMap Mapping Activities with JOSM</h3>
                             <p class="card-text">As an active contributor to OpenStreetMap, Meet the Experts organized mapping activities using JOSM. Their knowledge and guidance in data collection and mapping techniques have significantly improved the accuracy and completeness
@@ -268,8 +255,8 @@
                 </div>
             </div>
         </div>
-
     </section>
+
     <section id="team" class="jumbotron" style="position: relative; overflow: hidden;">
         <div class="container text-light">
             <div class="overlay" id="overlay1" style="position: relative; z-index: 1;">
