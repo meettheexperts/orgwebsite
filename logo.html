@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700&display=swap" rel="stylesheet">
     <style>
       body {
         display: flex;
@@ -15,7 +16,8 @@
         align-items: center;
         height: 100vh;
         margin: 0;
-        background-color: #ffffff;
+        background-color: #white;
+        font-family: 'Montserrat', sans-serif;
       }
 
       .logo {
@@ -24,37 +26,61 @@
       }
 
       .icon {
-        font-size: 30px;
+        font-size: 38px;
         color: #3498db; /* Blue color for the globe icon */
-        margin-left: 50px;
-        padding: 4px;
+        margin-left: 67px;
+        padding: 1px;
         position: absolute;
 
-        margin-top: 22px;
+        margin-top: 14px;
         border-radius: 30px;
 
         background: white;
+
         z-index: 1;
       }
 
-      .short-text {
+      .short-text1 {
         font-size: 60px;
-        font-weight: bold;
-        font-family: Arial, sans-serif;
+        font-weight: bold;font-family: Georgia, serif;
         color: #ff7f00; /* Orange color for "MTE" */
         text-transform: uppercase;
         position: relative;
+        top: 0;
+        text-shadow: 0px 0px 1.0px black, 0 0 0px blue, 0 0 1.0px darkblue;
+      }
+         .short-text2 {
+        font-size: 54px;
+        font-weight: bold;font-family: Georgia, serif;
+       color: #3498db;/* Orange color for "MTE" */
+        text-transform: uppercase;
+        position: relative;
+        margin-left: -31.5px;
+      
 
+        top: 0;
+      }   
+      .short-text3 {
+        font-size: 60px;
+        font-weight: bold;font-family: Georgia, serif;
+        color: #ff7f00; /* Orange color for "MTE" */
+        text-transform: uppercase;
+        position: relative;
+        margin-left: -30px;
+      text-shadow: 0px 0px 1.0px black, 0 0 0px blue, 0 0 1.0px darkblue;
         top: 0;
       }
 
       .slogan {
-        font-size: 10px;
+        font-size: 7px;
         font-weight: normal;
         font-family: Arial, sans-serif;
-        color: #333333; /* Dark gray color for the slogan */
+        color:  #3498db; /* Dark gray color for the slogan */
         text-transform: uppercase;
         margin-top: -10px;
+         margin-left: 20px;
+         font-weight: bold;
+          text-shadow: 0px 0px 0.5px black, 0 0 0px blue, 0 0 0.5px darkblue;
       }
     </style>
     <title>MTE Logo</title>
@@ -62,7 +88,7 @@
   <body>
     <div class="logo">
       <i class="fas fa-globe icon"></i>
-      <span class="short-text">MTE</span>
+      <span class="short-text1">M</span><span class="short-text2">T</span><span class="short-text3">E</span>
       <div class="slogan">Borderless Creativity</div>
     </div>
   </body>

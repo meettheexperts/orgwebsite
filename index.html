@@ -126,7 +126,11 @@
   -webkit-box-shadow: 0 1px 15px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 1px 15px rgba(0, 0, 0, 0.1);
   -ms-box-shadow: 0 1px 15px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.3);
+  
+}
+.card-body:hover{
+     border-radius: 0;
+   box-shadow: 0 2px 20px #333; 
 }
 
 /*------------------------------- Get In Youch ---------------------------------*/
@@ -193,7 +197,7 @@ background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.9)),url(contact.j
     border-radius: 50%;
 }
 
-ul.social, ul.navbar-nav{
+ul.social{
   list-style-type: none;
   display: flex;
   max-width: 16rem;
@@ -203,8 +207,12 @@ ul.social, ul.navbar-nav{
 ul.social li {
   margin: 0 auto;
 }
+.socia{
+    color: lightskyblue;
+    box-shadow: 0 2px 100px #333;
+}
 .socia:hover{
-    color: white;
+    color: gray;
 }
 ul.footer-links {
   list-style-type: none;
@@ -217,7 +225,16 @@ ul.footer-links {
   .footer-links a:hover{
     color: white;
   }
-
+  .primary{
+    background: lightskyblue;
+    color: gray;
+    box-shadow: 0 .5rem .5rem rgba(0, 0, 0, 0.1);
+  }
+  .primary:hover{
+    background: gray;
+    color: lightskyblue;
+    box-shadow: 0 2px 100px #333;
+  }
 
     </style>
 
@@ -231,12 +248,21 @@ ul.footer-links {
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav  ml-auto mr-5">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Projects</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#services">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
+                        <a class="nav-link" href="#products">Products</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact</a>
@@ -246,7 +272,7 @@ ul.footer-links {
         </nav>
     </header>
 
-    <section id="hero" class="jumbotron my-5" style="position: relative; overflow: hidden;">
+    <section id="home" class="jumbotron my-5" style="position: relative; overflow: hidden;">
         <div class="container text-light my-5" style="position: relative; z-index: 1;">
             <h3 style="font-weight: bold;">Your Trusted Ally for Comprehensive IT Solutions: Proactive Systems Maintenance, Advanced GIS Capabilities, and Innovative Web & System Development</h3>
             <p style="font-weight: bold;">Unlock the power of technology and data with our expert services. From computer troubleshooting and software installations to geospatial analysis and stunning visualizations, we have you covered.</p>
@@ -261,7 +287,7 @@ ul.footer-links {
 
 
 
-    <section id="about" class="jumbotron bg-light">
+    <section class="jumbotron bg-light">
         <div class="container">
 
 
@@ -273,7 +299,7 @@ ul.footer-links {
 
     </section>
 
-    <section id="skills" class="bg-white">
+    <section id="about" class="bg-light">
         <div class="container">
             <div class="row mt-5 mb-5">
                 <div class="col-md-6 mb-2">
@@ -320,14 +346,14 @@ ul.footer-links {
 
 
 
-    <section id="case-studies">
+    <section id="projects">
         <div class="container-fluid mt-5 mb-5">
-            <h2><center>Case Studies</center></h2>
+            <h2 c><center>Case Studies</center></h2>
             <div class="row">
                 <div class="col-md-3 mb-4">
                     <div class="card shadow-sm h-100">
                         <div class="card-body">
-                            <h3 class="card-title">BTS Points Project - QGIS Implementation</h3>
+                            <h3 class="card-title card-head">BTS Points Project - QGIS Implementation</h3>
                             <p class="card-text">We partnered with Meet the Experts to implement a BTS (Base Transceiver Station) points project using QGIS. Their GIS expertise and attention to detail resulted in accurate spatial data representation, enabling us to optimize
                                 our network coverage and improve service quality.</p>
                         </div>
@@ -379,7 +405,7 @@ ul.footer-links {
         <img id="teamimg" src="team.jpg" alt="Hero Image" class="img-fluid" style="position: absolute; top: -5%; left: 0; z-index: 0; width: 100%; height: auto; filter: brightness(70%);">
     </section>
 
-    <section id="popular-products" class="py-3">
+    <section id="products" class="py-3">
         <div class="container">
             <h2 class="text-center">Our Popular Products</h2>
             <div class="row justify-content-center mt-4">
@@ -440,7 +466,7 @@ ul.footer-links {
                         <div class="form-group">
                             <textarea  class="form-control" rows="4" name="" placeholder="Message"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary "><center>SEND MESSAGE</center></button>
+                        <button type="submit" class="btn primary "><center>SEND MESSAGE</center></button>
                     </form>
                 </div>
                 <div class="col-md-6">
