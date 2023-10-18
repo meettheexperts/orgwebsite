@@ -90,7 +90,7 @@
         }
         
         .jumbotron {
-            background-color: var(--neutral-color-light-gray);
+            background-color: rgba(255, 255, 255, 0); /*var(--neutral-color-light-gray);*/
            
         }
 
@@ -243,6 +243,225 @@ ul.footer-links {
     color: lightskyblue;
     box-shadow: 0 2px 100px #333;
   }
+.translateY-animation {
+    transition: transform 0.3s ease; /* Adjust the duration and easing as needed */
+}
+
+.translateY-animation:hover {
+    transform: translateY(-20px); /* Adjust the desired translateY value */
+}
+img:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+  @keyframes glitter {
+        0% { filter: brightness(70%); }
+        25% { filter: brightness(100%); }
+        50% { filter: brightness(70%); }
+        75% { filter: brightness(100%); }
+        100% { filter: brightness(70%); }
+    }
+
+    /*.background{
+          background-image: url('background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    animation: fadeInOut 5s linear infinite;
+  }
+
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }*/
+
+.background {
+    position: relative;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+  }
+  .background::before {
+    content: "";
+     background-image: url('06.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    animation: fadeInOut 10s linear infinite;
+  }
+
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0.1;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .about
+{
+background-image: url(background.jpg);
+ background-size: cover;
+ background-position: center;
+ color: #efefef !important; 
+ /*background-attachment: fixed;*/
+ 
+}
+
+ .project
+{
+background-image: url(09.jpg);
+ background-size: cover;
+ background-position: center;
+ color: #efefef !important; 
+ /*background-attachment: fixed;*/
+ 
+}
+#fade-in {
+    opacity: 0;
+    transform: scale(0.1);
+    transition: opacity 20s ease-in-out, transform 5s ease-in-out;
+  }
+
+    @keyframes fadeInOut {
+    0%, 100% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    25% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+    75% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+  
+  #fade-in-out {
+    animation: fadeInOut 20s infinite;
+}
+    /* CSS for initial style */
+#transitionText {
+  font-weight: bold;
+}
+
+ /*.lead {
+            color: saddlebrown;
+            font-size: 25px;
+            animation: fadeIn 10s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }*/
+
+         .lead {
+            color: saddlebrown;
+            font-size: 25px;
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            transition: opacity 10s, transform 10s;
+        }
+
+
+        /* Add CSS for the underline effect */
+  /*.navbar-nav .nav-link {
+    position: relative;
+    text-decoration: none;
+    color: black; //Change the color as per your requirement 
+  }
+
+  .navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #007bff; // Change the color as per your requirement 
+    transform-origin: bottom right;
+    transition: transform 0.4s ease;
+  }
+
+  .navbar-nav .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }*/
+
+   /* Add CSS for the underline effect */
+  /*.navbar-nav .nav-link {
+    position: relative;
+    text-decoration: none;
+    color: black; // Change the color as per your requirement 
+  }
+
+  .navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #007bff; // Change the color as per your requirement 
+    transform-origin: bottom right;
+    transition: transform 0.4s ease;
+  }
+  */
+
+   /* Add CSS for the underline effect */
+  .navbar-nav .nav-link {
+    position: relative;
+    text-decoration: none;
+    color: black; /* Change the color as per your requirement */
+  }
+
+  .navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #007bff; /* Change the color as per your requirement */
+    transform-origin: bottom right;
+    transition: transform 0.4s ease;
+  }
+
+  .navbar-nav .nav-link.active::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+   
+
+
 
     </style>
 
@@ -280,26 +499,23 @@ ul.footer-links {
         </nav>
     </header>
 
-    <section id="home" class="jumbotron my-5" style="position: relative; overflow: hidden;">
-        <div class="container text-light my-5" style="position: relative; z-index: 1;">
-            <h3 style="font-weight: bold;">Your Trusted Ally for Comprehensive IT Solutions: Proactive Systems Maintenance, Advanced GIS Capabilities, and Innovative Web & System Development</h3>
-            <p style="font-weight: bold;">Unlock the power of technology and data with our expert services. From computer troubleshooting and software installations to geospatial analysis and stunning visualizations, we have you covered.</p>
-            <a href="#contact" class="btn btn-primary">Get Started</a>
-        </div>
-        <img id="heroImage" src="hero.jpg" alt="Hero Image" class="img-fluid" style="position: absolute; top: -5%; left: 0; z-index: 0; width: 100%; height: auto; filter: brightness(70%);">
-    </section>
-
-
-
-
-
-
-
-    <section class="jumbotron bg-light">
+   
+   <section id="home" class="jumbotron my-3" style="position: relative; overflow: hidden;">
+    <div class="container text-light my-5" style="position: relative; z-index: 1; display: block;">
+        <h1 id="fade-in-out" style="font-weight: bold;">Your Trusted Ally for Comprehensive IT Solutions: Proactive Systems Maintenance, Advanced GIS Capabilities, and Innovative Web & System Development</h1>
+        <div id="fade-in">
+        <p id="transitionText" class="mt-4">Unlock the power of technology and data with our expert services. From computer troubleshooting and software installations to geospatial analysis and stunning visualizations, we have you covered.</p>
+        <a href="#contact" class="btn btn-primary">Get Started</a>
+    </div>
+    </div>
+    <img id="heroImage" src="skilled.jpg" alt="Hero Image" class="img-fluid" style="position: absolute; top: -5%; left: 0; z-index: 0; width: 100%; height: auto; filter: brightness(50%); transition: all 0.05s;">
+</section>
+     
+     
+<section class="background">
+    <section class="jumbotron">
         <div class="container">
-
-
-            <p class="lead">Welcome to [Your Company Name] - Your Partner for Cutting-Edge IT Solutions! At [Your Company Name], we're dedicated to providing top-notch IT solutions tailored to your needs. With years of experience, we offer proactive systems maintenance,
+            <p class="lead" style="color:saddlebrown; font-size: 25px;">Welcome to [Your Company Name] - Your Partner for Cutting-Edge IT Solutions! At [Your Company Name], we're dedicated to providing top-notch IT solutions tailored to your needs. With years of experience, we offer proactive systems maintenance,
                 expert software support, robust data security, efficient networking, advanced GIS capabilities, and innovative web and system development. Experience comprehensive IT solutions with us today! Let's elevate your organization's capabilities
                 together.
             </p>
@@ -307,18 +523,19 @@ ul.footer-links {
 
     </section>
 
-    <section id="about" class="bg-light">
+
+    <section id="about" class="translateY-animation about">
         <div class="container">
-            <div class="row mt-5 mb-5">
-                <div class="col-md-6 mb-2">
-                    <section id="skills" class="jumbotron" style="position: relative; overflow: hidden;height: 100%;">
-                        <div class="container">
+            <div class="row">
+                <div class="col-md-6 my-5">
+                    <section id="skills" class="jumbotron bg-light" style="position: relative; overflow: hidden;height: 100%;">
+                        <div>
                             <!-- Use the following text to give a captivating introduction to your skills and expertise -->
-                            <h1 class="">Empowering Your Organization with Cutting-Edge IT Solutions</h1>
-                            <p class="lead">At MTE, we are a team of dedicated professionals committed to elevating your organization's IT capabilities. With a wide range of skills and expertise, we offer comprehensive services tailored to meet your specific needs:
-                            </p>
+                            <h1 class="" style="font-weight:bold; color: navy;">Empowering Your Organization with Cutting-Edge IT Solutions</h1>
+                            <h4 class="" style="color: darkturquoise;">At MTE, we are a team of dedicated professionals committed to elevating your organization's IT capabilities. With a wide range of skills and expertise, we offer comprehensive services tailored to meet your specific needs:
+                            </h4>
                         </div>
-                        <ul>
+                        <ul style="color: cornflowerblue;">
                             <li>Proactive Systems Maintenance for Windows, macOS, and Linux</li>
                             <li>Expert Software Installation, Troubleshooting, and Repair</li>
                             <li>Robust Data Backup, Recovery, and Security Solutions</li>
@@ -329,67 +546,67 @@ ul.footer-links {
                         </ul>
                     </section>
                 </div>
-                <div class="col-md-6 mb-2">
-                    <section id="skill" class="jumbotron" style="position: relative; overflow: hidden;height: 100%;">
-                        <div class="container text-light">
+
+                <div class="col-md-6 my-5">
+                    <section id="skill" class="jumbotron" style="position: relative; overflow: hidden;height: 100%; ">
+                        <div class="container text-light" style="padding-top: 100px;">
                             <!-- Use the following text to give a brief description of the services -->
-                            <div class="overlay" id="overlay1" style="position: relative; z-index: 1;">
-                                <h4>Unleash the full potential of your organization with integrated software, cutting-edge hardware, and secure network solutions</h4>
+                            <div class="overlay" id="overlay1" style="position: relative; z-index: 1; color: gainsboro">
+                                <h2>Unleash the full potential of your organization with integrated software, cutting-edge hardware, and secure network solutions</h2>
                             </div>
-                            <div class="overlay" id="overlay2" style="position: relative; z-index: 1;display: none;">
-                                <h4>Building a solid technological backbone for your organization. Explore our software, hardware, and network solutions to drive growth and productivity</h4>
+                            <div class="overlay" id="overlay2" style="position: relative; z-index: 1;display: none; color: gainsboro">
+                                <h2>Building a solid technological backbone for your organization. Explore our software, hardware, and network solutions to drive growth and productivity</h2>
                             </div>
-                            <div class="overlay" id="overlay3" style="position: relative; z-index: 1;display: none;">
-                                <h4>Elevate your organization's capabilities with our tailored computer solutions. Let us transform your software, hardware, and networks into a competitive advantage</h4>
+                            <div class="overlay" id="overlay3" style="position: relative; z-index: 1;display: none; color: gainsboro">
+                                <h2>Elevate your organization's capabilities with our tailored computer solutions. Let us transform your software, hardware, and networks into a competitive advantage</h2>
                             </div>
                         </div>
                         <!-- Replace 'skill.jpg' with an image that visually represents your IT services -->
-                        <img id="skillsImageid" src="skill.jpg" alt="Hero Image" class="img-fluid" style="position: absolute; top: -5%; left: 0; z-index: 0; width: 100%; height: auto; filter: brightness(70%);">
+                        <img id="skillsImageid" id="transforming-image" src="skill.jpg" alt="Hero Image" class="img-fluid" style="position: absolute; top: -5%; left: 0; z-index: 0; width: 100%; height: auto; filter: brightness(70%); ">
                     </section>
                 </div>
             </div>
-
         </div>
     </section>
 
 
 
     <section id="projects">
-        <div class="container-fluid mt-5 mb-5">
-            <h2 c><center>Case Studies</center></h2>
+        <div class="container-fluid  mb-5 mt-4 translateY-animation">
+            <h1 style="font-weight: bold; color: chocolate;" class="mb-4"><center>Case Studies</center></h1>
             <div class="row">
                 <div class="col-md-3 mb-4">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow-sm h-100 project">
                         <div class="card-body">
-                            <h3 class="card-title card-head">BTS Points Project - QGIS Implementation</h3>
-                            <p class="card-text">We partnered with Meet the Experts to implement a BTS (Base Transceiver Station) points project using QGIS. Their GIS expertise and attention to detail resulted in accurate spatial data representation, enabling us to optimize
+                            <h3 class="card-title card-head" style="color:olive; font-weight:bold;">BTS Points Project - QGIS Implementation</h3>
+                            <p class="card-text" style="color:forestgreen; font-size:16px;">We partnered with Meet the Experts to implement a BTS (Base Transceiver Station) points project using QGIS. Their GIS expertise and attention to detail resulted in accurate spatial data representation, enabling us to optimize
                                 our network coverage and improve service quality.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 mb-4">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow-sm h-100 project">
                         <div class="card-body">
-                            <h3 class="card-title">ePayment System for Public Transport - Academic Project</h3>
-                            <p class="card-text">Meet the Experts collaborated with our academic institution to develop an ePayment system for public transport. Their team's proficiency in embedded systems and software development ensured a secure and efficient payment solution,
+                            <h3 class="card-title card-head"  style="color:olive; font-weight:bold;">ePayment System for Public Transport - Academic Project</h3>
+                            <p class="card-text" style="color:forestgreen; font-size:16px;">Meet the Experts collaborated with our academic institution to develop an ePayment system for public transport. Their team's proficiency in embedded systems and software development ensured a secure and efficient payment solution,
                                 contributing to the advancement of smart transportation systems.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 mb-4">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow-sm h-100 project">
                         <div class="card-body">
-                            <h3 class="card-title">Computer Maintenance at Saviour Developments</h3>
-                            <p class="card-text">Meet the Experts provided exceptional computer maintenance services to our organization. Their prompt response and thorough troubleshooting skills helped us overcome technical challenges, ensuring uninterrupted operations.
+                            <h3 class="card-title" style="color:olive; font-weight:bold;">Computer Maintenance at Saviour Developments</h3>
+                            <p class="card-text" style="color:forestgreen; font-size:16px;">Meet the Experts provided exceptional computer maintenance services to our organization. Their prompt response and thorough troubleshooting skills helped us overcome technical challenges, ensuring uninterrupted operations.
                                 We highly appreciate their professionalism and expertise.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 mb-4">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow-sm h-100 project">
                         <div class="card-body">
-                            <h3 class="card-title">OpenStreetMap Mapping Activities with JOSM</h3>
-                            <p class="card-text">As an active contributor to OpenStreetMap, Meet the Experts organized mapping activities using JOSM. Their knowledge and guidance in data collection and mapping techniques have significantly improved the accuracy and completeness
+                            <h3 class="card-title" style="color:olive; font-weight:bold;">OpenStreetMap Mapping Activities with JOSM</h3>
+                            <p class="card-text" style="color:forestgreen; font-size:16px;">As an active contributor to OpenStreetMap, Meet the Experts organized mapping activities using JOSM. Their knowledge and guidance in data collection and mapping techniques have significantly improved the accuracy and completeness
                                 of our geographic data. It's been a pleasure collaborating with their team.</p>
                         </div>
                     </div>
@@ -398,22 +615,60 @@ ul.footer-links {
         </div>
     </section>
 
-    <section id="team" class="jumbotron" style="position: relative; overflow: hidden;">
-        <div class="container text-light">
+    <section id="services" class="jumbotron translateY-animation" style="position: relative; overflow: hidden;">
+        <div class="container text-light mb-5 text-center" style="display: block; font-weight: bold;">
+         <h1 class="mt-5" style="text-align: center; position: relative; z-index: 1; 
+margin-bottom: 20px; display: inline-block;">
+    <span style="border-bottom: 4px solid #0000ff; font-weight: bold;">Our Services</span>
+</h1>
+
+
+
+
+            <section  id="team">
             <div class="overlay" id="overlay1" style="position: relative; z-index: 1;">
-                <h4>Collaboration fuels innovation. Together, we build remarkable software solutions</h4>
+                <h2>Collaboration fuels innovation.<span style="font-size: 25px;"> Together, we build remarkable software solutions</span></h2>
             </div>
             <div class="overlay" id="overlay2" style="position: relative; z-index: 1;display: none;">
-                <h4>Code with confidence, create with passion. We are a team driven by excellence</h4>
+                <h2>Code with confidence, create with passion. We are a team driven by excellence</h2>
             </div>
             <div class="overlay" id="overlay3" style="position: relative; z-index: 1;display: none;">
-                <h4>Behind every great software, there's a team of brilliant minds</h4>
+                <h2>Behind every great software, there's a team of brilliant minds</h2>
             </div>
+        </section>
+        <div class="row mt-4">
+         <div class="col-md-4" style="position: relative; z-index: 1;">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h3 class="card-title card-head" style="color:olive; font-weight:bold;">BTS Points Project - QGIS Implementation</h3>
+                            <p class="card-text" style="color:forestgreen; font-size:16px;">We partnered with Meet the Experts to implement a BTS (Base Transceiver Station) points project using QGIS. Their GIS .</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4" style="position: relative; z-index: 1;">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h3 class="card-title card-head" style="color:olive; font-weight:bold;">BTS Points Project - QGIS Implementation</h3>
+                            <p class="card-text" style="color:forestgreen; font-size:16px;">We partnered with Meet the Experts to implement a BTS (Base Transceiver Station) points project using QGIS. Their GIS .</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4"style="position: relative; z-index: 1;">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h3 class="card-title card-head" style="color:olive; font-weight:bold;">BTS Points Project - QGIS Implementation</h3>
+                            <p class="card-text" style="color:forestgreen; font-size:16px;">We partnered with Meet the Experts to implement a BTS (Base Transceiver Station) points project using QGIS. Their GIS .</p>
+                        </div>
+                    </div>
+                </div>
+         </div>
         </div>
         <img id="teamimg" src="team.jpg" alt="Hero Image" class="img-fluid" style="position: absolute; top: -5%; left: 0; z-index: 0; width: 100%; height: auto; filter: brightness(70%);">
     </section>
 
-    <section id="products" class="py-3">
+    <section id="products" class="py-3 translateY-animation">
         <div class="container">
             <h2 class="text-center">Our Popular Products</h2>
             <div class="row justify-content-center mt-4">
@@ -455,7 +710,9 @@ ul.footer-links {
         </div>
     </section>
 
-    <section id="contact" class="">
+</section>
+
+    <section id="contact">
         <div class="container-fluid bg-light contacting">
             <div class="row my-5">
                 <div class="col-md-6 mb-4">
@@ -494,7 +751,7 @@ ul.footer-links {
                 </div>
             </div>
             <div class="col-md-12 mb-4">
-                        <ul class="social">
+                        <ul class="social translateY-animation">
                         <li><a href="" class="socia" target="_blank"><i class="fab fa-facebook fa-2x"></i></a></li>
                         <li><a href="" class="socia"target="_blank"><i class="fab fa-twitter fa-2x"></i></a></li>
                         <li><a href=""class="socia" target="_blank"><i class="fab fa-instagram fa-2x"></i></a></li>
@@ -552,8 +809,8 @@ ul.footer-links {
     <script src="js/all.min.js"></script>
 
     <script>
-        var imageNames = ['hero1.jpg', 'hero2.jpg', 'hero3.jpg']; // Replace with your array of image names
-        var skillImages = ['skill.jpg', 'skill1.jpg', 'skill2.jpg']; // Replace with your array of image names
+        //var imageNames = ['hero1.jpg', 'hero2.jpg', 'hero3.jpg']; // Replace with your array of image names
+        var skillImages = ['skill.jpg', 'skilled.jpg', 'skilled1.jpg']; // Replace with your array of image names
         var contactsImage = ['contacts.jpg', 'contacts1.jpg', 'contacts2.jpg']; // Replace with your array of image names
         var teamImages = ['team.jpg', 'team1.jpg', 'team2.jpg']; // Replace with your array of image names
 
@@ -589,10 +846,10 @@ ul.footer-links {
 
 
         // Change the images and overlays every 6 seconds (6000 milliseconds)
-        setInterval(function() {
-            changeImage('heroImage', imageNames);
+       // setInterval(function() {
+         //   changeImage('heroImage', imageNames);
 
-        }, 6000);
+       // }, 6000);
 
         setInterval(function() {
             changeImage('skillsImageid', skillImages);
@@ -608,6 +865,105 @@ ul.footer-links {
             changeImage('teamimg', teamImages);
             toggleOverlay('team', 'overlay1');
         }, 6000);
+
+      const heroImage = document.getElementById('heroImage');
+    let scale = 1;
+    let zoomingIn = true;
+    let currentImageIndex = 0;
+    const images = ['skilled.jpg', 'skilled2.jpg', 'skilled3.jpg'];
+
+    function zoomImage() {
+        if (zoomingIn) {
+            scale += 0.0005;
+            if (scale >= 1.2) {
+                zoomingIn = false;
+            }
+        } else {
+            scale -= 0.0005;
+            if (scale <= 1.0) {
+                zoomingIn = true;
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                heroImage.style.animation = "glitter 0.0005s";
+                heroImage.src = images[currentImageIndex];
+            }
+        }
+
+        heroImage.style.transform = `scale(${scale})`;
+        requestAnimationFrame(zoomImage);
+    }
+
+    zoomImage();
+
+     document.addEventListener('DOMContentLoaded', function() {
+    var fadeInOut = document.getElementById('fade-in-out');
+    fadeInOut.style.opacity = 1;
+    fadeInOut.style.transform = 'scale(1)';
+  });
+
+     function toggleStyle() {
+    var text = document.getElementById('transitionText');
+    if (text.style.fontWeight === 'bold') {
+      text.style.fontWeight = 'normal';
+    } else {
+      text.style.fontWeight = 'bold';
+    }
+  }
+
+  // Set an interval to toggle the style every 5 seconds
+  setInterval(toggleStyle, 10000);
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var fadeInOut = document.getElementById('fade-in');
+    fadeInOut.style.opacity = 1;
+    fadeInOut.style.transform = 'scale(1)';
+  });
+
+
+
+   document.addEventListener("DOMContentLoaded", function() {
+            const lead = document.querySelector(".lead");
+
+            const options = {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.5
+            };
+
+            const observer = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        lead.style.opacity = "1";
+                        lead.style.transform = "translateY(0) scale(1)";
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, options);
+
+            observer.observe(lead);
+        });
+
+
+
+  // JavaScript for adding 'active' class based on scroll position
+  window.addEventListener('scroll', function() {
+    var sections = document.querySelectorAll('section');
+    var scrollPosition = window.pageYOffset;
+
+    sections.forEach(function(section) {
+      var sectionId = section.getAttribute('id');
+      var navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+      navLinks.forEach(function(link) {
+        if (sectionId === link.getAttribute('href').substring(1)) {
+          if (section.offsetTop <= scrollPosition && section.offsetTop + section.offsetHeight > scrollPosition) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        }
+      });
+    });
+  });
+
     </script>
 </body>
 
