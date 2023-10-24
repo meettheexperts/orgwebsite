@@ -141,18 +141,8 @@
    transition:;
 }
 
-*============= MEDIA QUERIES =============*/
+/*============= MEDIA QUERIES =============*/
 
-/* Devices under 1199px (xl) */
-@media (max-width: 1199.98px) {
-  .carousel-caption h1 {
-    font-size: 3.8rem;
-  }
-  .carousel-caption h3 {
-    font-size: 1.8rem;
-  }
-
-}
 /* Devices under 992px (lg) */
 @media (max-width: 991.98px) {
   .carousel-caption h1 {
@@ -162,9 +152,22 @@
     font-size: 1.5rem;
   }
   .btn-lg {
-    font-size: .95rem;
+    font-size: 0.95rem;
   }
+}
 
+/* Devices under 768px (md) - targeting phones */
+@media (max-width: 767.98px) {
+  /* Adjust styles for smaller devices, such as phones */
+  .carousel-caption h1 {
+    font-size: 2rem; /* Adjusted font size for smaller screens */
+  }
+  .carousel-caption h3 {
+    font-size: 1.3rem; /* Adjusted font size for smaller screens */
+  }
+  .btn-lg {
+    font-size: 0.85rem; /* Adjusted font size for smaller screens */
+  }
 }
 
 
