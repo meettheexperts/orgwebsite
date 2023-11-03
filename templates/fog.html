@@ -125,13 +125,6 @@
         }
         /* Media query for smaller screens */
         
-        @media (max-width: 576px) {
-            .loader {
-                width: 30px;
-                height: 30px;
-            }
-        }
-        
         .content {
             display: none;
             /* Hide content by default */
@@ -256,46 +249,34 @@
     <div class="loader-wrapper">
         <div class="loader"></div>
     </div>
-    <div class="content">
+    <div class="sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #333; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); z-index: 100;">
 
-        <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #333; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
-
-            <a class="navbar-brand very-bold-text" href="#">
-                <!-- <img src="" alt="Your Logo" class="logo"> -->
-                WEB
-            </a>
-            <!-- <div class="search-bar d-flex">
-            <input type="text" class="form-control" placeholder="Search" style="border: none; border-bottom: 1px solid #fff; background: transparent; color: #fff; font-size: 16px;">
-            <button class="btn btn-warning text-light ">Search</button>
-        </div> -->
+            <a class="navbar-brand very-bold-text text-light" href="#">
+            WEB
+        </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#home">Home</a>
+                        <a class="nav-link text-light" href="#home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
+                        <a class="nav-link text-light" href="#about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#services">Services</a>
+                        <a class="nav-link text-light" href="#services">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
+                        <a class="nav-link text-light" href="#contact">Contact</a>
                     </li>
                 </ul>
             </div>
-
-
-
-
         </nav>
-
         <div class="d-flex justify-content-between align-items-center bg-primary text-light mt-0 " style="position: relative;">
             <div class="d-flex"></div>
             <div class="announcements font-weight-bold">
@@ -303,10 +284,17 @@
             </div>
             <div class="d-flex"></div>
         </div>
-        <div id="home" class="header bg-change text-light pt-5" style="height: 70vh; overflow: hidden; background: url('./img5.jpg') center/cover no-repeat;">
+    </div>
+
+    <div class="content" style="overflow:hidden ;">
+
+
+
+
+        <div id="home" class="header bg-change text-light pt-5 pb-5" style="height: 70vh; overflow: hidden; background: url('./img5.jpg') center/cover no-repeat;">
             <div class="overlay "></div>
 
-            <div class="header-content ">
+            <div class="header-content pt-5">
                 <div class="header-text text-center ">
                     <div class="typing-effect">
                         <h1 class="display-1 font-weight-bold text-shadow text very-bold-text ">Welcome to Our Website</h1>
@@ -321,7 +309,7 @@
             </div>
         </div>
 
-        <div id="about" class="parallax-container" style="background-image: url('https://picsum.photos/536/355');">
+        <div id="about" class="parallax-container pt-5 pb-5" style="background-image: url('https://picsum.photos/536/355');">
             <div class="parallax-overlay"></div>
             <div class="container pt-5" style="z-index:2;position: relative;">
                 <h1 class="display-4 font-weight-bold very-bold-text text-wrap">Who we are</h1>
@@ -346,13 +334,17 @@
                             </p>
                         </div>
                         <div class="about-item fly-in-element">
-                            <h2 class="h4 font-weight-bold">Our Team</h2>
-                            <ul class="list-group font-size-md">
-                                <li class="list-group-item">Developers</li>
-                                <li class="list-group-item">Designers</li>
-                                <li class="list-group-item">Digital Strategists</li>
-                                <li class="list-group-item"><a href="#" class="read-more-link">Meet the Team</a></li>
+                            <h2 class="h4 font-weight-bold text-center">Our Team</h2>
+                            <ul class="list-group font-size-md text-center">
+                                <li class="list-group-item">A Team of Creative Minds</li>
+                                <li class="list-group-item">Passionate Developers</li>
+                                <li class="list-group-item">Talented Designers</li>
+                                <li class="list-group-item">Strategic Thinkers</li>
                             </ul>
+                            <p class="text-center mt-3">
+                                <a href="#" class="btn btn-primary">Meet the Team</a>
+                            </p>
+
                         </div>
                     </div>
 
@@ -360,7 +352,7 @@
             </div>
         </div>
 
-        <div id="services" class="parallax-container" style="background-image: url('https://picsum.photos/536/356');">
+        <div id="services" class="parallax-container pt-5 pb-5" style="background-image: url('https://picsum.photos/536/356');">
             <div class="parallax-overlay"></div>
             <div class="container pt-5" style="z-index: 2; position: relative;">
                 <h1 class="display-4 very-bold-text">Our Services</h1>
@@ -370,7 +362,7 @@
                 <div class="row">
                     <!-- Service 1 -->
                     <div class="col-md-4">
-                        <div class="card border-0 shadow fly-in-element" style="background-color: #FF5733;">
+                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: #FF5733;">
                             <div class="card-body">
                                 <i class="fas fa-globe service-icon"></i>
                                 <h5 class="card-title">Service 1</h5>
@@ -382,7 +374,7 @@
 
                     <!-- Service 2 -->
                     <div class="col-md-4">
-                        <div class="card border-0 shadow fly-in-element" style="background-color: #41B883;">
+                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: #41B883;">
                             <div class="card-body">
                                 <i class="fas fa-chart-bar service-icon"></i>
                                 <h5 class="card-title">Service 2</h5>
@@ -394,7 +386,7 @@
 
                     <!-- Service 3 -->
                     <div class="col-md-4">
-                        <div class="card border-0 shadow fly-in-element" style="background-color: #007BFF;">
+                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: #007BFF;">
                             <div class="card-body">
                                 <i class="fas fa-code service-icon"></i>
                                 <h5 class="card-title">Service 3</h5>
@@ -407,7 +399,7 @@
             </div>
         </div>
 
-        <div id="contact" class="parallax-container" style="background-image: url('https://picsum.photos/536/358');height: auto;">
+        <div id="contact" class="parallax-container pt-5 pb-5" style="background-image: url('https://picsum.photos/536/358');height: auto;">
             <div class="parallax-overlay"></div>
             <div class="container pt-5" style="z-index:2;position: relative;">
                 <h1 class="display-4 text-light very-bold-text">Contact Us</h1>
@@ -416,7 +408,7 @@
             <div class="container mt-5">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="card border-0 shadow fly-in-element" style="background-color: #007BFF; ">
+                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: #007BFF; ">
                             <div class="card-body">
                                 <i class="fas fa-map-marker-alt contact-icon text-light"></i>
                                 <h5 class="card-title text-light">Our Location</h5>
@@ -425,7 +417,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card border-0 shadow fly-in-element" style="background-color: #41B883; ">
+                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: #41B883; ">
                             <div class="card-body">
                                 <i class="fas fa-phone contact-icon text-light"></i>
                                 <h5 class="card-title text-light">Contact Information</h5>
@@ -436,38 +428,48 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-8">
-                        <div class="card border-0 shadow fly-in-element">
+                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: rgba(255, 255, 255, 0.1); border-radius: 10px;">
                             <div class="card-body">
                                 <h5 class="card-title">Send Us a Message</h5>
                                 <form>
                                     <div class="mb-3">
-                                        <input type="text" class="form-control" placeholder="Your Name">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                            <input type="text" class="form-control" placeholder="Your Name">
+                                        </div>
                                     </div>
                                     <div class="mb-3">
-                                        <input type="email" class="form-control" placeholder="Your Email">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                            <input type="email" class="form-control" placeholder="Your Email">
+                                        </div>
                                     </div>
                                     <div class="mb-3">
-                                        <textarea class="form-control" rows="4" placeholder="Your Message"></textarea>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-chat-text"></i></span>
+                                            <textarea class="form-control" rows="4" placeholder="Your Message"></textarea>
+                                        </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Send Message</button>
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block">Send Message</button>
                                 </form>
                             </div>
                         </div>
+
                     </div>
                     <div class="col-md-4">
-                        <div class="card border-0 shadow fly-in-element" style="background-color: #FF5733; ">
+                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: #FF5733; ">
                             <div class="card-body">
                                 <i class="fab fa-facebook contact-icon text-light"></i>
                                 <a href="#" class="card-link text-light">Facebook</a>
                             </div>
                         </div>
-                        <div class="card mt-3 border-0 shadow fly-in-element" style="background-color: #41B883; ">
+                        <div class="card mt-3 border-0 shadow fly-in-element mb-3" style="background-color: #41B883; ">
                             <div class="card-body">
                                 <i class="fab fa-twitter contact-icon text-light"></i>
                                 <a href="#" class="card-link text-light">Twitter</a>
                             </div>
                         </div>
-                        <div class="card mt-3 border-0 shadow fly-in-element" style="background-color: #007BFF; ">
+                        <div class="card mt-3 border-0 shadow fly-in-element mb-3" style="background-color: #007BFF; ">
                             <div class="card-body">
                                 <i class="fab fa-linkedin contact-icon text-light"></i>
                                 <a href="#" class="card-link text-light">LinkedIn</a>
@@ -478,13 +480,13 @@
             </div>
         </div>
 
-        <div id="contact" class="parallax-container" style="background-image: url('https://picsum.photos/536/357');">
+        <!--  <div id="another" class="parallax-container  pt-5 pb-5" style="background-image: url('https://picsum.photos/536/357');">
             <div class="parallax-overlay"></div>
             <div class="container">
                 <div class="container pt-5">
                     <div class="row">
                         <div class="col-md-4 blog-post-card">
-                            <div class="card fly-in-element">
+                            <div class="card fly-in-element mb-3">
                                 <div class="card-body">
                                     <h2 class="card-title">Blog Post Title 1</h2>
                                     <p class="card-text">Blog post content goes here.</p>
@@ -494,7 +496,7 @@
                         </div>
 
                         <div class="col-md-4 blog-post-card">
-                            <div class="card fly-in-element">
+                            <div class="card fly-in-element mb-3">
                                 <div class="card-body">
                                     <h2 class="card-title">Blog Post Title 2</h2>
                                     <p class="card-text">Another blog post content here.</p>
@@ -504,7 +506,7 @@
                         </div>
 
                         <div class="col-md-4 blog-post-card">
-                            <div class="card fly-in-element">
+                            <div class="card fly-in-element mb-3">
                                 <div class="card-body">
                                     <h2 class="card-title">Blog Post Title 3</h2>
                                     <p class="card-text">More blog post content for the effect.</p>
@@ -515,7 +517,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
 
@@ -525,7 +527,7 @@
         <div class="container">
             <div class="row focus-section">
                 <div class="col-md-4">
-                    <div class="card-transparent p-2 " style="height: 15rem;  overflow: hidden;  color: #fff;">
+                    <div class="card-transparent p-2  " style="height: 15rem;  overflow: hidden;  color: #fff;">
                         <div class="card-body">
                             <h5 class="card-title card-head text-center" style=" color: olive; font-weight: 800 !important;  ">Contact Us <i class="fas fa-envelope "></i></h5>
                             <hr>
