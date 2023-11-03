@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split-Screen Layout Example with Bootstrap</title>
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <style>
+        .parallax-container {
+            background-size: cover;
+            background-attachment: fixed;
+            height: 100vh;
+            color: white;
+            position: relative;
+        }
+        
+        .parallax-overlay {
+            background: rgba(28, 28, 28, 0.5);
+            /* Semi-transparent black overlay */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        /* Sticky navigation styles */
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            /* Set opacity to 0 */
+        }
+        
+        .bg-change {
+            animation: changeBackground 10s linear infinite;
+        }
+        
+        @keyframes changeBackground {
+            0%,
+            100% {
+                background-image: url('./img1.jpg');
+            }
+            25% {
+                background-image: url('./img2.jpg');
+            }
+            50% {
+                background-image: url('./img3.jpg');
+            }
+            75% {
+                background-image: url('./img4.jpg');
+            }
+        }
+        
+        .typing-effect {
+            display: inline-block;
+            /* Adjust the display property */
+            position: relative;
+        }
+        
+        .text {
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            animation: typing 10s steps(25) infinite, cursor-blink 1s infinite step-end;
+            /* Delay before the entire animation cycle repeats */
+        }
+        
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            10% {
+                /* Keeps the text fully typed for 5 seconds */
+                width: 100%;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        
+        @keyframes cursor-blink {
+            0%,
+            100% {
+                border-right: 3px solid transparent;
+            }
+            50% {
+                border-right: 3px solid rgba(0, 0, 0, 0);
+            }
+        }
+        
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            /* Add a semi-transparent white background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            /* Ensure it's on top of other content */
+        }
+        
+        .loader {
+            border: 8px solid #f3f3f3;
+            /* Light gray border */
+            border-top: 8px solid #3498db;
+            /* Blue border on top */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+        }
+        
+        .content {
+            display: none;
+            /* Hide content by default */
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        /* Style for active navigation item */
+        /* CSS for active navigation item with improved transition */
+        
+        .nav-link.active {
+            background-color: #007BFF;
+            /* Initial background color */
+            color: #fff;
+            /* Initial text color */
+            transition: background-color 0.3s ease, color 0.3s ease;
+            /* Smooth transition for color changes */
+        }
+        /* Hover effect for navigation items (optional) */
+        
+        .nav-link:hover {
+            background-color: #0056b3;
+            /* Change background color on hover */
+            color: #fff;
+            /* Change text color on hover */
+            transition: background-color 0.3s ease, color 0.3s ease;
+            /* Smooth hover effect */
+        }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .cta-buttons {
+            position: relative;
+            z-index: 1;
+        }
+        /* Hover effect for buttons, cards, and forms */
+        /* Define a keyframe animation for shaking effect */
+        /* Define a keyframe animation for shaking effect */
+        
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-5px);
+            }
+            50% {
+                transform: translateX(5px);
+            }
+            75% {
+                transform: translateX(-5px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+        /* Apply the shake animation on hover for buttons, cards, and forms */
+        
+        .btn:hover,
+        .card:hover {
+            animation: shake 0.5s;
+            /* Play the shake animation once on hover */
+            animation-fill-mode: forwards;
+            /* Keep the final state of the animation after it ends */
+        }
+        /* Hover effect for form inputs and textareas */
+        
+        .form-control:hover {
+            border-color: #333;
+            /* Change to your desired border color on hover */
+            transition: border-color 0.3s;
+        }
+        /* Define a keyframe animation for flying in from the left */
+        
+        .fly-in-element {
+            transform: translateX(50%);
+            /* Start with a translateX to move the element from the right */
+            opacity: 0;
+            /* Start with 0 opacity to make it invisible */
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+        
+        .fly-in-element.in-viewport {
+            transform: translateX(0);
+            /* Move the element back to its original position when in viewport */
+            opacity: 1;
+            /* Make the element fully visible when in viewport */
+        }
+        
+        .very-bold-text {
+            font-weight: 800 !important;
+            /* Use !important to ensure it overrides other styles */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #333; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
+
+        <a class="navbar-brand" href="#">
+            <img src="your-logo.png" alt="Your Logo" class="logo">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="language-selector">
+            <select class="custom-select text-light" style="background-color: #444;">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                </select>
+        </div>
+
+        <div class="search-bar d-flex">
+            <input type="text" class="form-control" placeholder="Search" style="border: none; border-bottom: 1px solid #fff; background: transparent; color: #fff; font-size: 16px;">
+            <button class="btn btn-warning text-light">Search</button>
+        </div>
+    </nav>
+
+
+
+
+    <div class="d-flex justify-content-between align-items-center bg-primary text-light mt-0 " style="position: relative;">
+        <div class="d-flex"></div>
+        <div class="announcements font-weight-bold">
+            <marquee behavior="scroll" direction="left" scrollamount="4">Welcome to our website! Stay updated with the latest news and announcements.</marquee>
+        </div>
+        <div class="d-flex"></div>
+    </div>
+    <div id="home" class="header bg-change text-light pt-5" style="height: 70vh; overflow: hidden; background: url('./img5.jpg') center/cover no-repeat;">
+        <div class="overlay "></div>
+
+        <div class="header-content ">
+            <div class="header-text text-center ">
+                <div class="typing-effect">
+                    <h1 class="display-2 font-weight-bold text-shadow text very-bold-text">Welcome to Our Website</h1>
+                    <p class="lead">We're here to transform your online presence. Discover how we can help you achieve your digital goals.</p>
+                </div>
+                <div class="cta-buttons d-flex justify-content-center mt-4">
+                    <a href="#" class="btn btn-primary mx-2 fly-in-element">Sign Up</a>
+                    <a href="#services" class="btn btn-success mx-2 fly-in-element">Get Started</a>
+                    <a href="#" class="btn btn-info mx-2 fly-in-element">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="about" class="parallax-container" style="background-image: url('https://picsum.photos/536/355');">
+        <div class="parallax-overlay"></div>
+        <div class="container pt-5" style="z-index:2;position: relative;">
+            <h1 class="display-4 font-weight-bold very-bold-text">Who we are</h1>
+            <div class="row about-grid">
+                <div class="col-lg-8">
+                    <p class="lead font-size-lg fly-in-element">
+                        <strong>We believe</strong> in the power of technology to transform businesses and create exceptional web experiences. Our mission is to empower businesses through innovative web solutions that exceed our clients' expectations.
+                    </p>
+                    <blockquote class="blockquote fly-in-element">
+                        <p class="mb-0 font-size-lg">
+                            <strong>Our clients' success</strong> is our success. We're dedicated to delivering results that matter.
+                        </p>
+                        <footer class="blockquote-footer pt-3">John Doe, CEO</footer>
+                    </blockquote>
+                </div>
+                <div class="col-lg-4">
+                    <div class="about-item fly-in-element">
+                        <h2 class="h4 font-weight-bold">Our Story</h2>
+                        <p class="font-size-md">
+                            We have a rich history of crafting exceptional web experiences for our clients.
+                            <a href="#" class="read-more-link">Read More</a>
+                        </p>
+                    </div>
+                    <div class="about-item fly-in-element">
+                        <h2 class="h4 font-weight-bold">Our Team</h2>
+                        <ul class="list-group font-size-md">
+                            <li class="list-group-item">Developers</li>
+                            <li class="list-group-item">Designers</li>
+                            <li class="list-group-item">Digital Strategists</li>
+                            <li class="list-group-item"><a href="#" class="read-more-link">Meet the Team</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="services" class="parallax-container" style="background-image: url('https://picsum.photos/536/356');">
+        <div class="parallax-overlay"></div>
+        <div class="container pt-5" style="z-index: 2; position: relative;">
+            <h1 class="display-4 very-bold-text">Our Services</h1>
+            <p class="lead">Explore our unique services and solutions.</p>
+        </div>
+        <div class="container mt-5">
+            <div class="row">
+                <!-- Service 1 -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow fly-in-element" style="background-color: #FF5733;">
+                        <div class="card-body">
+                            <i class="fas fa-globe service-icon"></i>
+                            <h5 class="card-title">Service 1</h5>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Learn more about Service 1.</p>
+                            <a href="#" class="card-link">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow fly-in-element" style="background-color: #41B883;">
+                        <div class="card-body">
+                            <i class="fas fa-chart-bar service-icon"></i>
+                            <h5 class="card-title">Service 2</h5>
+                            <p class="card-text">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Learn more about Service 2.</p>
+                            <a href="#" class="card-link">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow fly-in-element" style="background-color: #007BFF;">
+                        <div class="card-body">
+                            <i class="fas fa-code service-icon"></i>
+                            <h5 class="card-title">Service 3</h5>
+                            <p class="card-text">Duis aute irure dolor in reprehenderit in voluptate velit esse. Learn more about Service 3.</p>
+                            <a href="#" class="card-link">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div id="contact" class="parallax-container" style="background-image: url('https://picsum.photos/536/358');height: auto;">
+        <div class="parallax-overlay"></div>
+        <div class="container pt-5" style="z-index:2;position: relative;">
+            <h1 class="display-4 text-light very-bold-text">Contact Us</h1>
+            <p class="lead text-light">Get in touch with us. We'd love to hear from you.</p>
+        </div>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow fly-in-element" style="background-color: #007BFF; ">
+                        <div class="card-body">
+                            <i class="fas fa-map-marker-alt contact-icon text-light"></i>
+                            <h5 class="card-title text-light">Our Location</h5>
+                            <p class="card-text text-light">123 Main Street<br>City, Country</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow fly-in-element" style="background-color: #41B883; ">
+                        <div class="card-body">
+                            <i class="fas fa-phone contact-icon text-light"></i>
+                            <h5 class="card-title text-light">Contact Information</h5>
+                            <p class="card-text text-light">Phone: +123 456 789<br>Email: contact@example.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-8">
+                    <div class="card border-0 shadow fly-in-element">
+                        <div class="card-body">
+                            <h5 class="card-title">Send Us a Message</h5>
+                            <form>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Your Name">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" placeholder="Your Email">
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control" rows="4" placeholder="Your Message"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow fly-in-element" style="background-color: #FF5733; ">
+                        <div class="card-body">
+                            <i class="fab fa-facebook contact-icon text-light"></i>
+                            <a href="#" class="card-link text-light">Facebook</a>
+                        </div>
+                    </div>
+                    <div class="card mt-3 border-0 shadow fly-in-element" style="background-color: #41B883; ">
+                        <div class="card-body">
+                            <i class="fab fa-twitter contact-icon text-light"></i>
+                            <a href="#" class="card-link text-light">Twitter</a>
+                        </div>
+                    </div>
+                    <div class="card mt-3 border-0 shadow fly-in-element" style="background-color: #007BFF; ">
+                        <div class="card-body">
+                            <i class="fab fa-linkedin contact-icon text-light"></i>
+                            <a href="#" class="card-link text-light">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="contact" class="parallax-container" style="background-image: url('https://picsum.photos/536/357');">
+        <div class="parallax-overlay"></div>
+        <div class="container">
+            <div class="container pt-5">
+                <div class="row">
+                    <div class="col-md-4 blog-post-card">
+                        <div class="card fly-in-element">
+                            <div class="card-body">
+                                <h2 class="card-title">Blog Post Title 1</h2>
+                                <p class="card-text">Blog post content goes here.</p>
+                                <a href="#" class="btn btn-primary">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 blog-post-card">
+                        <div class="card fly-in-element">
+                            <div class="card-body">
+                                <h2 class="card-title">Blog Post Title 2</h2>
+                                <p class="card-text">Another blog post content here.</p>
+                                <a href="#" class="btn btn-primary">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 blog-post-card">
+                        <div class="card fly-in-element">
+                            <div class="card-body">
+                                <h2 class="card-title">Blog Post Title 3</h2>
+                                <p class="card-text">More blog post content for the effect.</p>
+                                <a href="#" class="btn btn-primary">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="bg-dark text-light p-4 w-100 ">
+        <div id="map-container" style="height: 10rem;"></div>
+
+        <div class="container">
+            <div class="row focus-section">
+                <div class="col-md-4">
+                    <div class="card-transparent p-2 " style="height: 15rem;  overflow: hidden;  color: #fff;">
+                        <div class="card-body">
+                            <h5 class="card-title card-head text-center" style=" color: olive; font-weight: 800 !important;  ">Contact Us <i class="fas fa-envelope "></i></h5>
+                            <hr>
+                            <ul style="color: forestgreen; font-size: 16px; list-style-type: none; padding-left: 30%; ">
+                                <li><i class="fas fa-map-marker-alt "></i> 123 Main Street, City</li>
+                                <li><i class="fas fa-envelope "></i> Email: contact<span>@</span>example.com</li>
+                                <li><i class="fas fa-phone "></i> Phone: (123) 456-7890</li>
+                                <li><i class="fas fa-directions "></i> <a href="# ">Get Directions</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4 ">
+
+
+                    <div class="card-transparent p-2 " style="height: 15rem; overflow: hidden; color: #fff; ">
+                        <div class="card-body ">
+                            <h5 class="card-title card-head text-center " style="color: olive; font-weight: bold; ">Quick Links <i class="fas fa-link "></i></h5>
+                            <hr>
+                            <ul style="color: forestgreen; font-size: 16px; padding-left: 35%; list-style: none; ">
+                                <li style="display: block; "><i class="fas fa-home "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Home</a></li>
+                                <li style="display: block; "><i class="fas fa-briefcase "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Services</a></li>
+                                <li style="display: block; "><i class="fas fa-info-circle "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">About Us</a></li>
+                                <li style="display: block; "><i class="fas fa-envelope "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Contact Us</a></li>
+                                <li style="display: block; "><i class="fas fa-rss "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Blog</a></li>
+                                <li style="display: block; "><i class="fas fa-shopping-cart "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Shop</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4 ">
+                    <div class="card-transparent p-2 " style="height: 15rem; overflow: hidden; color: #fff; ">
+                        <div class="card-body text-center ">
+                            <h5 class="card-title card-head " style="color: olive; font-weight: bold; ">Follow Us <i class="fas fa-share-alt "></i></h5>
+                            <hr>
+                            <ul class="list-inline ">
+                                <li class="list-inline-item "><a href="# "><i class="fab fa-facebook " style="color: forestgreen; font-size: 16px; "></i></a></li>
+                                <li class="list-inline-item "><a href="# "><i class="fab fa-twitter " style="color: forestgreen; font-size: 16px; "></i></a></li>
+                                <li class="list-inline-item "><a href="# "><i class="fab fa-linkedin " style="color: forestgreen; font-size: 16px; "></i></a></li>
+                                <li class="list-inline-item "><a href="# "><i class="fab fa-instagram " style="color: forestgreen; font-size: 16px; "></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Widgets -->
+        <div class="row mt-4 focus-section">
+            <div class="col-md-4 ">
+
+                <div class="card p-2 " style="height: 15rem; text-align: center; overflow: hidden; background-color: #333; color: #fff; ">
+                    <div class="card-body ">
+                        <h5 class="card-title card-head " style="color: olive; font-weight: bold; ">Newsletter Signup <i class="fas fa-envelope "></i></h5>
+                        <p class="card-text " style="color: forestgreen; font-size: 16px; ">Subscribe to our newsletter for updates and offers.</p>
+
+                        <form>
+                            <input type="email " placeholder="Your Email " class="form-control " style="background-color: #444; color: #fff; ">
+                            <button class="btn btn-primary mt-2 " style="background-color: #4CAF50; "><i class="fas fa-paper-plane "></i> Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-4 ">
+                <div id="testimonialSlider3" class="carousel slide" data-bs-ride="carousel" style="height: 15rem;">
+                    <div class="carousel-inner h-100" style="height: 100%;">
+                        <!-- Testimonial 1 -->
+                        <div class="carousel-item active h-100">
+                            <div class="card mx-auto h-100" style="max-width: 300px; background-color: #333; color: #fff;">
+                                <div class="card-body text-center p-4">
+                                    <p class="card-text">"I had a great experience with this company. Their service is top-notch!"</p>
+                                    <p class="card-author text-primary fw-bold">John Doe</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial 2 -->
+                        <div class="carousel-item h-100">
+                            <div class="card mx-auto h-100" style="max-width: 300px; background-color: #333; color: #fff;">
+                                <div class="card-body text-center p-4">
+                                    <p class="card-text">"The quality of their products is amazing. I'm a happy customer!"</p>
+                                    <p class="card-author text-primary fw-bold">Jane Smith</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial 3 -->
+                        <div class="carousel-item h-100">
+                            <div class="card mx-auto h-100" style="max-width: 300px; background-color: #333; color: #fff;">
+                                <div class="card-body text-center p-4">
+                                    <p class="card-text">"Outstanding customer support. They go above and beyond to help you."</p>
+                                    <p class="card-author text-primary fw-bold">Robert Johnson</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="carousel-control-prev" href="#testimonialSlider3" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#testimonialSlider3" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </a>
+                </div>
+
+
+            </div>
+            <div class="col-md-4">
+
+
+                <div class="card p-2" style="height: 15rem; text-align: center; overflow: hidden; background-color: #333; color: #fff;">
+                    <div class="card-body">
+                        <h5 class="card-title card-head" style="color: olive; font-weight: bold;">Awards & Certifications <i class="fas fa-award"></i></h5>
+                        <p class="card-text" style="color: forestgreen; font-size: 16px;">We're proud of our achievements:</p>
+
+                        <img src="preview.jpg" alt="" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </footer>
+
+
+    <!-- Include Bootstrap JS and jQuery scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize the map when the page is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            var map = L.map('map-container').setView([51.505, -0.09], 13); // Set the initial coordinates and zoom level
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            L.marker([51.5, -0.09]).addTo(map).bindPopup('Your Location');
+        });
+
+        window.addEventListener('load', function() {
+            // This code runs when the entire page has loaded, including images
+            document.querySelector('.loader-wrapper').style.display = 'none';
+            document.querySelector('.content').style.display = 'block';
+        });
+
+
+
+        // Intersection Observer for Navigation Link Highlighting
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        const navObserverOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.7,
+        };
+
+        const navObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const targetLink = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    targetLink.classList.add('active');
+                }
+            });
+        }, navObserverOptions);
+
+        navLinks.forEach(link => {
+            const targetId = link.getAttribute('href').substring(1); // Remove the '#'
+            const targetElement = document.getElementById(targetId);
+            navObserver.observe(targetElement);
+        });
+
+        const flyInElements = document.querySelectorAll('.fly-in-element');
+
+        const flyInObserverOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2, // Adjust threshold as needed
+        };
+
+        const flyInObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-viewport');
+                } else {
+                    entry.target.classList.remove('in-viewport');
+                }
+            });
+        }, flyInObserverOptions);
+
+        flyInElements.forEach(element => {
+            flyInObserver.observe(element);
+        });
+    </script>
+
+</body>
+
+</html>
