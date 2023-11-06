@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Split-Screen Layout Example with Bootstrap</title>
     <!-- Link to Bootstrap CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:700" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -230,7 +233,7 @@
         @media (max-width: 768px) {
             /* Adjust the font size for smaller screens */
             .very-bold-text {
-                font-size: 24px;
+                font-size: 36px;
                 /* Adjust the size as needed */
             }
         }
@@ -238,9 +241,84 @@
         @media (max-width: 576px) {
             /* Adjust the font size for smaller screens */
             .very-bold-text {
-                font-size: 24px;
+                font-size: 28px;
                 /* Adjust the size as needed */
             }
+        }
+        
+        .nav-arrow {
+            position: absolute;
+            transform: translateY(-50%);
+            font-size: 24px;
+            background-color: rgba(0, 0, 0, 0.3);
+            /* Add a semi-transparent background */
+            color: white;
+            /* Text color for better visibility */
+            padding: 5px 10px;
+            /* Adjust the padding for a better look */
+            border: none;
+            /* Remove border */
+            cursor: pointer;
+            /* Add a pointer cursor for interactivity */
+            z-index: 2;
+            /* Ensure it's above the card content */
+        }
+        
+        .left-arrow {
+            left: 0;
+        }
+        
+        .right-arrow {
+            right: 0;
+        }
+        
+        .navbar {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            background-color: #66a2fe;
+            /* Background color from the previous question */
+            color: #fff;
+            /* White text on a colored background */
+        }
+        /* Headings */
+        /* Headings */
+        
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 28px;
+            line-height: 1.2;
+            letter-spacing: 1px;
+        }
+        /* Paragraphs and Links */
+        
+        p,
+        a {
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            line-height: 1.4;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+        }
+        /* Links (anchor tags) */
+        
+        a {
+            color: #0077B5;
+        }
+        /* Style visited links */
+        
+        a:visited {
+            color: #654321;
+        }
+        /* Style links when hovered over */
+        
+        a:hover {
+            color: #FFA500;
         }
     </style>
 </head>
@@ -250,15 +328,15 @@
         <div class="loader"></div>
     </div>
     <div class="sticky-top">
-        <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #333; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); z-index: 100;">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #66a2fe; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); z-index: 100;">
 
             <a class="navbar-brand very-bold-text text-light" href="#">
-            WEB
-        </a>
+                WEB
+            </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
@@ -277,7 +355,7 @@
                 </ul>
             </div>
         </nav>
-        <div class="d-flex justify-content-between align-items-center bg-primary text-light mt-0 " style="position: relative;">
+        <div class="d-flex justify-content-between align-items-center bg-primary text-light mt-0" style="position: relative;">
             <div class="d-flex"></div>
             <div class="announcements font-weight-bold">
                 <marquee behavior="scroll" direction="left" scrollamount="4">Welcome to our website! Stay updated with the latest news and announcements.</marquee>
@@ -285,6 +363,7 @@
             <div class="d-flex"></div>
         </div>
     </div>
+
 
     <div class="content" style="overflow:hidden ;">
 
@@ -303,7 +382,7 @@
                     <div class="cta-buttons d-flex justify-content-center mt-4">
                         <a href="#" class="btn btn-primary mx-2 fly-in-element">Sign Up</a>
                         <a href="#services" class="btn btn-success mx-2 fly-in-element">Get Started</a>
-                        <a href="#" class="btn btn-info mx-2 fly-in-element">Contact Us</a>
+                        <a href="#contact" class="btn btn-info mx-2 fly-in-element">Contact Us</a>
                     </div>
                 </div>
             </div>
@@ -480,56 +559,181 @@
             </div>
         </div>
 
-        <!--  <div id="another" class="parallax-container  pt-5 pb-5" style="background-image: url('https://picsum.photos/536/357');">
+        <div id="another" class="parallax-container  pt-5 pb-5" style="background-image: url('https://picsum.photos/536/357');height: auto;">
             <div class="parallax-overlay"></div>
-            <div class="container">
+            <div class="container" style="z-index:2;position: relative;">
                 <div class="container pt-5">
-                    <div class="row">
-                        <div class="col-md-4 blog-post-card">
-                            <div class="card fly-in-element mb-3">
+                    <h1 class="display-4 text-light very-bold-text">Product Showcase</h1>
+                    <p class="lead text-light">Browse our featured products and discover what we have to offer.</p>
+                </div>
+
+                <!--/////////////////////**************************** -->
+                <div class="d-flex product-container" style="overflow-x: hidden; white-space: nowrap;">
+                    <!-- Repeat this structure for each product -->
+                    <div class="col-md-4 product-column d-flex p-3" style="display: inline-block;">
+                        <div class="card border-0 shadow fly-in-element mb-3">
+                            <div class="carousel-container" data-bs-ride="carousel">
+                                <!-- Add unique IDs for carousel elements to avoid conflicts -->
+                                <div id="product1Carousel" class="carousel slide" data-bs-ride="carousel">
+                                    <!-- Carousel Controls -->
+                                    <a class="carousel-control-prev" href="#product1Carousel" role="button" data-bs-slide="prev">
+                                        <!-- Carousel Control Icons -->
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#product1Carousel" role a-button data-bs-slide="next">
+                                        <!-- Carousel Control Icons -->
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </a>
+                                    <!-- Carousel Images -->
+                                    <div class="carousel-inner" style="height: 15rem;">
+                                        <div class="carousel-item active">
+                                            <img src="https://picsum.photos/536/357" class="d-block w-100" alt="Product 1 Image 1">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://placekitten.com/408/287" class="d-block w-100" alt="Product 1 Image 2">
+                                        </div>
+                                        <!-- Add more images for Product 1 as needed -->
+                                    </div>
+                                </div>
                                 <div class="card-body">
-                                    <h2 class="card-title">Blog Post Title 1</h2>
-                                    <p class="card-text">Blog post content goes here.</p>
-                                    <a href="#" class="btn btn-primary">Read More</a>
+                                    <h5 class="card-title text-dark">Product 1</h5>
+                                    <p class="card-text text-dark">Description for Product 1.</p>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-4 blog-post-card">
-                            <div class="card fly-in-element mb-3">
+                    </div>
+                    <!-- Repeat the above structure for other products -->
+                    <div class="col-md-4 product-column d-flex p-3" style="display: inline-block;">
+                        <div class="card border-0 shadow fly-in-element mb-3">
+                            <div class="carousel-container" data-bs-ride="carousel">
+                                <!-- Add unique IDs for carousel elements to avoid conflicts -->
+                                <div id="product1Carousel1" class="carousel slide" data-bs-ride="carousel">
+                                    <!-- Carousel Controls -->
+                                    <a class="carousel-control-prev" href="#product1Carousel1" role="button" data-bs-slide="prev">
+                                        <!-- Carousel Control Icons -->
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#product1Carousel1" role a-button data-bs-slide="next">
+                                        <!-- Carousel Control Icons -->
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </a>
+                                    <!-- Carousel Images -->
+                                    <div class="carousel-inner" style="height: 15rem;">
+                                        <div class="carousel-item active">
+                                            <img src="https://picsum.photos/536/357" class="d-block w-100" alt="Product 1 Image 1">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://placekitten.com/408/287" class="d-block w-100" alt="Product 1 Image 2">
+                                        </div>
+                                        <!-- Add more images for Product 1 as needed -->
+                                    </div>
+                                </div>
                                 <div class="card-body">
-                                    <h2 class="card-title">Blog Post Title 2</h2>
-                                    <p class="card-text">Another blog post content here.</p>
-                                    <a href="#" class="btn btn-primary">Read More</a>
+                                    <h5 class="card-title text-dark">Product 1</h5>
+                                    <p class="card-text text-dark">Description for Product 1.</p>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-4 blog-post-card">
-                            <div class="card fly-in-element mb-3">
+                    </div>
+                    <div class="col-md-4 product-column d-flex p-3" style="display: inline-block;">
+                        <div class="card border-0 shadow fly-in-element mb-3">
+                            <div class="carousel-container" data-bs-ride="carousel">
+                                <!-- Add unique IDs for carousel elements to avoid conflicts -->
+                                <div id="product1Carouse2" class="carousel slide" data-bs-ride="carousel">
+                                    <!-- Carousel Controls -->
+                                    <a class="carousel-control-prev" href="#product1Carouse2" role="button" data-bs-slide="prev">
+                                        <!-- Carousel Control Icons -->
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#product1Carouse2" role a-button data-bs-slide="next">
+                                        <!-- Carousel Control Icons -->
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </a>
+                                    <!-- Carousel Images -->
+                                    <div class="carousel-inner" style="height: 15rem;">
+                                        <div class="carousel-item active">
+                                            <img src="https://picsum.photos/536/357" class="d-block w-100" alt="Product 1 Image 1">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://placekitten.com/408/287" class="d-block w-100" alt="Product 1 Image 2">
+                                        </div>
+                                        <!-- Add more images for Product 1 as needed -->
+                                    </div>
+                                </div>
                                 <div class="card-body">
-                                    <h2 class="card-title">Blog Post Title 3</h2>
-                                    <p class="card-text">More blog post content for the effect.</p>
-                                    <a href="#" class="btn btn-primary">Read More</a>
+                                    <h5 class="card-title text-dark">Product 1</h5>
+                                    <p class="card-text text-dark">Description for Product 1.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 product-column d-flex p-3" style="display: inline-block;">
+                        <div class="card border-0 shadow fly-in-element mb-3">
+                            <div class="carousel-container" data-bs-ride="carousel">
+                                <!-- Add unique IDs for carousel elements to avoid conflicts -->
+                                <div id="product1Carouse3" class="carousel slide" data-bs-ride="carousel">
+                                    <!-- Carousel Controls -->
+                                    <a class="carousel-control-prev" href="#product1Carouse3" role="button" data-bs-slide="prev">
+                                        <!-- Carousel Control Icons -->
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#product1Carousel" role a-button data-bs-slide="next">
+                                        <!-- Carousel Control Icons -->
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </a>
+                                    <!-- Carousel Images -->
+                                    <div class="carousel-inner" style="height: 15rem;">
+                                        <div class="carousel-item active">
+                                            <img src="https://picsum.photos/536/357" class="d-block w-100" alt="Product 1 Image 1">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://placekitten.com/408/287" class="d-block w-100" alt="Product 1 Image 2">
+                                        </div>
+                                        <!-- Add more images for Product 1 as needed -->
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark">Product 1</h5>
+                                    <p class="card-text text-dark">Description for Product 1.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
+
+                <!--/////////////////////*********************** -->
+
+
+                <div class="d-flex justify-content-between">
+                    <button id="prev" class="nav-arrow left-arrow btn-prev">&#9665;</button>
+                    <button id="next" class="nav-arrow right-arrow btn-next">&#9655;</button>
+                    <!-- Position guiding elements (dots) -->
+                </div>
             </div>
-        </div> -->
+        </div>
     </div>
 
 
     <footer class="bg-dark text-light p-4 w-100 ">
-        <div id="map-container" style="height: 10rem;"></div>
+        <div id="map-container" style="height: 10rem; "></div>
 
-        <div class="container">
-            <div class="row focus-section">
-                <div class="col-md-4">
-                    <div class="card-transparent p-2  " style="height: 15rem;  overflow: hidden;  color: #fff;">
-                        <div class="card-body">
-                            <h5 class="card-title card-head text-center" style=" color: olive; font-weight: 800 !important;  ">Contact Us <i class="fas fa-envelope "></i></h5>
+        <div class="container ">
+            <div class="row focus-section ">
+                <div class="col-md-4 ">
+                    <div class="card-transparent p-2 " style="height: 15rem; overflow: hidden; color: #fff; ">
+                        <div class="card-body ">
+                            <h5 class="card-title card-head text-center " style=" color: olive; font-weight: 800 !important; ">Contact Us <i class="fas fa-envelope "></i></h5>
                             <hr>
                             <ul style="color: forestgreen; font-size: 16px; list-style-type: none; padding-left: 30%; ">
                                 <li><i class="fas fa-map-marker-alt "></i> 123 Main Street, City</li>
@@ -550,10 +754,10 @@
                             <h5 class="card-title card-head text-center " style="color: olive; font-weight: bold; ">Quick Links <i class="fas fa-link "></i></h5>
                             <hr>
                             <ul style="color: forestgreen; font-size: 16px; padding-left: 35%; list-style: none; ">
-                                <li style="display: block; "><i class="fas fa-home "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Home</a></li>
-                                <li style="display: block; "><i class="fas fa-briefcase "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Services</a></li>
-                                <li style="display: block; "><i class="fas fa-info-circle "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">About Us</a></li>
-                                <li style="display: block; "><i class="fas fa-envelope "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Contact Us</a></li>
+                                <li style="display: block; "><i class="fas fa-home "></i> <a href="#home" style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Home</a></li>
+                                <li style="display: block; "><i class="fas fa-briefcase "></i> <a href="#services" style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Services</a></li>
+                                <li style="display: block; "><i class="fas fa-info-circle "></i> <a href="#about" style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">About Us</a></li>
+                                <li style="display: block; "><i class="fas fa-envelope "></i> <a href="#contact" style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Contact Us</a></li>
                                 <li style="display: block; "><i class="fas fa-rss "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Blog</a></li>
                                 <li style="display: block; "><i class="fas fa-shopping-cart "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Shop</a></li>
                             </ul>
@@ -582,9 +786,9 @@
         <div class="row mt-4 focus-section">
             <div class="col-md-4 ">
 
-                <div class="card p-2 " style="height: 15rem; text-align: center; overflow: hidden; background-color: #333; color: #fff; ">
-                    <div class="card-body ">
-                        <h5 class="card-title card-head " style="color: olive; font-weight: bold; ">Newsletter Signup <i class="fas fa-envelope "></i></h5>
+                <div class="card p-2" style="height: 15rem; text-align: center; overflow: hidden; background-color: #333; color: #fff;">
+                    <div class="card-body">
+                        <h5 class="card-title card-head" style="color: olive; font-weight: bold; ">Newsletter Signup <i class="fas fa-envelope"></i></h5>
                         <p class="card-text " style="color: forestgreen; font-size: 16px; ">Subscribe to our newsletter for updates and offers.</p>
 
                         <form>
@@ -597,22 +801,22 @@
             </div>
             <div class="col-md-4 ">
                 <div id="testimonialSlider3" class="carousel slide" data-bs-ride="carousel" style="height: 15rem;">
-                    <div class="carousel-inner h-100" style="height: 100%;">
+                    <div class="carousel-inner h-100" style="height: 100%; ">
                         <!-- Testimonial 1 -->
                         <div class="carousel-item active h-100">
-                            <div class="card mx-auto h-100" style="max-width: 300px; background-color: #333; color: #fff;">
+                            <div class="card mx-auto h-100 " style="max-width: 300px; background-color: #333; color: #fff; ">
                                 <div class="card-body text-center p-4">
-                                    <p class="card-text">"I had a great experience with this company. Their service is top-notch!"</p>
-                                    <p class="card-author text-primary fw-bold">John Doe</p>
+                                    <p class="card-text ">"I had a great experience with this company. Their service is top-notch! "</p>
+                                    <p class="card-author text-primary fw-bold ">John Doe</p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Testimonial 2 -->
                         <div class="carousel-item h-100">
-                            <div class="card mx-auto h-100" style="max-width: 300px; background-color: #333; color: #fff;">
+                            <div class="card mx-auto h-100" style="max-width: 300px; background-color: #333; color: #fff; ">
                                 <div class="card-body text-center p-4">
-                                    <p class="card-text">"The quality of their products is amazing. I'm a happy customer!"</p>
+                                    <p class="card-text ">"The quality of their products is amazing. I 'm a happy customer!"</p>
                                     <p class="card-author text-primary fw-bold">Jane Smith</p>
                                 </div>
                             </div>
@@ -730,7 +934,39 @@
         flyInElements.forEach(element => {
             flyInObserver.observe(element);
         });
+
+
+
+        $(document).ready(function() {
+            const container = $('.product-container');
+            const productColumns = $('.product-column');
+            let currentOffset = 0;
+
+            // Function to update the container's scroll position
+            function updateContainerPosition() {
+                container.animate({
+                    scrollLeft: currentOffset * productColumns.first().width()
+                }, 500); // You can adjust the animation speed (in milliseconds) as needed
+            }
+
+            // Handle "Next" button click
+            $('.btn-next').click(function() {
+                if (currentOffset < productColumns.length - 1) {
+                    currentOffset++;
+                    updateContainerPosition();
+                }
+            });
+
+            // Handle "Previous" button click
+            $('.btn-prev').click(function() {
+                if (currentOffset > 0) {
+                    currentOffset--;
+                    updateContainerPosition();
+                }
+            });
+        });
     </script>
+
 
 </body>
 
