@@ -354,9 +354,9 @@
 .contacting h1::after
 {
   content: '';
-  background: white;
+  background: honeydew;
   display: block;
-  height: 3px;
+  height: 5px;
   width: 270px;
  margin: 20px auto 5px; 
 }
@@ -489,10 +489,11 @@ ul.footer-links {
     position: relative;
     font-family: Arial, sans-serif;
     min-height: 100vh;
-  }
-  .background::before {
+}
+
+.background::before,
+.background::after {
     content: "";
-     background-image: url('06.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -502,20 +503,45 @@ ul.footer-links {
     width: 100%;
     height: 100%;
     z-index: -1;
-    animation: fadeInOut 10s linear infinite;
-  }
+}
 
-  @keyframes fadeInOut {
-    0% {
-      opacity: 0.1;
+.background::before {
+    background-image: url('background.jpg'); /* Initial image */
+    animation: fadeInOut1 30s linear infinite;
+}
+
+.background::after {
+    background-image: url('cover.jpg'); /* Next image */
+    opacity: 0;
+    animation: fadeInOut2 30s linear infinite;
+}
+
+@keyframes fadeInOut1 {
+    0%, 20% {
+        opacity: 1;
     }
-    50% {
-      opacity: 1;
+    25%, 75% {
+        opacity: 0;
     }
-    100% {
-      opacity: 0;
+    80%, 100% {
+        opacity: 1;
     }
-  }
+}
+
+@keyframes fadeInOut2 {
+    0%, 20% {
+        opacity: 0;
+    }
+    25%, 75% {
+        opacity: 1;
+    }
+    80%, 100% {
+        opacity: 0;
+    }
+}
+
+
+
 
   .about
 {
@@ -640,7 +666,6 @@ background-image: url(09.jpg);
   .navbar-nav .nav-link {
     position: relative;
     text-decoration: none;
-    color: black; /* Change the color as per your requirement */
   }
 
   .navbar-nav .nav-link::after {
@@ -651,8 +676,8 @@ background-image: url(09.jpg);
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #007bff; /* Change the color as per your requirement */
-    transform-origin: bottom right;
+    background-color: burlywood; /* Change the color as per your requirement */
+   transform-origin: bottom right;
     transition: transform 0.4s ease;
   }
 
@@ -660,6 +685,54 @@ background-image: url(09.jpg);
     transform: scaleX(1);
     transform-origin: bottom left;
   }
+
+
+.image-container {
+    position: relative;
+    overflow: hidden;
+    height: 100%px; /* Set the height as per your requirement */
+    width: 100%;
+}
+
+.image-container img {
+    transition: all 0.3s ease;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+}
+
+.image-container p {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(100%);
+    transition: all 0.9s ease;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.8); /* Adjust the background color as needed */
+    color: white; /* Adjust the text color as needed */
+}
+
+.image-container:hover img {
+    opacity: 0.5; /* Adjust the opacity value for the fade effect */
+}
+
+.image-container:hover p {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+
+
+
+
+
 
    
 
@@ -773,7 +846,7 @@ background-image: url(09.jpg);
 
 
     <section id="projects">
-        <div class="container-fluid  mb-5 mt-4 translateY-animation">
+        <div class="container  mb-5 mt-4 translateY-animation">
             <h1 style="font-weight: bold; color: chocolate;" class="mb-4"><center>Case Studies</center></h1>
             <div class="row">
                 <div class="col-md-3 mb-4">
@@ -887,36 +960,53 @@ margin-bottom: 20px; display: inline-block;">
             <h1 class="text-center" style="font-weight: bold; color: firebrick;">Our Popular Products</h1>
             <div class="row justify-content-center mt-4">
                 <div class="col-6 col-md-4 col-lg-3 mb-4">
-                    <img src="Microsoft1.png" alt="Microsoft Office" class="img-fluid rounded shadow" style="height: 75%;">
-                    <p class="text-center mt-2">Microsoft Office</p>
-                </div>
+    <div class="image-container">
+        <img src="Office.jpg" alt="Microsoft Office" class="img-fluid rounded shadow" style="height: 75%;">
+        <p class="text-center mt-2">Microsoft Office</p>
+    </div>
+</div>
+
                 <div class="col-6 col-md-4 col-lg-3 mb-4">
-                    <img src="powerbi.png" alt="Power BI" class="img-fluid rounded shadow" style="height: 75%;">
+                    <div class="image-container">
+                    <img src="powerbi1.png" alt="Power BI" class="img-fluid rounded shadow" style="height: 75%;">
                     <p class="text-center mt-2">Power BI</p>
                 </div>
+                </div>
                 <div class="col-6 col-md-4 col-lg-3 mb-4">
-                    <img src="qgis.png" alt="QGIS" class="img-fluid rounded shadow" style="height: 75%;">
+                    <div class="image-container">
+                    <img src="qgis1.jpg" alt="QGIS" class="img-fluid rounded shadow" style="height: 75%;">
                     <p class="text-center mt-2">QGIS</p>
                 </div>
+                </div>
                 <div class="col-6 col-md-4 col-lg-3 mb-4">
-                    <img src="text-editor.jpg" alt="code Editors" class="img-fluid rounded shadow" style="height: 75%;">
+                    <div class="image-container">
+                    <img src="editors1.jpg" alt="code Editors" class="img-fluid rounded shadow" style="height: 75%;">
                     <p class="text-center mt-2">Code Editors</p>
                 </div>
-                <div class="col-6 col-md-4 col-lg-3 mb-4">
-                    <img src="cprograminglanguage.png" alt="Programming Languages" class="img-fluid rounded shadow" style="height: 75%;">
-                    <p class="text-center mt-2">Programming Languages</p>
                 </div>
                 <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="image-container">
+                    <img src="c1.png" alt="Programming Languages" class="img-fluid rounded shadow" style="height: 75%;">
+                    <p class="text-center mt-2">C Programming Languages</p>
+                </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="image-container">
                     <img src="php.jpg" alt="Programming Languages" class="img-fluid rounded shadow" style="height: 75%;">
-                    <p class="text-center mt-2">Programming Languages</p>
+                    <p class="text-center mt-2">PHP Programming Languages</p>
+                </div>
                 </div>
                 <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="image-container">
                     <img src="sqli.png" alt="Programming Languages" class="img-fluid rounded shadow" style="height: 75%;">
-                    <p class="text-center mt-2">Programming Languages</p>
+                    <p class="text-center mt-2">MYSQL Database </p>
+                </div>
                 </div>
                 <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="image-container">
                     <img src="esri.png" alt="Data Visualization" class="img-fluid rounded shadow" style="height: 75%;">
                     <p class="text-center mt-2">Data Visualization</p>
+                </div>
                 </div>
                 <!-- Add more product images and descriptions here -->
 
@@ -930,7 +1020,7 @@ margin-bottom: 20px; display: inline-block;">
         <div class="container-fluid bg-light contacting">
             <div class="row my-5">
                 <div class="col-md-6 mb-4">
-                 <h1 class="text-center mb-5">Get In Touch</h1>
+                 <h1 class="text-center mb-5" style="font-weight: bold; color: honeydew;">Get In Touch</h1>
                     <form class="contact-from">
                         
                         <div class="form-group">
@@ -953,10 +1043,10 @@ margin-bottom: 20px; display: inline-block;">
                         <div class="overlay contact-info" id="overlay1" style="position: relative; z-index: 1;">
 
                            <div class="follow mt-5"><b><i class="fa fa-map-marker mx-3" aria-hidden="true"></i>Address:</b><i></i class="
-                               fa fa-map-marker">XYZ Road Bangalore, IN</div>
-                                   <div class="follow"><b><i class="fa fa-phone mx-3" aria-hidden="true"></i>Phone:</b>+256 751788445 or +256 773297508</div>
+                               fa fa-map-marker">9J5G+47P, Kigobe Rd, Kampala</div>
+                                   <div class="follow"><b><i class="fa fa-phone mx-3" aria-hidden="true"></i>Phone:</b>+256 777233322 or +256 774442035</div>
                                           <div class="follow"><b><i class="fa fa-envelope mx-3" aria-hidden="true"></i>Email: </b></i class="
-                                           fa fa-envelope-o">conservatoirebethelmusic@gmail.com</div>
+                                           fa fa-envelope-o">meetthexperts@gmail.com</div>
 
                             </div>
 
@@ -990,17 +1080,20 @@ margin-bottom: 20px; display: inline-block;">
                 <div class="col-md-3">
                     <h5>Quick Links</h5>
                     <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                         <li><a href="#about">About</a></li>
+                        <li><a href="#projects">Projects</a></li>
                         <li><a href="#services">Services</a></li>
-                        <li><a href="#about">About</a></li>
+                        <li><a href="#products">Products</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
                     <h5>Contact Information</h5>
                     <ul class="footer-links">
-                        <li><i class="fa fa-phone"></i> +1 123-456-7890</li>
-                        <li><i class="fa fa-envelope"></i> info@mte.com</li>
-                        <li><i class="fa fa-map-marker"></i> 123 Main St, City, Country</li>
+                        <li><i class="fa fa-phone"></i> +256 777 233 322</li>
+                        <li><i class="fa fa-envelope"></i> meetthexperts@gmail.com</li>
+                        <li><i class="fa fa-map-marker"></i> 9J5F+6F2, Kigobe Rd</li>
                     </ul>
                 </div>
             </div>
