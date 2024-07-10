@@ -1,973 +1,1471 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Split-Screen Layout Example with Bootstrap</title>
     <!-- Link to Bootstrap CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:700" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:700"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
     <style>
-        .parallax-container {
-            background-size: cover;
-            background-attachment: fixed;
-            min-height: 100vh;
-            color: white;
-            position: relative;
-        }
-        
-        .parallax-overlay {
-            background: rgba(28, 28, 28, 0.5);
-            /* Semi-transparent black overlay */
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        /* Sticky navigation styles */
-        
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            /* Set opacity to 0 */
-        }
-        
-        .bg-change {
-            animation: changeBackground 10s linear infinite;
-        }
-        
-        @keyframes changeBackground {
-            0%,
-            100% {
-                background-image: url('./img1.jpg');
-            }
-            25% {
-                background-image: url('./img2.jpg');
-            }
-            50% {
-                background-image: url('./img3.jpg');
-            }
-            75% {
-                background-image: url('./img4.jpg');
-            }
-        }
-        
-        .typing-effect {
-            display: inline-block;
-            /* Adjust the display property */
-            position: relative;
-        }
-        
-        .text {
-            white-space: nowrap;
-            overflow: hidden;
-            width: 0;
-            animation: typing 10s steps(25) infinite, cursor-blink 1s infinite step-end;
-            /* Delay before the entire animation cycle repeats */
-        }
-        
-        @keyframes typing {
-            from {
-                width: 0;
-            }
-            10% {
-                /* Keeps the text fully typed for 5 seconds */
-                width: 100%;
-            }
-            to {
-                width: 100%;
-            }
-        }
-        
-        @keyframes cursor-blink {
-            0%,
-            100% {
-                border-right: 3px solid transparent;
-            }
-            50% {
-                border-right: 3px solid rgba(0, 0, 0, 0);
-            }
-        }
-        
-        .loader-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        
-        .loader {
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #3498db;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 2s linear infinite;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        /* Media query for smaller screens */
-        
-        .content {
-            display: none;
-            /* Hide content by default */
-        }
-        
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        /* Style for active navigation item */
-        /* CSS for active navigation item with improved transition */
-        
-        .nav-link.active {
-            background-color: #007BFF;
-            /* Initial background color */
-            color: #fff;
-            /* Initial text color */
-            transition: background-color 0.3s ease, color 0.3s ease;
-            /* Smooth transition for color changes */
-        }
-        /* Hover effect for navigation items (optional) */
-        
-        .nav-link:hover {
-            background-color: #0056b3;
-            /* Change background color on hover */
-            color: #fff;
-            /* Change text color on hover */
-            transition: background-color 0.3s ease, color 0.3s ease;
-            /* Smooth hover effect */
-        }
-        
-        .text-shadow {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        .cta-buttons {
-            position: relative;
-            z-index: 1;
-        }
-        /* Hover effect for buttons, cards, and forms */
-        /* Define a keyframe animation for shaking effect */
-        /* Define a keyframe animation for shaking effect */
-        
-        @keyframes shake {
-            0% {
-                transform: translateX(0);
-            }
-            25% {
-                transform: translateX(-5px);
-            }
-            50% {
-                transform: translateX(5px);
-            }
-            75% {
-                transform: translateX(-5px);
-            }
-            100% {
-                transform: translateX(0);
-            }
-        }
-        /* Apply the shake animation on hover for buttons, cards, and forms */
-        
-        .btn:hover,
-        .card:hover {
-            animation: shake 0.5s;
-            /* Play the shake animation once on hover */
-            animation-fill-mode: forwards;
-            /* Keep the final state of the animation after it ends */
-        }
-        /* Hover effect for form inputs and textareas */
-        
-        .form-control:hover {
-            border-color: #333;
-            /* Change to your desired border color on hover */
-            transition: border-color 0.3s;
-        }
-        /* Define a keyframe animation for flying in from the left */
-        
-        .fly-in-element {
-            transform: translateX(50%);
-            /* Start with a translateX to move the element from the right */
-            opacity: 0;
-            /* Start with 0 opacity to make it invisible */
-            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-        }
-        
-        .fly-in-element.in-viewport {
-            transform: translateX(0);
-            /* Move the element back to its original position when in viewport */
-            opacity: 1;
-            /* Make the element fully visible when in viewport */
-        }
-        
-        .very-bold-text {
-            font-weight: 800 !important;
-            /* Use !important to ensure it overrides other styles */
-        }
-        
-        @media (max-width: 768px) {
-            /* Adjust the font size for smaller screens */
-            .very-bold-text {
-                font-size: 36px;
-                /* Adjust the size as needed */
-            }
-        }
-        
-        @media (max-width: 576px) {
-            /* Adjust the font size for smaller screens */
-            .very-bold-text {
-                font-size: 28px;
-                /* Adjust the size as needed */
-            }
-        }
-        
-        .nav-arrow {
-            position: absolute;
-            transform: translateY(-50%);
-            font-size: 24px;
-            background-color: rgba(0, 0, 0, 0.3);
-            /* Add a semi-transparent background */
-            color: white;
-            /* Text color for better visibility */
-            padding: 5px 10px;
-            /* Adjust the padding for a better look */
-            border: none;
-            /* Remove border */
-            cursor: pointer;
-            /* Add a pointer cursor for interactivity */
-            z-index: 2;
-            /* Ensure it's above the card content */
-        }
-        
-        .left-arrow {
-            left: 0;
-        }
-        
-        .right-arrow {
-            right: 0;
-        }
-        
-        .navbar {
-            font-family: 'Playfair Display', serif;
-            font-size: 18px;
-            background-color: #66a2fe;
-            /* Background color from the previous question */
-            color: #fff;
-            /* White text on a colored background */
-        }
-        /* Headings */
-        /* Headings */
-        
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 700;
-            font-size: 28px;
-            line-height: 1.2;
-            letter-spacing: 1px;
-        }
-        /* Paragraphs and Links */
-        
-        p,
-        a {
-            font-family: 'Georgia', serif;
-            font-size: 16px;
-            line-height: 1.4;
-            letter-spacing: 0.5px;
-            text-decoration: none;
-        }
-        /* Links (anchor tags) */
-        
-        a {
-            color: #0077B5;
-        }
-        /* Style visited links */
-        
-        a:visited {
-            color: #654321;
-        }
-        /* Style links when hovered over */
-        
-        a:hover {
-            color: #FFA500;
-        }
-    </style>
-</head>
+      .parallax-container {
+        background-size: cover;
+        background-attachment: fixed;
+        min-height: 100vh;
+        color: white;
+        position: relative;
+      }
 
-<body>
+      .parallax-overlay {
+        background: rgba(28, 28, 28, 0.5);
+        /* Semi-transparent black overlay */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      /* Sticky navigation styles */
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(28, 28, 28, 0.5);
+        /* Set opacity to 0 */
+      }
+
+      .bg-change {
+        animation: changeBackground 10s linear infinite;
+      }
+
+      @keyframes changeBackground {
+        0%,
+        100% {
+          background-image: url("./img1.jpg");
+        }
+        25% {
+          background-image: url("./img2.jpg");
+        }
+        50% {
+          background-image: url("./img3.jpg");
+        }
+        75% {
+          background-image: url("./img4.jpg");
+        }
+      }
+
+      .typing-effect {
+        display: inline-block;
+        /* Adjust the display property */
+        position: relative;
+      }
+
+      .text {
+        white-space: nowrap;
+        overflow: hidden;
+        width: 0;
+        animation: typing 10s steps(25) infinite,
+          cursor-blink 1s infinite step-end;
+        /* Delay before the entire animation cycle repeats */
+      }
+
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        10% {
+          /* Keeps the text fully typed for 5 seconds */
+          width: 100%;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes cursor-blink {
+        0%,
+        100% {
+          border-right: 3px solid transparent;
+        }
+        50% {
+          border-right: 3px solid rgba(0, 0, 0, 0);
+        }
+      }
+
+      .loader-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      .loader {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 2s linear infinite;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      /* Media query for smaller screens */
+
+      .content {
+        display: none;
+        /* Hide content by default */
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      /* Style for active navigation item */
+      /* CSS for active navigation item with improved transition */
+
+      .nav-link.active {
+        background-color: #007bff;
+        /* Initial background color */
+        color: #fff;
+        /* Initial text color */
+        transition: background-color 0.3s ease, color 0.3s ease;
+        /* Smooth transition for color changes */
+      }
+      /* Hover effect for navigation items (optional) */
+
+      .nav-link:hover {
+        background-color: #0056b3;
+        /* Change background color on hover */
+        color: #fff;
+        /* Change text color on hover */
+        transition: background-color 0.3s ease, color 0.3s ease;
+        /* Smooth hover effect */
+      }
+
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .cta-buttons {
+        position: relative;
+        z-index: 1;
+      }
+      /* Hover effect for buttons, cards, and forms */
+      /* Define a keyframe animation for shaking effect */
+      /* Define a keyframe animation for shaking effect */
+
+      @keyframes shake {
+        0% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        50% {
+          transform: translateX(5px);
+        }
+        75% {
+          transform: translateX(-5px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+      /* Apply the shake animation on hover for buttons, cards, and forms */
+
+      .btn:hover,
+      .card:hover {
+        animation: shake 0.5s;
+        /* Play the shake animation once on hover */
+        animation-fill-mode: forwards;
+        /* Keep the final state of the animation after it ends */
+      }
+      /* Hover effect for form inputs and textareas */
+
+      .form-control:hover {
+        border-color: #333;
+        /* Change to your desired border color on hover */
+        transition: border-color 0.3s;
+      }
+      /* Define a keyframe animation for flying in from the left */
+
+      .fly-in-element {
+        transform: translateX(50%);
+        /* Start with a translateX to move the element from the right */
+        opacity: 0;
+        /* Start with 0 opacity to make it invisible */
+        transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+      }
+
+      .fly-in-element.in-viewport {
+        transform: translateX(0);
+        /* Move the element back to its original position when in viewport */
+        opacity: 1;
+        /* Make the element fully visible when in viewport */
+      }
+
+      .very-bold-text {
+        font-weight: 800 !important;
+        /* Use !important to ensure it overrides other styles */
+      }
+
+      @media (max-width: 768px) {
+        /* Adjust the font size for smaller screens */
+        .very-bold-text {
+          font-size: 36px;
+          /* Adjust the size as needed */
+        }
+      }
+
+      @media (max-width: 576px) {
+        /* Adjust the font size for smaller screens */
+        .very-bold-text {
+          font-size: 28px;
+          /* Adjust the size as needed */
+        }
+      }
+
+      .nav-arrow {
+        position: absolute;
+        transform: translateY(-50%);
+        font-size: 24px;
+        background-color: rgba(0, 0, 0, 0.3);
+        /* Add a semi-transparent background */
+        color: white;
+        /* Text color for better visibility */
+        padding: 5px 10px;
+        /* Adjust the padding for a better look */
+        border: none;
+        /* Remove border */
+        cursor: pointer;
+        /* Add a pointer cursor for interactivity */
+        z-index: 2;
+        /* Ensure it's above the card content */
+      }
+
+      .left-arrow {
+        left: 0;
+      }
+
+      .right-arrow {
+        right: 0;
+      }
+
+      .navbar {
+        font-family: "Playfair Display", serif;
+        font-size: 18px;
+        background-color: #66a2fe;
+        /* Background color from the previous question */
+        color: #fff;
+        /* White text on a colored background */
+      }
+      /* Headings */
+      /* Headings */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 700;
+        font-size: 28px;
+        line-height: 1.2;
+        letter-spacing: 1px;
+      }
+      /* Paragraphs and Links */
+
+      p,
+      a {
+        font-family: "Georgia", serif;
+        font-size: 16px;
+        line-height: 1.4;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+      }
+      /* Links (anchor tags) */
+
+      a {
+        color: #0077b5;
+      }
+      /* Style visited links */
+
+      a:visited {
+        color: #654321;
+      }
+      /* Style links when hovered over */
+
+      a:hover {
+        color: #ffa500;
+      }
+    </style>
+  </head>
+
+  <body>
     <div class="loader-wrapper">
-        <div class="loader"></div>
+      <div class="loader"></div>
     </div>
     <div class="sticky-top">
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #66a2fe; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); z-index: 100;">
+      <nav
+        class="navbar navbar-expand-lg navbar-light"
+        style="
+          background-color: #66a2fe;
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+          z-index: 100;
+        "
+      >
+        <a class="navbar-brand very-bold-text text-light" href="#"> WEB </a>
 
-            <a class="navbar-brand very-bold-text text-light" href="#">
-                WEB
-            </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link text-light" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="#services">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div
+        class="d-flex justify-content-between align-items-center bg-primary text-light mt-0"
+        style="position: relative"
+      >
+        <div class="d-flex"></div>
+        <div class="announcements font-weight-bold">
+          <marquee behavior="scroll" direction="left" scrollamount="4"
+            >Welcome to our website! Stay updated with the latest news and
+            announcements.</marquee
+          >
+        </div>
+        <div class="d-flex"></div>
+      </div>
+    </div>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link text-light" href="#home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="#about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="#services">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="#contact">Contact</a>
-                    </li>
+    <div class="content" style="overflow: hidden">
+      <div
+        id="home"
+        class="header bg-change text-light pt-5 pb-5"
+        style="
+          height: 70vh;
+          overflow: hidden;
+          background: url('./img5.jpg') center/cover no-repeat;
+        "
+      >
+        <div class="overlay"></div>
+
+        <div class="header-content pt-5">
+          <div class="header-text text-center">
+            <div class="typing-effect">
+              <h1
+                class="display-1 h1 font-weight-bold text-shadow text very-bold-text"
+              >
+                Welcome to Our Website
+              </h1>
+              <p class="lead text-wrap text-lg">
+                We're here to transform your online presence. Discover how we
+                can help you achieve your digital goals.
+              </p>
+            </div>
+            <div class="cta-buttons d-flex justify-content-center mt-4">
+              <a href="#" class="btn btn-primary mx-2 fly-in-element"
+                >Sign Up</a
+              >
+              <a href="#services" class="btn btn-success mx-2 fly-in-element"
+                >Get Started</a
+              >
+              <a href="#contact" class="btn btn-info mx-2 fly-in-element"
+                >Contact Us</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="about"
+        class="parallax-container pt-5 pb-5"
+        style="background-image: url('https://picsum.photos/536/355')"
+      >
+        <div class="parallax-overlay"></div>
+        <div class="container pt-5" style="z-index: 2; position: relative">
+          <h1 class="display-4 font-weight-bold very-bold-text text-wrap">
+            Who we are
+          </h1>
+          <div class="row about-grid">
+            <div class="col-lg-8">
+              <p class="lead font-size-lg fly-in-element">
+                <strong>We believe</strong> in the power of technology to
+                transform businesses and create exceptional web experiences. Our
+                mission is to empower businesses through innovative web
+                solutions that exceed our clients' expectations.
+              </p>
+              <blockquote class="blockquote fly-in-element">
+                <p class="mb-0 font-size-lg">
+                  <strong>Our clients' success</strong> is our success. We're
+                  dedicated to delivering results that matter.
+                </p>
+                <footer class="blockquote-footer pt-3">John Doe, CEO</footer>
+              </blockquote>
+            </div>
+            <div class="col-lg-4">
+              <div class="about-item fly-in-element">
+                <h2 class="h4 font-weight-bold">Our Story</h2>
+                <p class="font-size-md">
+                  We have a rich history of crafting exceptional web experiences
+                  for our clients.
+                  <a href="#" class="read-more-link">Read More</a>
+                </p>
+              </div>
+              <div class="about-item fly-in-element">
+                <h2 class="h4 font-weight-bold text-center">Our Team</h2>
+                <ul class="list-group font-size-md text-center">
+                  <li class="list-group-item">A Team of Creative Minds</li>
+                  <li class="list-group-item">Passionate Developers</li>
+                  <li class="list-group-item">Talented Designers</li>
+                  <li class="list-group-item">Strategic Thinkers</li>
                 </ul>
+                <p class="text-center mt-3">
+                  <a href="#" class="btn btn-primary">Meet the Team</a>
+                </p>
+              </div>
             </div>
-        </nav>
-        <div class="d-flex justify-content-between align-items-center bg-primary text-light mt-0" style="position: relative;">
-            <div class="d-flex"></div>
-            <div class="announcements font-weight-bold">
-                <marquee behavior="scroll" direction="left" scrollamount="4">Welcome to our website! Stay updated with the latest news and announcements.</marquee>
-            </div>
-            <div class="d-flex"></div>
+          </div>
         </div>
-    </div>
+      </div>
 
-
-    <div class="content" style="overflow:hidden ;">
-
-
-
-
-        <div id="home" class="header bg-change text-light pt-5 pb-5" style="height: 70vh; overflow: hidden; background: url('./img5.jpg') center/cover no-repeat;">
-            <div class="overlay "></div>
-
-            <div class="header-content pt-5">
-                <div class="header-text text-center ">
-                    <div class="typing-effect">
-                        <h1 class="display-1 font-weight-bold text-shadow text very-bold-text ">Welcome to Our Website</h1>
-                        <p class="lead text-wrap text-lg">We're here to transform your online presence. Discover how we can help you achieve your digital goals.</p>
-                    </div>
-                    <div class="cta-buttons d-flex justify-content-center mt-4">
-                        <a href="#" class="btn btn-primary mx-2 fly-in-element">Sign Up</a>
-                        <a href="#services" class="btn btn-success mx-2 fly-in-element">Get Started</a>
-                        <a href="#contact" class="btn btn-info mx-2 fly-in-element">Contact Us</a>
-                    </div>
-                </div>
-            </div>
+      <div
+        id="services"
+        class="parallax-container pt-5 pb-5"
+        style="background-image: url('https://picsum.photos/536/356')"
+      >
+        <div class="parallax-overlay"></div>
+        <div class="container pt-5" style="z-index: 2; position: relative">
+          <h1 class="display-4 very-bold-text">Our Services</h1>
+          <p class="lead">Explore our unique services and solutions.</p>
         </div>
-
-        <div id="about" class="parallax-container pt-5 pb-5" style="background-image: url('https://picsum.photos/536/355');">
-            <div class="parallax-overlay"></div>
-            <div class="container pt-5" style="z-index:2;position: relative;">
-                <h1 class="display-4 font-weight-bold very-bold-text text-wrap">Who we are</h1>
-                <div class="row about-grid">
-                    <div class="col-lg-8">
-                        <p class="lead font-size-lg fly-in-element">
-                            <strong>We believe</strong> in the power of technology to transform businesses and create exceptional web experiences. Our mission is to empower businesses through innovative web solutions that exceed our clients' expectations.
-                        </p>
-                        <blockquote class="blockquote fly-in-element">
-                            <p class="mb-0 font-size-lg">
-                                <strong>Our clients' success</strong> is our success. We're dedicated to delivering results that matter.
-                            </p>
-                            <footer class="blockquote-footer pt-3">John Doe, CEO</footer>
-                        </blockquote>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="about-item fly-in-element">
-                            <h2 class="h4 font-weight-bold">Our Story</h2>
-                            <p class="font-size-md">
-                                We have a rich history of crafting exceptional web experiences for our clients.
-                                <a href="#" class="read-more-link">Read More</a>
-                            </p>
-                        </div>
-                        <div class="about-item fly-in-element">
-                            <h2 class="h4 font-weight-bold text-center">Our Team</h2>
-                            <ul class="list-group font-size-md text-center">
-                                <li class="list-group-item">A Team of Creative Minds</li>
-                                <li class="list-group-item">Passionate Developers</li>
-                                <li class="list-group-item">Talented Designers</li>
-                                <li class="list-group-item">Strategic Thinkers</li>
-                            </ul>
-                            <p class="text-center mt-3">
-                                <a href="#" class="btn btn-primary">Meet the Team</a>
-                            </p>
-
-                        </div>
-                    </div>
-
+        <div class="container mt-5">
+          <div class="row">
+            <!-- Service 1 -->
+            <div class="col-md-4">
+              <div
+                class="card border-0 shadow fly-in-element mb-3"
+                style="background-color: #ff5733"
+              >
+                <div class="card-body">
+                  <i class="fas fa-globe service-icon"></i>
+                  <h5 class="card-title">Service 1</h5>
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Learn more about Service 1.
+                  </p>
+                  <a href="#" class="card-link">Learn More</a>
                 </div>
+              </div>
             </div>
+
+            <!-- Service 2 -->
+            <div class="col-md-4">
+              <div
+                class="card border-0 shadow fly-in-element mb-3"
+                style="background-color: #41b883"
+              >
+                <div class="card-body">
+                  <i class="fas fa-chart-bar service-icon"></i>
+                  <h5 class="card-title">Service 2</h5>
+                  <p class="card-text">
+                    Sed do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Learn more about Service 2.
+                  </p>
+                  <a href="#" class="card-link">Learn More</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="col-md-4">
+              <div
+                class="card border-0 shadow fly-in-element mb-3"
+                style="background-color: #007bff"
+              >
+                <div class="card-body">
+                  <i class="fas fa-code service-icon"></i>
+                  <h5 class="card-title">Service 3</h5>
+                  <p class="card-text">
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse. Learn more about Service 3.
+                  </p>
+                  <a href="#" class="card-link">Learn More</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div id="services" class="parallax-container pt-5 pb-5" style="background-image: url('https://picsum.photos/536/356');">
-            <div class="parallax-overlay"></div>
-            <div class="container pt-5" style="z-index: 2; position: relative;">
-                <h1 class="display-4 very-bold-text">Our Services</h1>
-                <p class="lead">Explore our unique services and solutions.</p>
-            </div>
-            <div class="container mt-5">
-                <div class="row">
-                    <!-- Service 1 -->
-                    <div class="col-md-4">
-                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: #FF5733;">
-                            <div class="card-body">
-                                <i class="fas fa-globe service-icon"></i>
-                                <h5 class="card-title">Service 1</h5>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Learn more about Service 1.</p>
-                                <a href="#" class="card-link">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Service 2 -->
-                    <div class="col-md-4">
-                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: #41B883;">
-                            <div class="card-body">
-                                <i class="fas fa-chart-bar service-icon"></i>
-                                <h5 class="card-title">Service 2</h5>
-                                <p class="card-text">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Learn more about Service 2.</p>
-                                <a href="#" class="card-link">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Service 3 -->
-                    <div class="col-md-4">
-                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: #007BFF;">
-                            <div class="card-body">
-                                <i class="fas fa-code service-icon"></i>
-                                <h5 class="card-title">Service 3</h5>
-                                <p class="card-text">Duis aute irure dolor in reprehenderit in voluptate velit esse. Learn more about Service 3.</p>
-                                <a href="#" class="card-link">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div
+        id="contact"
+        class="parallax-container pt-5 pb-5"
+        style="
+          background-image: url('https://picsum.photos/536/358');
+          height: auto;
+        "
+      >
+        <div class="parallax-overlay"></div>
+        <div class="container pt-5" style="z-index: 2; position: relative">
+          <h1 class="display-4 text-light very-bold-text">Contact Us</h1>
+          <p class="lead text-light">
+            Get in touch with us. We'd love to hear from you.
+          </p>
         </div>
-
-        <div id="contact" class="parallax-container pt-5 pb-5" style="background-image: url('https://picsum.photos/536/358');height: auto;">
-            <div class="parallax-overlay"></div>
-            <div class="container pt-5" style="z-index:2;position: relative;">
-                <h1 class="display-4 text-light very-bold-text">Contact Us</h1>
-                <p class="lead text-light">Get in touch with us. We'd love to hear from you.</p>
+        <div class="container mt-5">
+          <div class="row">
+            <div class="col-md-6">
+              <div
+                class="card border-0 shadow fly-in-element mb-3"
+                style="background-color: #007bff"
+              >
+                <div class="card-body">
+                  <i class="fas fa-map-marker-alt contact-icon text-light"></i>
+                  <h5 class="card-title text-light">Our Location</h5>
+                  <p class="card-text text-light">
+                    123 Main Street<br />City, Country
+                  </p>
+                </div>
+              </div>
             </div>
-            <div class="container mt-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: #007BFF; ">
-                            <div class="card-body">
-                                <i class="fas fa-map-marker-alt contact-icon text-light"></i>
-                                <h5 class="card-title text-light">Our Location</h5>
-                                <p class="card-text text-light">123 Main Street<br>City, Country</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: #41B883; ">
-                            <div class="card-body">
-                                <i class="fas fa-phone contact-icon text-light"></i>
-                                <h5 class="card-title text-light">Contact Information</h5>
-                                <p class="card-text text-light">Phone: +123 456 789<br>Email: contact@example.com</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="col-md-6">
+              <div
+                class="card border-0 shadow fly-in-element mb-3"
+                style="background-color: #41b883"
+              >
+                <div class="card-body">
+                  <i class="fas fa-phone contact-icon text-light"></i>
+                  <h5 class="card-title text-light">Contact Information</h5>
+                  <p class="card-text text-light">
+                    Phone: +123 456 789<br />Email: contact@example.com
+                  </p>
                 </div>
-                <div class="row mt-4">
-                    <div class="col-md-8">
-                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: rgba(255, 255, 255, 0.1); border-radius: 10px;">
-                            <div class="card-body">
-                                <h5 class="card-title">Send Us a Message</h5>
-                                <form>
-                                    <div class="mb-3">
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                            <input type="text" class="form-control" placeholder="Your Name">
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                            <input type="email" class="form-control" placeholder="Your Email">
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-chat-text"></i></span>
-                                            <textarea class="form-control" rows="4" placeholder="Your Message"></textarea>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-lg btn-block">Send Message</button>
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card border-0 shadow fly-in-element mb-3" style="background-color: #FF5733; ">
-                            <div class="card-body">
-                                <i class="fab fa-facebook contact-icon text-light"></i>
-                                <a href="#" class="card-link text-light">Facebook</a>
-                            </div>
-                        </div>
-                        <div class="card mt-3 border-0 shadow fly-in-element mb-3" style="background-color: #41B883; ">
-                            <div class="card-body">
-                                <i class="fab fa-twitter contact-icon text-light"></i>
-                                <a href="#" class="card-link text-light">Twitter</a>
-                            </div>
-                        </div>
-                        <div class="card mt-3 border-0 shadow fly-in-element mb-3" style="background-color: #007BFF; ">
-                            <div class="card-body">
-                                <i class="fab fa-linkedin contact-icon text-light"></i>
-                                <a href="#" class="card-link text-light">LinkedIn</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
-        </div>
-
-        <div id="another" class="parallax-container  pt-5 pb-5" style="background-image: url('https://picsum.photos/536/357');height: auto;">
-            <div class="parallax-overlay"></div>
-            <div class="container" style="z-index:2;position: relative;">
-                <div class="container pt-5">
-                    <h1 class="display-4 text-light very-bold-text">Product Showcase</h1>
-                    <p class="lead text-light">Browse our featured products and discover what we have to offer.</p>
+          </div>
+          <div class="row mt-4">
+            <div class="col-md-8">
+              <div
+                class="card border-0 shadow fly-in-element mb-3"
+                style="
+                  background-color: rgba(255, 255, 255, 0.1);
+                  border-radius: 10px;
+                "
+              >
+                <div class="card-body">
+                  <h5 class="card-title">Send Us a Message</h5>
+                  <form>
+                    <div class="mb-3">
+                      <div class="input-group">
+                        <span class="input-group-text"
+                          ><i class="bi bi-person"></i
+                        ></span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Your Name"
+                        />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div class="input-group">
+                        <span class="input-group-text"
+                          ><i class="bi bi-envelope"></i
+                        ></span>
+                        <input
+                          type="email"
+                          class="form-control"
+                          placeholder="Your Email"
+                        />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div class="input-group">
+                        <span class="input-group-text"
+                          ><i class="bi bi-chat-text"></i
+                        ></span>
+                        <textarea
+                          class="form-control"
+                          rows="4"
+                          placeholder="Your Message"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-lg btn-block"
+                    >
+                      Send Message
+                    </button>
+                  </form>
                 </div>
-
-                <!--/////////////////////**************************** -->
-                <div class="d-flex product-container" style="overflow-x: hidden; white-space: nowrap;">
-                    <!-- Repeat this structure for each product -->
-                    <div class="col-md-4 product-column d-flex p-3" style="display: inline-block;">
-                        <div class="card border-0 shadow fly-in-element mb-3">
-                            <div class="carousel-container" data-bs-ride="carousel">
-                                <!-- Add unique IDs for carousel elements to avoid conflicts -->
-                                <div id="product1Carousel" class="carousel slide" data-bs-ride="carousel">
-                                    <!-- Carousel Controls -->
-                                    <a class="carousel-control-prev" href="#product1Carousel" role="button" data-bs-slide="prev">
-                                        <!-- Carousel Control Icons -->
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#product1Carousel" role a-button data-bs-slide="next">
-                                        <!-- Carousel Control Icons -->
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </a>
-                                    <!-- Carousel Images -->
-                                    <div class="carousel-inner" style="height: 15rem;">
-                                        <div class="carousel-item active">
-                                            <img src="https://picsum.photos/536/357" class="d-block w-100" alt="Product 1 Image 1">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="https://placekitten.com/408/287" class="d-block w-100" alt="Product 1 Image 2">
-                                        </div>
-                                        <!-- Add more images for Product 1 as needed -->
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title text-dark">Product 1</h5>
-                                    <p class="card-text text-dark">Description for Product 1.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Repeat the above structure for other products -->
-                    <div class="col-md-4 product-column d-flex p-3" style="display: inline-block;">
-                        <div class="card border-0 shadow fly-in-element mb-3">
-                            <div class="carousel-container" data-bs-ride="carousel">
-                                <!-- Add unique IDs for carousel elements to avoid conflicts -->
-                                <div id="product1Carousel1" class="carousel slide" data-bs-ride="carousel">
-                                    <!-- Carousel Controls -->
-                                    <a class="carousel-control-prev" href="#product1Carousel1" role="button" data-bs-slide="prev">
-                                        <!-- Carousel Control Icons -->
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#product1Carousel1" role a-button data-bs-slide="next">
-                                        <!-- Carousel Control Icons -->
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </a>
-                                    <!-- Carousel Images -->
-                                    <div class="carousel-inner" style="height: 15rem;">
-                                        <div class="carousel-item active">
-                                            <img src="https://picsum.photos/536/357" class="d-block w-100" alt="Product 1 Image 1">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="https://placekitten.com/408/287" class="d-block w-100" alt="Product 1 Image 2">
-                                        </div>
-                                        <!-- Add more images for Product 1 as needed -->
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title text-dark">Product 1</h5>
-                                    <p class="card-text text-dark">Description for Product 1.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 product-column d-flex p-3" style="display: inline-block;">
-                        <div class="card border-0 shadow fly-in-element mb-3">
-                            <div class="carousel-container" data-bs-ride="carousel">
-                                <!-- Add unique IDs for carousel elements to avoid conflicts -->
-                                <div id="product1Carouse2" class="carousel slide" data-bs-ride="carousel">
-                                    <!-- Carousel Controls -->
-                                    <a class="carousel-control-prev" href="#product1Carouse2" role="button" data-bs-slide="prev">
-                                        <!-- Carousel Control Icons -->
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#product1Carouse2" role a-button data-bs-slide="next">
-                                        <!-- Carousel Control Icons -->
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </a>
-                                    <!-- Carousel Images -->
-                                    <div class="carousel-inner" style="height: 15rem;">
-                                        <div class="carousel-item active">
-                                            <img src="https://picsum.photos/536/357" class="d-block w-100" alt="Product 1 Image 1">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="https://placekitten.com/408/287" class="d-block w-100" alt="Product 1 Image 2">
-                                        </div>
-                                        <!-- Add more images for Product 1 as needed -->
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title text-dark">Product 1</h5>
-                                    <p class="card-text text-dark">Description for Product 1.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 product-column d-flex p-3" style="display: inline-block;">
-                        <div class="card border-0 shadow fly-in-element mb-3">
-                            <div class="carousel-container" data-bs-ride="carousel">
-                                <!-- Add unique IDs for carousel elements to avoid conflicts -->
-                                <div id="product1Carouse3" class="carousel slide" data-bs-ride="carousel">
-                                    <!-- Carousel Controls -->
-                                    <a class="carousel-control-prev" href="#product1Carouse3" role="button" data-bs-slide="prev">
-                                        <!-- Carousel Control Icons -->
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#product1Carousel" role a-button data-bs-slide="next">
-                                        <!-- Carousel Control Icons -->
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </a>
-                                    <!-- Carousel Images -->
-                                    <div class="carousel-inner" style="height: 15rem;">
-                                        <div class="carousel-item active">
-                                            <img src="https://picsum.photos/536/357" class="d-block w-100" alt="Product 1 Image 1">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="https://placekitten.com/408/287" class="d-block w-100" alt="Product 1 Image 2">
-                                        </div>
-                                        <!-- Add more images for Product 1 as needed -->
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title text-dark">Product 1</h5>
-                                    <p class="card-text text-dark">Description for Product 1.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-                <!--/////////////////////*********************** -->
-
-
-                <div class="d-flex justify-content-between">
-                    <button id="prev" class="nav-arrow left-arrow btn-prev">&#9665;</button>
-                    <button id="next" class="nav-arrow right-arrow btn-next">&#9655;</button>
-                    <!-- Position guiding elements (dots) -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <footer class="bg-dark text-light p-4 w-100 ">
-        <div id="map-container" style="height: 10rem; "></div>
-
-        <div class="container ">
-            <div class="row focus-section ">
-                <div class="col-md-4 ">
-                    <div class="card-transparent p-2 " style="height: 15rem; overflow: hidden; color: #fff; ">
-                        <div class="card-body ">
-                            <h5 class="card-title card-head text-center " style=" color: olive; font-weight: 800 !important; ">Contact Us <i class="fas fa-envelope "></i></h5>
-                            <hr>
-                            <ul style="color: forestgreen; font-size: 16px; list-style-type: none; padding-left: 30%; ">
-                                <li><i class="fas fa-map-marker-alt "></i> 123 Main Street, City</li>
-                                <li><i class="fas fa-envelope "></i> Email: contact<span>@</span>example.com</li>
-                                <li><i class="fas fa-phone "></i> Phone: (123) 456-7890</li>
-                                <li><i class="fas fa-directions "></i> <a href="# ">Get Directions</a></li>
-                            </ul>
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-md-4 ">
-
-
-                    <div class="card-transparent p-2 " style="height: 15rem; overflow: hidden; color: #fff; ">
-                        <div class="card-body ">
-                            <h5 class="card-title card-head text-center " style="color: olive; font-weight: bold; ">Quick Links <i class="fas fa-link "></i></h5>
-                            <hr>
-                            <ul style="color: forestgreen; font-size: 16px; padding-left: 35%; list-style: none; ">
-                                <li style="display: block; "><i class="fas fa-home "></i> <a href="#home" style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Home</a></li>
-                                <li style="display: block; "><i class="fas fa-briefcase "></i> <a href="#services" style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Services</a></li>
-                                <li style="display: block; "><i class="fas fa-info-circle "></i> <a href="#about" style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">About Us</a></li>
-                                <li style="display: block; "><i class="fas fa-envelope "></i> <a href="#contact" style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Contact Us</a></li>
-                                <li style="display: block; "><i class="fas fa-rss "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Blog</a></li>
-                                <li style="display: block; "><i class="fas fa-shopping-cart "></i> <a href="# " style="color: forestgreen; font-size: 16px; " class="text-decoration-none ">Shop</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-md-4 ">
-                    <div class="card-transparent p-2 " style="height: 15rem; overflow: hidden; color: #fff; ">
-                        <div class="card-body text-center ">
-                            <h5 class="card-title card-head " style="color: olive; font-weight: bold; ">Follow Us <i class="fas fa-share-alt "></i></h5>
-                            <hr>
-                            <ul class="list-inline ">
-                                <li class="list-inline-item "><a href="# "><i class="fab fa-facebook " style="color: forestgreen; font-size: 16px; "></i></a></li>
-                                <li class="list-inline-item "><a href="# "><i class="fab fa-twitter " style="color: forestgreen; font-size: 16px; "></i></a></li>
-                                <li class="list-inline-item "><a href="# "><i class="fab fa-linkedin " style="color: forestgreen; font-size: 16px; "></i></a></li>
-                                <li class="list-inline-item "><a href="# "><i class="fab fa-instagram " style="color: forestgreen; font-size: 16px; "></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Additional Widgets -->
-        <div class="row mt-4 focus-section">
-            <div class="col-md-4 ">
-
-                <div class="card p-2" style="height: 15rem; text-align: center; overflow: hidden; background-color: #333; color: #fff;">
-                    <div class="card-body">
-                        <h5 class="card-title card-head" style="color: olive; font-weight: bold; ">Newsletter Signup <i class="fas fa-envelope"></i></h5>
-                        <p class="card-text " style="color: forestgreen; font-size: 16px; ">Subscribe to our newsletter for updates and offers.</p>
-
-                        <form>
-                            <input type="email " placeholder="Your Email " class="form-control " style="background-color: #444; color: #fff; ">
-                            <button class="btn btn-primary mt-2 " style="background-color: #4CAF50; "><i class="fas fa-paper-plane "></i> Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-md-4 ">
-                <div id="testimonialSlider3" class="carousel slide" data-bs-ride="carousel" style="height: 15rem;">
-                    <div class="carousel-inner h-100" style="height: 100%; ">
-                        <!-- Testimonial 1 -->
-                        <div class="carousel-item active h-100">
-                            <div class="card mx-auto h-100 " style="max-width: 300px; background-color: #333; color: #fff; ">
-                                <div class="card-body text-center p-4">
-                                    <p class="card-text ">"I had a great experience with this company. Their service is top-notch! "</p>
-                                    <p class="card-author text-primary fw-bold ">John Doe</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Testimonial 2 -->
-                        <div class="carousel-item h-100">
-                            <div class="card mx-auto h-100" style="max-width: 300px; background-color: #333; color: #fff; ">
-                                <div class="card-body text-center p-4">
-                                    <p class="card-text ">"The quality of their products is amazing. I 'm a happy customer!"</p>
-                                    <p class="card-author text-primary fw-bold">Jane Smith</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Testimonial 3 -->
-                        <div class="carousel-item h-100">
-                            <div class="card mx-auto h-100" style="max-width: 300px; background-color: #333; color: #fff;">
-                                <div class="card-body text-center p-4">
-                                    <p class="card-text">"Outstanding customer support. They go above and beyond to help you."</p>
-                                    <p class="card-author text-primary fw-bold">Robert Johnson</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a class="carousel-control-prev" href="#testimonialSlider3" role="button" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#testimonialSlider3" role="button" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </a>
-                </div>
-
-
+              </div>
             </div>
             <div class="col-md-4">
-
-
-                <div class="card p-2" style="height: 15rem; text-align: center; overflow: hidden; background-color: #333; color: #fff;">
-                    <div class="card-body">
-                        <h5 class="card-title card-head" style="color: olive; font-weight: bold;">Awards & Certifications <i class="fas fa-award"></i></h5>
-                        <p class="card-text" style="color: forestgreen; font-size: 16px;">We're proud of our achievements:</p>
-
-                        <img src="preview.jpg" alt="" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                    </div>
+              <div
+                class="card border-0 shadow fly-in-element mb-3"
+                style="background-color: #ff5733"
+              >
+                <div class="card-body">
+                  <i class="fab fa-facebook contact-icon text-light"></i>
+                  <a href="#" class="card-link text-light">Facebook</a>
                 </div>
-
+              </div>
+              <div
+                class="card mt-3 border-0 shadow fly-in-element mb-3"
+                style="background-color: #41b883"
+              >
+                <div class="card-body">
+                  <i class="fab fa-twitter contact-icon text-light"></i>
+                  <a href="#" class="card-link text-light">Twitter</a>
+                </div>
+              </div>
+              <div
+                class="card mt-3 border-0 shadow fly-in-element mb-3"
+                style="background-color: #007bff"
+              >
+                <div class="card-body">
+                  <i class="fab fa-linkedin contact-icon text-light"></i>
+                  <a href="#" class="card-link text-light">LinkedIn</a>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
 
+      <div
+        id="another"
+        class="parallax-container pt-5 pb-5"
+        style="
+          background-image: url('https://picsum.photos/536/357');
+          height: auto;
+        "
+      >
+        <div class="parallax-overlay"></div>
+        <div class="container" style="z-index: 2; position: relative">
+          <div class="container pt-5">
+            <h1 class="display-4 text-light very-bold-text">
+              Product Showcase
+            </h1>
+            <p class="lead text-light">
+              Browse our featured products and discover what we have to offer.
+            </p>
+          </div>
 
+          <!--/////////////////////**************************** -->
+          <div
+            class="d-flex product-container"
+            style="overflow-x: hidden; white-space: nowrap"
+          >
+            <!-- Repeat this structure for each product -->
+            <div
+              class="col-md-4 product-column d-flex p-3"
+              style="display: inline-block"
+            >
+              <div class="card border-0 shadow fly-in-element mb-3">
+                <div class="carousel-container" data-bs-ride="carousel">
+                  <!-- Add unique IDs for carousel elements to avoid conflicts -->
+                  <div
+                    id="product1Carousel"
+                    class="carousel slide"
+                    data-bs-ride="carousel"
+                  >
+                    <!-- Carousel Controls -->
+                    <a
+                      class="carousel-control-prev"
+                      href="#product1Carousel"
+                      role="button"
+                      data-bs-slide="prev"
+                    >
+                      <!-- Carousel Control Icons -->
+                      <span
+                        class="carousel-control-prev-icon"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a
+                      class="carousel-control-next"
+                      href="#product1Carousel"
+                      role
+                      a-button
+                      data-bs-slide="next"
+                    >
+                      <!-- Carousel Control Icons -->
+                      <span
+                        class="carousel-control-next-icon"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden">Next</span>
+                    </a>
+                    <!-- Carousel Images -->
+                    <div class="carousel-inner" style="height: 15rem">
+                      <div class="carousel-item active">
+                        <img
+                          src="https://picsum.photos/536/357"
+                          class="d-block w-100"
+                          alt="Product 1 Image 1"
+                        />
+                      </div>
+                      <div class="carousel-item">
+                        <img
+                          src="https://placekitten.com/408/287"
+                          class="d-block w-100"
+                          alt="Product 1 Image 2"
+                        />
+                      </div>
+                      <!-- Add more images for Product 1 as needed -->
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title text-dark">Product 1</h5>
+                    <p class="card-text text-dark">
+                      Description for Product 1.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Repeat the above structure for other products -->
+            <div
+              class="col-md-4 product-column d-flex p-3"
+              style="display: inline-block"
+            >
+              <div class="card border-0 shadow fly-in-element mb-3">
+                <div class="carousel-container" data-bs-ride="carousel">
+                  <!-- Add unique IDs for carousel elements to avoid conflicts -->
+                  <div
+                    id="product1Carousel1"
+                    class="carousel slide"
+                    data-bs-ride="carousel"
+                  >
+                    <!-- Carousel Controls -->
+                    <a
+                      class="carousel-control-prev"
+                      href="#product1Carousel1"
+                      role="button"
+                      data-bs-slide="prev"
+                    >
+                      <!-- Carousel Control Icons -->
+                      <span
+                        class="carousel-control-prev-icon"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a
+                      class="carousel-control-next"
+                      href="#product1Carousel1"
+                      role
+                      a-button
+                      data-bs-slide="next"
+                    >
+                      <!-- Carousel Control Icons -->
+                      <span
+                        class="carousel-control-next-icon"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden">Next</span>
+                    </a>
+                    <!-- Carousel Images -->
+                    <div class="carousel-inner" style="height: 15rem">
+                      <div class="carousel-item active">
+                        <img
+                          src="https://picsum.photos/536/357"
+                          class="d-block w-100"
+                          alt="Product 1 Image 1"
+                        />
+                      </div>
+                      <div class="carousel-item">
+                        <img
+                          src="https://placekitten.com/408/287"
+                          class="d-block w-100"
+                          alt="Product 1 Image 2"
+                        />
+                      </div>
+                      <!-- Add more images for Product 1 as needed -->
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title text-dark">Product 1</h5>
+                    <p class="card-text text-dark">
+                      Description for Product 1.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-md-4 product-column d-flex p-3"
+              style="display: inline-block"
+            >
+              <div class="card border-0 shadow fly-in-element mb-3">
+                <div class="carousel-container" data-bs-ride="carousel">
+                  <!-- Add unique IDs for carousel elements to avoid conflicts -->
+                  <div
+                    id="product1Carouse2"
+                    class="carousel slide"
+                    data-bs-ride="carousel"
+                  >
+                    <!-- Carousel Controls -->
+                    <a
+                      class="carousel-control-prev"
+                      href="#product1Carouse2"
+                      role="button"
+                      data-bs-slide="prev"
+                    >
+                      <!-- Carousel Control Icons -->
+                      <span
+                        class="carousel-control-prev-icon"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a
+                      class="carousel-control-next"
+                      href="#product1Carouse2"
+                      role
+                      a-button
+                      data-bs-slide="next"
+                    >
+                      <!-- Carousel Control Icons -->
+                      <span
+                        class="carousel-control-next-icon"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden">Next</span>
+                    </a>
+                    <!-- Carousel Images -->
+                    <div class="carousel-inner" style="height: 15rem">
+                      <div class="carousel-item active">
+                        <img
+                          src="https://picsum.photos/536/357"
+                          class="d-block w-100"
+                          alt="Product 1 Image 1"
+                        />
+                      </div>
+                      <div class="carousel-item">
+                        <img
+                          src="https://placekitten.com/408/287"
+                          class="d-block w-100"
+                          alt="Product 1 Image 2"
+                        />
+                      </div>
+                      <!-- Add more images for Product 1 as needed -->
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title text-dark">Product 1</h5>
+                    <p class="card-text text-dark">
+                      Description for Product 1.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-md-4 product-column d-flex p-3"
+              style="display: inline-block"
+            >
+              <div class="card border-0 shadow fly-in-element mb-3">
+                <div class="carousel-container" data-bs-ride="carousel">
+                  <!-- Add unique IDs for carousel elements to avoid conflicts -->
+                  <div
+                    id="product1Carouse3"
+                    class="carousel slide"
+                    data-bs-ride="carousel"
+                  >
+                    <!-- Carousel Controls -->
+                    <a
+                      class="carousel-control-prev"
+                      href="#product1Carouse3"
+                      role="button"
+                      data-bs-slide="prev"
+                    >
+                      <!-- Carousel Control Icons -->
+                      <span
+                        class="carousel-control-prev-icon"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a
+                      class="carousel-control-next"
+                      href="#product1Carousel"
+                      role
+                      a-button
+                      data-bs-slide="next"
+                    >
+                      <!-- Carousel Control Icons -->
+                      <span
+                        class="carousel-control-next-icon"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="visually-hidden">Next</span>
+                    </a>
+                    <!-- Carousel Images -->
+                    <div class="carousel-inner" style="height: 15rem">
+                      <div class="carousel-item active">
+                        <img
+                          src="https://picsum.photos/536/357"
+                          class="d-block w-100"
+                          alt="Product 1 Image 1"
+                        />
+                      </div>
+                      <div class="carousel-item">
+                        <img
+                          src="https://placekitten.com/408/287"
+                          class="d-block w-100"
+                          alt="Product 1 Image 2"
+                        />
+                      </div>
+                      <!-- Add more images for Product 1 as needed -->
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title text-dark">Product 1</h5>
+                    <p class="card-text text-dark">
+                      Description for Product 1.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--/////////////////////*********************** -->
+
+          <div class="d-flex justify-content-between">
+            <button id="prev" class="nav-arrow left-arrow btn-prev">
+              &#9665;
+            </button>
+            <button id="next" class="nav-arrow right-arrow btn-next">
+              &#9655;
+            </button>
+            <!-- Position guiding elements (dots) -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="bg-dark text-light p-4 w-100">
+      <div id="map-container" style="height: 10rem"></div>
+
+      <div class="container">
+        <div class="row focus-section">
+          <div class="col-md-4">
+            <div
+              class="card-transparent p-2"
+              style="height: 15rem; overflow: hidden; color: #fff"
+            >
+              <div class="card-body">
+                <h5
+                  class="card-title card-head text-center"
+                  style="color: olive; font-weight: 800 !important"
+                >
+                  Contact Us <i class="fas fa-envelope"></i>
+                </h5>
+                <hr />
+                <ul
+                  style="
+                    color: forestgreen;
+                    font-size: 16px;
+                    list-style-type: none;
+                    padding-left: 30%;
+                  "
+                >
+                  <li>
+                    <i class="fas fa-map-marker-alt"></i> 123 Main Street, City
+                  </li>
+                  <li>
+                    <i class="fas fa-envelope"></i> Email:
+                    contact<span>@</span>example.com
+                  </li>
+                  <li><i class="fas fa-phone"></i> Phone: (123) 456-7890</li>
+                  <li>
+                    <i class="fas fa-directions"></i>
+                    <a href="# ">Get Directions</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div
+              class="card-transparent p-2"
+              style="height: 15rem; overflow: hidden; color: #fff"
+            >
+              <div class="card-body">
+                <h5
+                  class="card-title card-head text-center"
+                  style="color: olive; font-weight: bold"
+                >
+                  Quick Links <i class="fas fa-link"></i>
+                </h5>
+                <hr />
+                <ul
+                  style="
+                    color: forestgreen;
+                    font-size: 16px;
+                    padding-left: 35%;
+                    list-style: none;
+                  "
+                >
+                  <li style="display: block">
+                    <i class="fas fa-home"></i>
+                    <a
+                      href="#home"
+                      style="color: forestgreen; font-size: 16px"
+                      class="text-decoration-none"
+                      >Home</a
+                    >
+                  </li>
+                  <li style="display: block">
+                    <i class="fas fa-briefcase"></i>
+                    <a
+                      href="#services"
+                      style="color: forestgreen; font-size: 16px"
+                      class="text-decoration-none"
+                      >Services</a
+                    >
+                  </li>
+                  <li style="display: block">
+                    <i class="fas fa-info-circle"></i>
+                    <a
+                      href="#about"
+                      style="color: forestgreen; font-size: 16px"
+                      class="text-decoration-none"
+                      >About Us</a
+                    >
+                  </li>
+                  <li style="display: block">
+                    <i class="fas fa-envelope"></i>
+                    <a
+                      href="#contact"
+                      style="color: forestgreen; font-size: 16px"
+                      class="text-decoration-none"
+                      >Contact Us</a
+                    >
+                  </li>
+                  <li style="display: block">
+                    <i class="fas fa-rss"></i>
+                    <a
+                      href="# "
+                      style="color: forestgreen; font-size: 16px"
+                      class="text-decoration-none"
+                      >Blog</a
+                    >
+                  </li>
+                  <li style="display: block">
+                    <i class="fas fa-shopping-cart"></i>
+                    <a
+                      href="# "
+                      style="color: forestgreen; font-size: 16px"
+                      class="text-decoration-none"
+                      >Shop</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div
+              class="card-transparent p-2"
+              style="height: 15rem; overflow: hidden; color: #fff"
+            >
+              <div class="card-body text-center">
+                <h5
+                  class="card-title card-head"
+                  style="color: olive; font-weight: bold"
+                >
+                  Follow Us <i class="fas fa-share-alt"></i>
+                </h5>
+                <hr />
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <a href="# "
+                      ><i
+                        class="fab fa-facebook"
+                        style="color: forestgreen; font-size: 16px"
+                      ></i
+                    ></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="# "
+                      ><i
+                        class="fab fa-twitter"
+                        style="color: forestgreen; font-size: 16px"
+                      ></i
+                    ></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="# "
+                      ><i
+                        class="fab fa-linkedin"
+                        style="color: forestgreen; font-size: 16px"
+                      ></i
+                    ></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="# "
+                      ><i
+                        class="fab fa-instagram"
+                        style="color: forestgreen; font-size: 16px"
+                      ></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Widgets -->
+      <div class="row mt-4 focus-section">
+        <div class="col-md-4">
+          <div
+            class="card p-2"
+            style="
+              height: 15rem;
+              text-align: center;
+              overflow: hidden;
+              background-color: #333;
+              color: #fff;
+            "
+          >
+            <div class="card-body">
+              <h5
+                class="card-title card-head"
+                style="color: olive; font-weight: bold"
+              >
+                Newsletter Signup <i class="fas fa-envelope"></i>
+              </h5>
+              <p class="card-text" style="color: forestgreen; font-size: 16px">
+                Subscribe to our newsletter for updates and offers.
+              </p>
+
+              <form>
+                <input
+                  type="email "
+                  placeholder="Your Email "
+                  class="form-control"
+                  style="background-color: #444; color: #fff"
+                />
+                <button
+                  class="btn btn-primary mt-2"
+                  style="background-color: #4caf50"
+                >
+                  <i class="fas fa-paper-plane"></i> Subscribe
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div
+            id="testimonialSlider3"
+            class="carousel slide"
+            data-bs-ride="carousel"
+            style="height: 15rem"
+          >
+            <div class="carousel-inner h-100" style="height: 100%">
+              <!-- Testimonial 1 -->
+              <div class="carousel-item active h-100">
+                <div
+                  class="card mx-auto h-100"
+                  style="max-width: 300px; background-color: #333; color: #fff"
+                >
+                  <div class="card-body text-center p-4">
+                    <p class="card-text">
+                      "I had a great experience with this company. Their service
+                      is top-notch! "
+                    </p>
+                    <p class="card-author text-primary fw-bold">John Doe</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Testimonial 2 -->
+              <div class="carousel-item h-100">
+                <div
+                  class="card mx-auto h-100"
+                  style="max-width: 300px; background-color: #333; color: #fff"
+                >
+                  <div class="card-body text-center p-4">
+                    <p class="card-text">
+                      "The quality of their products is amazing. I 'm a happy
+                      customer!"
+                    </p>
+                    <p class="card-author text-primary fw-bold">Jane Smith</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Testimonial 3 -->
+              <div class="carousel-item h-100">
+                <div
+                  class="card mx-auto h-100"
+                  style="max-width: 300px; background-color: #333; color: #fff"
+                >
+                  <div class="card-body text-center p-4">
+                    <p class="card-text">
+                      "Outstanding customer support. They go above and beyond to
+                      help you."
+                    </p>
+                    <p class="card-author text-primary fw-bold">
+                      Robert Johnson
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <a
+              class="carousel-control-prev"
+              href="#testimonialSlider3"
+              role="button"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </a>
+            <a
+              class="carousel-control-next"
+              href="#testimonialSlider3"
+              role="button"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div
+            class="card p-2"
+            style="
+              height: 15rem;
+              text-align: center;
+              overflow: hidden;
+              background-color: #333;
+              color: #fff;
+            "
+          >
+            <div class="card-header">
+              <!-- This is the header -->
+              <h5
+                class="card-title card-head"
+                style="color: olive; font-weight: bold"
+              >
+                Awards & Certifications <i class="fas fa-award"></i>
+              </h5>
+              <p class="card-text" style="color: forestgreen; font-size: 16px">
+                We're proud of our achievements:
+              </p>
+            </div>
+            <div
+              class="card-body"
+              style="
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              "
+            >
+              <img
+                src="preview.jpg"
+                alt=""
+                style="max-width: 90%; max-height: 90%; object-fit: contain"
+              />
+            </div>
+
+            <div class="card-footer">
+              <!-- This is the footer -->
+              Your Footer Content Goes Here
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
-
 
     <!-- Include Bootstrap JS and jQuery scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Initialize the map when the page is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            var map = L.map('map-container').setView([51.505, -0.09], 13); // Set the initial coordinates and zoom level
+      // Initialize the map when the page is ready
+      document.addEventListener("DOMContentLoaded", function () {
+        var map = L.map("map-container").setView([51.505, -0.09], 13); // Set the initial coordinates and zoom level
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
 
-            L.marker([51.5, -0.09]).addTo(map).bindPopup('Your Location');
+        L.marker([51.5, -0.09]).addTo(map).bindPopup("Your Location");
+      });
+
+      window.addEventListener("load", function () {
+        // This code runs when the entire page has loaded, including images
+        document.querySelector(".loader-wrapper").style.display = "none";
+        document.querySelector(".content").style.display = "block";
+      });
+
+      // Intersection Observer for Navigation Link Highlighting
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      const navObserverOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.7,
+      };
+
+      const navObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const targetLink = document.querySelector(
+              `.nav-link[href="#${entry.target.id}"]`
+            );
+            navLinks.forEach((link) => link.classList.remove("active"));
+            targetLink.classList.add("active");
+          }
+        });
+      }, navObserverOptions);
+
+      navLinks.forEach((link) => {
+        const targetId = link.getAttribute("href").substring(1); // Remove the '#'
+        const targetElement = document.getElementById(targetId);
+        navObserver.observe(targetElement);
+      });
+
+      //fly in effect
+
+      const flyInElements = document.querySelectorAll(".fly-in-element");
+
+      const flyInObserverOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.2, // Adjust threshold as needed
+      };
+
+      const flyInObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-viewport");
+          } else {
+            entry.target.classList.remove("in-viewport");
+          }
+        });
+      }, flyInObserverOptions);
+
+      flyInElements.forEach((element) => {
+        flyInObserver.observe(element);
+      });
+
+      // scroll for horizontal cards
+
+      $(document).ready(function () {
+        const container = $(".product-container");
+        const productColumns = $(".product-column");
+        let currentOffset = 0;
+
+        // Function to update the container's scroll position
+        function updateContainerPosition() {
+          container.animate(
+            {
+              scrollLeft: currentOffset * productColumns.first().width(),
+            },
+            500
+          ); // You can adjust the animation speed (in milliseconds) as needed
+        }
+
+        // Handle "Next" button click
+        $(".btn-next").click(function () {
+          if (currentOffset < productColumns.length - 1) {
+            currentOffset++;
+            updateContainerPosition();
+          }
         });
 
-        window.addEventListener('load', function() {
-            // This code runs when the entire page has loaded, including images
-            document.querySelector('.loader-wrapper').style.display = 'none';
-            document.querySelector('.content').style.display = 'block';
+        // Handle "Previous" button click
+        $(".btn-prev").click(function () {
+          if (currentOffset > 0) {
+            currentOffset--;
+            updateContainerPosition();
+          }
         });
-
-
-
-        // Intersection Observer for Navigation Link Highlighting
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        const navObserverOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.7,
-        };
-
-        const navObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const targetLink = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    targetLink.classList.add('active');
-                }
-            });
-        }, navObserverOptions);
-
-        navLinks.forEach(link => {
-            const targetId = link.getAttribute('href').substring(1); // Remove the '#'
-            const targetElement = document.getElementById(targetId);
-            navObserver.observe(targetElement);
-        });
-
-        const flyInElements = document.querySelectorAll('.fly-in-element');
-
-        const flyInObserverOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.2, // Adjust threshold as needed
-        };
-
-        const flyInObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-viewport');
-                } else {
-                    entry.target.classList.remove('in-viewport');
-                }
-            });
-        }, flyInObserverOptions);
-
-        flyInElements.forEach(element => {
-            flyInObserver.observe(element);
-        });
-
-
-
-        $(document).ready(function() {
-            const container = $('.product-container');
-            const productColumns = $('.product-column');
-            let currentOffset = 0;
-
-            // Function to update the container's scroll position
-            function updateContainerPosition() {
-                container.animate({
-                    scrollLeft: currentOffset * productColumns.first().width()
-                }, 500); // You can adjust the animation speed (in milliseconds) as needed
-            }
-
-            // Handle "Next" button click
-            $('.btn-next').click(function() {
-                if (currentOffset < productColumns.length - 1) {
-                    currentOffset++;
-                    updateContainerPosition();
-                }
-            });
-
-            // Handle "Previous" button click
-            $('.btn-prev').click(function() {
-                if (currentOffset > 0) {
-                    currentOffset--;
-                    updateContainerPosition();
-                }
-            });
-        });
+      });
     </script>
-
-
-</body>
-
+  </body>
 </html>
