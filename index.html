@@ -1,0 +1,3239 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gorilla Home Africa</title>
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet-routing-machine/dist/leaflet-routing-machine.css"
+    />
+
+    <style>
+      :root {
+        /* Light theme colors */
+        --main-bg-color: #ffffff; /* Light background */
+        --text-color: #212121; /* Dark text for readability */
+        --sidebar-bg-color: #f4f4f4; /* Light gray sidebar */
+        --navbar-bg-color: #007bff; /* Blue navbar */
+        --card-bg-color: #ffffff; /* Light card background */
+        --card-border-color: #007bff; /* Border in blue */
+        --card-text-color: #212121; /* Dark text for cards */
+        --card-title-color: #0056b3; /* Dark blue card titles */
+        --card-description-color: #616161; /* Muted gray description text */
+        --overlay-bg-color: rgba(
+          255,
+          255,
+          255,
+          0.8
+        ); /* Light overlay for focus */
+        --nav-link-color: #007bff; /* Blue for nav links */
+        --nav-link-hover-color: #0056b3; /* Darker blue for hover */
+        --nav-link-active-color: #004085; /* Darker blue for active nav links */
+        --navbar-brand-color: #ffffff; /* White navbar brand */
+        --navbar-brand-hover-color: #f4f4f4; /* Light hover effect for the navbar brand */
+        --btn-primary-bg: #007bff; /* Primary button in blue */
+        --hover-color: #0056b3; /* Button hover color in darker blue */
+        --heading-color: #0056b3; /* Dark blue for headings */
+        --subheading-color: #004085; /* Darker blue for subheadings */
+        --text-muted-color: #6c757d; /* Muted text color */
+        --paragraph-color: #212121; /* Dark text for paragraphs */
+        --link-hover-color: #0056b3; /* Dark blue hover color for links */
+        --card-hover-bg-color: #f8f9fa; /* Light card hover effect */
+      }
+
+      /* Active State for Navbar Links */
+      [data-theme="light"] .nav-pills .nav-link.active {
+        background-color: var(
+          --nav-link-active-color
+        ); /* Darker blue background */
+        color: #ffffff; /* White text for active link */
+        border-color: var(--nav-link-active-color); /* Border for active link */
+      }
+
+      /* Active State for Button */
+      [data-theme="light"] .btn-primary.active {
+        background-color: var(--nav-link-active-color); /* Active button blue */
+        border-color: var(
+          --nav-link-active-color
+        ); /* Border color for active button */
+        color: #fff; /* White text */
+      }
+
+      /* Button Styles */
+      [data-theme="light"] .btn-primary {
+        background-color: var(--btn-primary-bg); /* Blue button background */
+        color: #ffffff; /* White text on the button */
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border: none;
+      }
+
+      [data-theme="light"] .btn-primary:hover {
+        background-color: var(--hover-color); /* Darker blue on hover */
+      }
+
+      /* Navbar Link Styles */
+      [data-theme="light"] .navbar a {
+        color: var(--navbar-brand-color); /* White navbar links */
+        padding: 10px;
+        transition: color 0.3s ease;
+      }
+
+      [data-theme="light"] .navbar a:hover {
+        color: var(--navbar-brand-hover-color); /* Light color on hover */
+      }
+
+      /* Footer Link Styles */
+      [data-theme="light"] footer a {
+        color: var(--link-hover-color); /* Dark blue footer links */
+      }
+
+      /* Light Theme - Dropdown */
+      [data-theme="light"] .navbar .dropdown-menu {
+        background-color: var(
+          --main-bg-color
+        ); /* Light background for dropdown */
+        border: 1px solid var(--card-border-color); /* Optional border */
+      }
+
+      [data-theme="light"] .navbar .dropdown-item {
+        color: var(--text-color); /* Text color for light theme */
+        background-color: transparent; /* Transparent background */
+      }
+
+      [data-theme="light"] .navbar .dropdown-item:hover {
+        background-color: var(
+          --nav-link-hover-color
+        ); /* Darker background on hover */
+        color: #000; /* Dark text on hover */
+      }
+
+      /* Light Theme Colors for Tourism Africa Site */
+      /* Dark Theme Colors */
+      /* Dark Theme Styles */
+      [data-theme="dark"] {
+        --main-bg-color: #121212; /* Dark background */
+        --text-color: #e1e1e1; /* Light text for readability */
+        --sidebar-bg-color: #212121; /* Slightly lighter dark sidebar */
+        --navbar-bg-color: #f57c00; /* Orange navbar */
+        --card-bg-color: #212121; /* Dark card background */
+        --card-border-color: #f57c00; /* Border in sunset orange */
+        --card-text-color: #ffffff; /* Light text for cards */
+        --card-title-color: #ff7043; /* Coral-orange card titles */
+        --card-description-color: #616161; /* Muted gray description text */
+        --overlay-bg-color: #212121; /* Dark overlay for focus */
+        --nav-link-color: #ff7043; /* Coral orange for nav links */
+        --nav-link-hover-color: #e64a19; /* Darker coral for hover */
+        --nav-link-active-color: #ff9800; /* Bright orange for active nav links */
+        --navbar-brand-color: #ffffff; /* White navbar brand */
+        --navbar-brand-hover-color: #212121; /* Dark hover effect for the navbar brand */
+        --btn-primary-bg: #ff7043; /* Primary button in coral-orange */
+        --hover-color: #e64a19; /* Button hover color in deeper orange */
+        --heading-color: #ff7043; /* Coral-orange for headings */
+        --subheading-color: #ff9800; /* Yellow-orange for subheadings */
+        --text-muted-color: #b0b0b0; /* Muted text color */
+        --paragraph-color: #ffffff; /* Light text for paragraphs */
+        --link-hover-color: #212121; /* Dark hover color for links */
+        --card-hover-bg-color: rgb(5, 5, 5); /* Dark card hover effect */
+      }
+
+      /* Active State for Navbar Links */
+      [data-theme="dark"] .nav-pills .nav-link.active {
+        background-color: var(
+          --nav-link-active-color
+        ); /* Vibrant orange background */
+        color: #ffffff; /* White text for active link */
+        border-color: var(
+          --nav-link-active-color
+        ); /* Optional border for active link */
+      }
+
+      /* Active State for Button */
+      [data-theme="dark"] .btn-primary.active {
+        background-color: var(
+          --nav-link-active-color
+        ); /* Active button orange */
+        border-color: var(
+          --nav-link-active-color
+        ); /* Border color for active button */
+        color: #fff; /* White text */
+      }
+
+      /* Button Styles */
+      [data-theme="dark"] .btn-primary {
+        background-color: var(
+          --btn-primary-bg
+        ); /* Coral-orange button background */
+        color: #ffffff; /* White text on the button */
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border: none;
+      }
+
+      [data-theme="dark"] .btn-primary:hover {
+        background-color: var(--hover-color); /* Darker orange on hover */
+      }
+
+      /* Navbar Link Styles */
+      [data-theme="dark"] .navbar a {
+        color: var(--navbar-brand-color); /* White navbar links */
+        padding: 10px;
+        transition: color 0.3s ease;
+      }
+
+      [data-theme="dark"] .navbar a:hover {
+        color: var(--navbar-brand-hover-color); /* Dark color on hover */
+      }
+
+      /* Footer Link Styles */
+      [data-theme="dark"] footer a {
+        color: var(--link-hover-color); /* Dark footer links */
+      }
+
+      /*another
+
+/* Dark Theme Styles - Savannah Grassland */
+      [data-theme="dark"] {
+        --main-bg-color: #2c3e50; /* Dark background for the savannah grassland theme */
+        --text-color: #ecf0f1; /* Light text for readability */
+        --sidebar-bg-color: #34495e; /* Slightly darker sidebar */
+        --navbar-bg-color: #27ae60; /* Earthy green navbar representing nature */
+        --card-bg-color: #2c3e50; /* Dark card background for a natural look */
+        --card-border-color: #27ae60; /* Green border for cards */
+        --card-text-color: #ecf0f1; /* Light card text */
+        --card-title-color: #2ecc71; /* Light green for card titles */
+        --card-description-color: #bdc3c7; /* Light gray for card descriptions */
+        --overlay-bg-color: rgba(
+          0,
+          0,
+          0,
+          0.8
+        ); /* Darker overlay for card focus */
+
+        /* Links & Buttons */
+        --nav-link-color: #2ecc71; /* Green for navigation links */
+        --nav-link-hover-color: #27ae60; /* Darker green for hover effect */
+        --nav-link-active-color: #1e8449; /* Darker green for active nav links */
+        --navbar-brand-color: #ecf0f1; /* Light text for navbar brand */
+        --navbar-brand-hover-color: #34495e; /* Hover effect in darker green */
+        --btn-primary-bg: #27ae60; /* Primary button in earthy green */
+        --hover-color: #2ecc71; /* Button hover color in light green */
+
+        /* Theme-specific colors */
+        --heading-color: #2ecc71; /* Green for headings */
+        --subheading-color: #27ae60; /* Slightly darker green for subheadings */
+        --text-muted-color: #7f8c8d; /* Muted gray text */
+        --paragraph-color: #ecf0f1; /* Light text for paragraphs */
+        --link-hover-color: #34495e; /* Darker link hover effect */
+        --card-hover-bg-color: #1a252f; /* Darker card background on hover */
+      }
+
+      /* Active State for Navbar Links */
+      [data-theme="dark"] .nav-pills .nav-link.active {
+        background-color: var(
+          --nav-link-active-color
+        ); /* Active navbar link with darker green */
+        color: #ffffff; /* White text for active link */
+        border-color: var(
+          --nav-link-active-color
+        ); /* Active navbar link border */
+      }
+
+      /* Active State for Button */
+      [data-theme="dark"] .btn-primary.active {
+        background-color: var(
+          --nav-link-active-color
+        ); /* Active button with dark green background */
+        border-color: var(
+          --nav-link-active-color
+        ); /* Active button border color */
+        color: #ffffff; /* White text on active button */
+      }
+
+      /* Button Styles */
+      [data-theme="dark"] .btn-primary {
+        background-color: var(--btn-primary-bg);
+        color: #ffffff; /* White text for buttons */
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border: none;
+      }
+
+      [data-theme="dark"] .btn-primary:hover {
+        background-color: var(--hover-color); /* Light green on button hover */
+      }
+
+      /* Navbar Link Styles */
+      [data-theme="dark"] .navbar a {
+        color: var(--navbar-brand-color); /* Light text for navbar links */
+        padding: 10px;
+        transition: color 0.3s ease;
+      }
+
+      [data-theme="dark"] .navbar a:hover {
+        color: var(
+          --navbar-brand-hover-color
+        ); /* Darker green for navbar link hover */
+      }
+
+      /* Footer Link Styles */
+      [data-theme="dark"] footer a {
+        color: var(--link-hover-color); /* Dark footer links */
+      }
+
+      /* Card Styles */
+      [data-theme="dark"] .card {
+        background-color: var(--card-bg-color); /* Dark card background */
+        border: 1px solid var(--card-border-color); /* Green border for cards */
+      }
+
+      [data-theme="dark"] .card-title {
+        color: var(--card-title-color); /* Green card titles */
+      }
+
+      [data-theme="dark"] .card-text {
+        color: var(--card-text-color); /* Light gray text for card content */
+      }
+
+      /* Sidebar Styles */
+      [data-theme="dark"] .sidebar {
+        background-color: var(
+          --sidebar-bg-color
+        ); /* Dark sidebar with green accents */
+        color: var(--text-color); /* Light text for sidebar items */
+      }
+
+      /* Dark Theme - Dropdown */
+      [data-theme="dark"] .navbar .dropdown-menu {
+        background-color: var(
+          --sidebar-bg-color
+        ); /* Dark background for dropdown */
+        border: 1px solid var(--card-border-color); /* Optional border */
+      }
+
+      [data-theme="dark"] .navbar .dropdown-item {
+        color: var(--text-color); /* Light text color for items */
+        background-color: transparent; /* Transparent background */
+      }
+
+      [data-theme="dark"] .navbar .dropdown-item:hover {
+        background-color: var(
+          --nav-link-hover-color
+        ); /* Darker background on hover */
+        color: #ffffff; /* White text on hover */
+      }
+      /* Base popup container style */
+.search-popup-container {
+  display: none;
+  position: absolute;
+  top: 100%; /* Position the popup below the search input */
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+/* Default search suggestion styling */
+.search-suggestion {
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Hover effect for search suggestions */
+.search-suggestion:hover {
+  background-color: #f0f0f0;
+}
+
+/* Styling for light theme */
+[data-theme="light"] .search-popup-container {
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+[data-theme="light"] .search-suggestion {
+  color: #000;
+  background-color: #fff;
+}
+
+[data-theme="light"] .search-suggestion:hover {
+  background-color: #e0e0e0;
+}
+
+/* Styling for dark theme */
+[data-theme="dark"] .search-popup-container {
+  background-color: #333;
+  border-color: #555;
+}
+
+[data-theme="dark"] .search-suggestion {
+  color: #fff;
+  background-color: #333;
+}
+
+[data-theme="dark"] .search-suggestion:hover {
+  background-color: #444;
+}
+
+
+      /* Specific Element Styles */
+      .navbar,
+      footer {
+        background-color: var(--navbar-bg-color);
+        /* Or a CSS variable */
+        color: #fff;
+        /* Or a CSS variable */
+      }
+
+      /* ...other blockquote styles... */
+      /* Headings */
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Arial", sans-serif;
+        font-weight: bold;
+        color: var(--heading-color);
+        line-height: 1.2;
+        margin-bottom: 10px;
+      }
+
+      h2,
+      h3,
+      h4 {
+        color: var(--subheading-color);
+        /* Override color for subheadings */
+        margin-top: 10px;
+        font-weight: normal;
+        /* Override font-weight for subheadings */
+      }
+
+      /* Paragraphs */
+      p {
+        color: var(--paragraph-color);
+        font-size: 1rem;
+        margin-bottom: 20px;
+      }
+
+      /* Muted Text */
+      .text-muted {
+        color: var(--text-muted-color);
+      }
+
+      /* Lists */
+      ul,
+      ol {
+        margin-left: 20px;
+        color: var(--paragraph-color);
+      }
+
+      /* Lists */
+      ul li,
+      ol li {
+        margin-bottom: 10px;
+        color: var(--paragraph-color);
+        /* Use paragraph color */
+      }
+
+      /* Code Blocks */
+      code {
+        background-color: var(--card-bg-color);
+        /* Light background */
+        padding: 2px 5px;
+        font-size: 0.9rem;
+        border-radius: 4px;
+      }
+
+      pre {
+        background-color: var(--sidebar-bg-color);
+        /* Dark background */
+        color: var(--text-color);
+        /* Light text color for contrast */
+        padding: 15px;
+        border-radius: 5px;
+        overflow: auto;
+        font-family: monospace;
+        font-size: 1rem;
+        margin-bottom: 20px;
+      }
+
+      /* Navbar Link Styles */
+      .navbar a {
+        color: var(--navbar-brand-color);
+        /* Navbar brand color */
+        padding: 10px;
+      }
+
+      .navbar a:hover {
+        color: var(--navbar-brand-hover-color);
+        /* Navbar hover color */
+      }
+
+      /* Footer */
+      footer {
+        padding: 20px 0;
+        background-color: var(--navbar-bg-color);
+        /* Set footer background same as navbar */
+        color: var(--text-color);
+        /* Use text color */
+      }
+
+      /* Footer Link Styles */
+      footer a {
+        color: var(--link-color);
+        /* Coral color for footer links */
+      }
+
+      footer a:hover {
+        color: var(--link-hover-color);
+        /* Brighter hover effect for footer links */
+      }
+
+      /* Active State for Navbar Links */
+      .nav-pills .nav-link.active {
+        background-color: var(--nav-link-active-color);
+        /* Vibrant orange background */
+        color: #fff;
+        /* White text */
+        border-color: var(--nav-link-active-color);
+        /* Optional: Apply border color for active link */
+      }
+
+      /* Card Styles */
+      .card {
+        background-color: var(--card-bg-color);
+        border: 1px solid var(--card-border-color);
+        color: var(--card-text-color);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease, border-color 0.3s ease,
+          transform 0.3s ease;
+      }
+
+      .card:hover {
+        background-color: var(--card-hover-bg-color);
+        border-color: var(--card-border-color);
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      }
+
+      .card .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: var(--heading-color);
+      }
+
+      .card .card-text {
+        font-size: 1rem;
+        color: var(--paragraph-color);
+      }
+
+      /* Active state for card */
+      .card.active {
+        border: 2px solid var(--nav-link-active-color);
+        box-shadow: 0 4px 8px rgba(255, 105, 47, 0.6);
+      }
+
+      .card-description {
+        margin-bottom: var(--card-description-margin);
+        color: var(--card-description-color);
+        transition: none;
+      }
+
+      /* Card Details (Info Section) */
+      .card-details {
+        display: none; /* Initially hidden */
+        position: relative;
+        background-color: var(
+          --main-bg-color
+        ); /* Light background for the details */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1; /* Make sure it's visible above the card content */
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        opacity: 0; /* Start hidden */
+        visibility: hidden; /* Make it invisible initially */
+      }
+
+      /* When the card details are shown */
+      .card-details.show {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* When hovering over the service card */
+      .service-card:hover .card-details {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all; /* Allow interaction with the details */
+      }
+
+      /* Styling for the "Show Info" button */
+      .btn-primary {
+        margin-bottom: 10px;
+      }
+
+      /* Styling for the "Close" button inside the details */
+      .card-details .btn-danger {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2; /* Ensure it's on top of the details */
+      }
+
+      /* Styling for the "Book Now" button */
+      .card-details .btn-success {
+        margin-top: 20px;
+      }
+
+      /* Styling for the checkbox list in the details */
+      .card-details ul {
+        list-style-type: none;
+        padding-left: 0;
+      }
+
+      .card-details ul li {
+        padding: 5px 0;
+      }
+
+      /* Hover effect to show card details */
+      .service-card:hover .card-details {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all;
+      }
+
+      /* Active State for Button */
+      .btn-primary.active {
+        background-color: var(--nav-link-active-color);
+        /* Use the active nav-link color */
+        border-color: var(--nav-link-active-color);
+        /* Use the active nav-link color for border */
+        color: var(--btn-primary-bg);
+        /* Text color based on primary button background */
+      }
+
+      /* Button Styles */
+      .btn-primary {
+        background-color: var(--btn-primary-bg);
+        /* Primary button background color */
+        color: var(--btn-text-color, #ffffff);
+        /* Text color for button, default to white */
+        padding: var(--btn-padding, 10px 20px);
+        /* Button padding using a variable */
+        border-radius: var(--btn-border-radius, 5px);
+        /* Button border radius using a variable */
+        text-align: center;
+        font-size: var(--btn-font-size, 1rem);
+        /* Font size for the button */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        /* Smooth transition for background color */
+        border: none;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--hover-color);
+      }
+
+      /* Toggle Button Styling */
+      .toggle-button {
+        display: inline-block;
+        margin-top: 15px;
+        background-color: var(--btn-primary-bg);
+        color: white;
+        border: none;
+        padding: var(--btn-padding);
+        cursor: pointer;
+        font-size: var(--btn-font-size);
+        border-radius: var(--btn-border-radius);
+      }
+
+      .toggle-button:hover {
+        background-color: var(--hover-color);
+      }
+
+      /* Close Button Styling */
+      .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: var(--gallery-btn-bg-color);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .close-button:hover {
+        background-color: var(--gallery-btn-hover-bg-color);
+      }
+
+      /* Button for Danger (Close) in Gallery */
+      .btn-danger {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: var(--gallery-btn-bg-color);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        z-index: 5;
+      }
+
+      .btn-danger:hover {
+        background-color: var(--gallery-btn-hover-bg-color);
+      }
+
+      .navbar a.active {
+        text-decoration: underline;
+      }
+
+      /* Body Styles */
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: var(--main-bg-color);
+        color: var(--paragraph-color);
+        /* Or var(--text-color) depending on intent */
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Navbar Styles */
+      .navbar-light {
+        background-color: var(--navbar-bg-color);
+      }
+
+      /* Navbar Brand */
+      .navbar-brand {
+        color: var(--navbar-brand-color);
+        /* Default color for navbar-brand */
+        transition: color 0.3s ease;
+        /* Smooth color transition */
+      }
+
+      /* Hover state for navbar-brand */
+      .navbar-brand:hover {
+        color: var(--navbar-brand-hover-color);
+        /* Hover color for navbar-brand */
+      }
+
+      /* Styling for nav-link (in both light and dark themes) */
+      .nav-link {
+        color: var(--nav-link-color);
+        /* Default link color */
+        transition: color 0.3s ease;
+        /* Smooth color transition */
+      }
+
+      /* Hover state for nav-link */
+      .nav-link:hover {
+        color: var(--nav-link-hover-color);
+        /* Hover color for nav-links */
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        min-height: 100vh;
+        background-color: var(--sidebar-bg-color);
+        position: fixed;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        transition: var(--sidebar-transition);
+        z-index: 4;
+      }
+
+      .sidebar.active {
+        left: 0;
+      }
+
+      /* Main Content Styles */
+      .main-content {
+        margin-left: 0;
+        padding: var(--main-content-padding);
+        transition: margin-left var(--sidebar-transition);
+      }
+
+      .main-content.expanded {
+        margin-left: 250px;
+      }
+
+      /* Media query for small screens */
+      @media (max-width: 768px) {
+        .sidebar {
+          position: fixed;
+          top: 0;
+          left: -250px;
+          width: 250px;
+          z-index: 4;
+        }
+
+        .main-content {
+          margin-left: 0;
+        }
+
+        .sidebar.active + .main-content {
+          margin-left: 250px;
+        }
+
+        .sidebar-toggle-btn {
+          display: block;
+        }
+
+        .navbar-toggler {
+          z-index: 5;
+        }
+
+        .navbar-collapse {
+          position: absolute;
+          top: 50px;
+          right: 0;
+          width: 100%;
+          z-index: 4;
+        }
+
+        .navbar-nav {
+          flex-direction: row;
+          margin-top: 10px;
+        }
+
+        .form-control {
+          width: 150px;
+        }
+
+        .btn-outline-success {
+          display: block;
+          margin-left: 5px;
+        }
+      }
+
+      /* Light Theme: Hover Effect for Direction Item */
+
+      .leaflet-routing-alternatives-container,
+      .leaflet-routing-alternatives-container .leaflet-routing-alt {
+        background-color: var(--card-bg-color);
+        /* Light hover background */
+        color: var(--card-description-color);
+        /* Dark hover text color */
+      }
+
+      /* Optional: Social Share Styles */
+      .social-share {
+        margin-top: 20px;
+      }
+
+      /* Map Container Styling */
+      #map {
+        width: 100%;
+        height: var(--map-height);
+      }
+
+      /* Gallery Overlay Styling */
+      .gallery-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: var(--gallery-overlay-bg-color);
+        z-index: 10000;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.3s ease;
+      }
+
+      .gallery-overlay.show {
+        display: flex;
+        opacity: 1;
+      }
+
+      .gallery-content {
+        position: relative;
+        width: 70%;
+        max-width: var(--gallery-content-max-width);
+        height: var(--gallery-content-height);
+        background-color: var(--gallery-content-bg-color);
+        padding: var(--gallery-content-padding);
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Ensure the carousel has a height of 10rem */
+      .gallerysec_carousel-item {
+        height: var(--carousel-item-height);
+      }
+
+      .herosec_carousel-item {
+        height: var(--carousel-item-height);
+      }
+
+      /* Carousel and Image Wrapper */
+      .carousel-inner {
+        height: 100%;
+      }
+
+      .carousel-item img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Optional: If you want the caption to appear over the image */
+      .carousel-caption {
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        width: 80%;
+        transform: translateX(-50%);
+        color: white;
+        font-size: var(--carousel-caption-font-size);
+        text-shadow: var(--carousel-caption-text-shadow);
+        z-index: 5;
+      }
+
+      /* Carousel control icons */
+      .carousel-control-prev-icon,
+      .carousel-control-next-icon {
+        background-color: black;
+      }
+
+      /* Styling for the image wrapper to contain the image */
+      .image-wrapper {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        z-index: var(--image-wrapper-z-index);
+      }
+
+      /* Image styling to ensure it covers the wrapper */
+      .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Dark overlay styling to cover the image */
+      .image-wrapper::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--image-wrapper-overlay-bg-color);
+        z-index: var(--image-wrapper-z-index);
+      }
+
+      /* Light Theme Blockquote Styling */
+      /* Blockquote Styles */
+      blockquote {
+        padding: 15px 20px;
+        /* Combine padding for both themes */
+        margin: 1.5rem 0;
+        font-style: italic;
+        font-size: 1.1rem;
+        border-left: 4px solid var(--blockquote-border-color);
+        /* Light border for blockquote */
+        background-color: var(--blockquote-bg-color);
+        /* Light background for blockquote */
+        color: var(--blockquote-text-color);
+        /* Text color for blockquote */
+      }
+
+      blockquote {
+        border-left: 5px solid var(--heading-color);
+        /* Darker border for blockquote */
+        color: var(--paragraph-color);
+        /* Default paragraph color */
+      }
+
+      blockquote footer {
+        color: var(--blockquote-quote-color);
+        /* Lighter quote text color */
+      }
+
+      .leaflet-routing-alternatives-container {
+        background-color: var(--leaflet-routing-alternatives-bg-color);
+        /* Light background */
+        color: var(--leaflet-routing-alternatives-text-color);
+        /* Dark text color */
+        border: 1px solid var(--leaflet-routing-alternatives-border-color);
+        /* Light border */
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .text-light {
+        color: var(--text-light-color);
+      }
+
+      /* Navbar & Link Styles */
+      .navbar {
+        background-color: var(--navbar-bg-color);
+        padding: 10px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Destinations Section -->
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar p-3">
+        <h4>Explore Our Services</h4>
+        <!-- Tab Navigation -->
+        <ul class="nav nav-pills flex-column" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              id="home-tab"
+              data-bs-toggle="pill"
+              href="#home"
+              role="tab"
+              aria-controls="home"
+              aria-selected="true"
+              >Home</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="systems-maintenance-tab"
+              data-bs-toggle="pill"
+              href="#systems-maintenance"
+              role="tab"
+              aria-controls="systems-maintenance"
+              aria-selected="true"
+              >Proactive Systems Maintenance</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="software-support-tab"
+              data-bs-toggle="pill"
+              href="#software-support"
+              role="tab"
+              aria-controls="software-support"
+              aria-selected="false"
+              >Software Installation & Support</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="data-security-tab"
+              data-bs-toggle="pill"
+              href="#data-security"
+              role="tab"
+              aria-controls="data-security"
+              aria-selected="false"
+              >Data Backup & Security</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="networking-tab"
+              data-bs-toggle="pill"
+              href="#networking"
+              role="tab"
+              aria-controls="networking"
+              aria-selected="false"
+              >Networking Setup & Support</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="gis-tab"
+              data-bs-toggle="pill"
+              href="#gis"
+              role="tab"
+              aria-controls="gis"
+              aria-selected="false"
+              >GIS & Data Visualization</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="web-development-tab"
+              data-bs-toggle="pill"
+              href="#web-development"
+              role="tab"
+              aria-controls="web-development"
+              aria-selected="false"
+              >Web & System Development</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="contact-tab"
+              data-bs-toggle="pill"
+              href="#contact"
+              role="tab"
+              aria-controls="contact"
+              aria-selected="false"
+              >Contact Us</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content w-100">
+        <nav
+          class="navbar navbar-expand-lg navbar-light sticky-top"
+          style="z-index: 10001"
+        >
+          <div class="container-fluid">
+            <button
+              class="navbar-toggler sidebar-toggle-btn"
+              type="button"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navbar Brand (Logo or Text) -->
+            <a class="navbar-brand" href="#">Meet the Experts (MTE)</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <!-- Tab Navigation -->
+              <ul class="nav nav-pills ms-auto" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="home-tab"
+                    data-bs-toggle="pill"
+                    href="#home"
+                    role="tab"
+                    aria-controls="home"
+                    aria-selected="true"
+                    >Home</a
+                  >
+                </li>
+
+                <!-- Dropdown for Services -->
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    id="services-tab"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    role="button"
+                    aria-expanded="false"
+                  >
+                    Services
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="services-tab">
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        id="systems-maintenance-tab"
+                        data-bs-toggle="pill"
+                        href="#systems-maintenance"
+                        role="tab"
+                        aria-controls="systems-maintenance"
+                        aria-selected="true"
+                        >Proactive Systems Maintenance</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        id="software-support-tab"
+                        data-bs-toggle="pill"
+                        href="#software-support"
+                        role="tab"
+                        aria-controls="software-support"
+                        aria-selected="false"
+                        >Software Installation & Support</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        id="data-security-tab"
+                        data-bs-toggle="pill"
+                        href="#data-security"
+                        role="tab"
+                        aria-controls="data-security"
+                        aria-selected="false"
+                        >Data Backup & Security</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        id="networking-tab"
+                        data-bs-toggle="pill"
+                        href="#networking"
+                        role="tab"
+                        aria-controls="networking"
+                        aria-selected="false"
+                        >Networking Setup & Support</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        id="gis-tab"
+                        data-bs-toggle="pill"
+                        href="#gis"
+                        role="tab"
+                        aria-controls="gis"
+                        aria-selected="false"
+                        >GIS & Data Visualization</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        id="web-development-tab"
+                        data-bs-toggle="pill"
+                        href="#web-development"
+                        role="tab"
+                        aria-controls="web-development"
+                        aria-selected="false"
+                        >Web & System Development</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="contact-tab"
+                    data-bs-toggle="pill"
+                    href="#contact"
+                    role="tab"
+                    aria-controls="contact"
+                    aria-selected="false"
+                    >Contact Us</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <!-- Theme Toggle Button (Bootstrap 5) -->
+            <button
+              id="theme-toggle"
+              class="btn btn-outline-secondary"
+              type="button"
+            >
+              <i id="theme-icon" class="bi bi-moon-stars"></i> Toggle Theme
+            </button>
+
+            <button class="btn btn-outline-danger ms-3" type="button">
+              Logout
+            </button>
+          </div>
+        </nav>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="myTabContent">
+          <div
+            class="tab-pane fade show active"
+            id="home"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <div class="row">
+              <!-- Services Section (Left Column) -->
+              <div id="services" class="col-md-8">
+                <nav
+                  class="navbar navbar-expand-lg navbar-light"
+                  style="z-index: 10000"
+                >
+                  <div class="container-fluid">
+                    <div
+                      class="search-popup-container"
+                      id="searchPopup"
+                      style="
+                        display: none;
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        z-index: 100;
+                        width: 100%;
+                        max-height: 200px;
+                        overflow-y: auto;
+                        background-color: #fff;
+                        border: 1px solid #ccc;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                      "
+                    >
+                      <!-- Matching service suggestions will be dynamically added here -->
+                    </div>
+
+                    <!-- Keep Search and Logout always visible -->
+                    <form class="d-flex ms-auto" id="searchForm">
+                      <input
+                        class="form-control me-2"
+                        type="search"
+                        id="searchInput"
+                        placeholder="Search Services"
+                        aria-label="Search"
+                      />
+                      <button class="btn btn-outline-success" type="submit">
+                        Search
+                      </button>
+                    </form>
+                  </div>
+                </nav>
+
+                <div class="row g-4">
+                  <!-- IT Systems Maintenance -->
+                  <div class="col-md-6">
+                    <div class="card shadow-sm service-card">
+                      <div class="card-body">
+                        <div class="content">
+                          <div class="image-wrapper" style="position: relative">
+                            <img
+                              src="https://i.imgur.com/fA75801.jpeg"
+                              alt="IT Systems Maintenance"
+                              class="card-img-top"
+                            />
+                          </div>
+                          <h3 class="card-title">1. IT Systems Maintenance</h3>
+                          <p class="card-description">
+                            Ensure the smooth operation of your systems with our
+                            proactive IT maintenance services.
+                          </p>
+                          <button
+                            class="btn btn-primary"
+                            onclick="toggleDetails(this)"
+                          >
+                            Show Info
+                          </button>
+                          <button
+                            class="btn btn-secondary"
+                            onclick="toggleGallery(this, 'gallery-maintenance')"
+                          >
+                            View Gallery
+                          </button>
+                          <!-- View Gallery Button -->
+
+                          <!-- Hidden Fullscreen Div (Activity, Support, etc.) -->
+                          <div class="card-details">
+                            <input type="hidden" value="-2.3333" class="lat" />
+                            <input type="hidden" value="34.8333" class="lon" />
+                            <p><strong>Service Cost:</strong> $150 per month</p>
+                            <p>
+                              <strong>Support:</strong> 24/7 Technical Support
+                            </p>
+
+                            <h4>Included Activities:</h4>
+                            <ul>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Routine Maintenance"
+                                  />
+                                  Routine Maintenance</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Software Updates"
+                                  />
+                                  Software Updates</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="System Diagnostics"
+                                  />
+                                  System Diagnostics</label
+                                >
+                              </li>
+                            </ul>
+
+                            <button class="btn btn-success">Book Now</button>
+                            <button
+                              class="btn btn-danger close-button"
+                              onclick="closeDetails(this)"
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- GIS Services -->
+                  <div class="col-md-6">
+                    <div class="card shadow-sm service-card">
+                      <div class="card-body">
+                        <div class="content">
+                          <div class="image-wrapper">
+                            <img
+                              src="https://i.imgur.com/JOWXWNw.jpeg"
+                              alt="GIS Services"
+                              class="card-img-top"
+                            />
+                          </div>
+                          <h3 class="card-title">2. GIS Services</h3>
+                          <p class="card-description">
+                            Visualize and analyze geographic data with our
+                            advanced GIS services for better decision-making.
+                          </p>
+                          <button
+                            class="btn btn-primary"
+                            onclick="toggleDetails(this)"
+                          >
+                            Show Info
+                          </button>
+                          <button
+                            class="btn btn-secondary"
+                            onclick="toggleGallery(this, 'gallery-gis')"
+                          >
+                            View Gallery
+                          </button>
+                          <!-- View Gallery Button -->
+
+                          <div class="card-details">
+                            <input type="hidden" value="-17.9244" class="lat" />
+                            <input type="hidden" value="25.8560" class="lon" />
+                            <p>
+                              <strong>Service Cost:</strong> Contact for Pricing
+                            </p>
+                            <p>
+                              <strong>Support:</strong> GIS Data Integration
+                            </p>
+
+                            <h4>Included Activities:</h4>
+                            <ul>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Geospatial Analysis"
+                                  />
+                                  Geospatial Analysis</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Mapping Solutions"
+                                  />
+                                  Mapping Solutions</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Data Visualization"
+                                  />
+                                  Data Visualization</label
+                                >
+                              </li>
+                            </ul>
+
+                            <button class="btn btn-success">
+                              Request a Quote
+                            </button>
+                            <button
+                              class="btn btn-danger close-button"
+                              onclick="closeDetails(this)"
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- IT Software Support -->
+                  <div class="col-md-6">
+                    <div class="card shadow-sm service-card">
+                      <div class="card-body">
+                        <div class="content">
+                          <div class="image-wrapper">
+                            <img
+                              src="https://i.imgur.com/2LnXOqR.jpeg"
+                              alt="IT Software Support"
+                              class="card-img-top"
+                            />
+                          </div>
+                          <h3 class="card-title">3. IT Software Support</h3>
+                          <p class="card-description">
+                            Get expert support for software installations,
+                            updates, and troubleshooting.
+                          </p>
+                          <button
+                            class="btn btn-primary"
+                            onclick="toggleDetails(this)"
+                          >
+                            Show Info
+                          </button>
+                          <button
+                            class="btn btn-secondary"
+                            onclick="toggleGallery(this, 'gallery-software')"
+                          >
+                            View Gallery
+                          </button>
+                          <!-- View Gallery Button -->
+
+                          <div class="card-details">
+                            <input type="hidden" value="-1.4052" class="lat" />
+                            <input type="hidden" value="35.0037" class="lon" />
+                            <p>
+                              <strong>Service Cost:</strong> $100 per incident
+                            </p>
+                            <p>
+                              <strong>Support:</strong> Available 9 AM - 5 PM
+                            </p>
+
+                            <h4>Included Activities:</h4>
+                            <ul>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Software Troubleshooting"
+                                  />
+                                  Troubleshooting</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Software Installation"
+                                  />
+                                  Installation</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Software Updates"
+                                  />
+                                  Updates</label
+                                >
+                              </li>
+                            </ul>
+
+                            <button class="btn btn-success">Book Now</button>
+                            <button
+                              class="btn btn-danger close-button"
+                              onclick="closeDetails(this)"
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- More services -->
+                  <div class="col-md-6">
+                    <div class="card shadow-sm service-card">
+                      <div class="card-body">
+                        <div class="content">
+                          <div class="image-wrapper">
+                            <img
+                              src="https://i.imgur.com/lvUhLGf.jpeg"
+                              alt="Cloud Services"
+                              class="card-img-top"
+                            />
+                          </div>
+                          <h3 class="card-title">4. Cloud Services</h3>
+                          <p class="card-description">
+                            Leverage the power of the cloud for flexible,
+                            scalable, and secure data management solutions.
+                          </p>
+                          <button
+                            class="btn btn-primary"
+                            onclick="toggleDetails(this)"
+                          >
+                            Show Info
+                          </button>
+                          <button
+                            class="btn btn-secondary"
+                            onclick="toggleGallery(this, 'gallery-cloud')"
+                          >
+                            View Gallery
+                          </button>
+                          <!-- View Gallery Button -->
+
+                          <div class="card-details">
+                            <input type="hidden" value="-0.1276" class="lat" />
+                            <input type="hidden" value="51.5074" class="lon" />
+                            <p><strong>Service Cost:</strong> $250 per month</p>
+                            <p><strong>Support:</strong> 24/7 Cloud Support</p>
+
+                            <h4>Included Activities:</h4>
+                            <ul>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Cloud Migration"
+                                  />
+                                  Cloud Migration</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input type="checkbox" value="Data Backup" />
+                                  Data Backup</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Cloud Security"
+                                  />
+                                  Cloud Security</label
+                                >
+                              </li>
+                            </ul>
+
+                            <button class="btn btn-success">
+                              Request Consultation
+                            </button>
+                            <button
+                              class="btn btn-danger close-button"
+                              onclick="closeDetails(this)"
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Cybersecurity Services -->
+                  <div class="col-md-6">
+                    <div class="card shadow-sm service-card">
+                      <div class="card-body">
+                        <div class="content">
+                          <div class="image-wrapper">
+                            <img
+                              src="https://i.imgur.com/LrGTsus.jpeg"
+                              alt="Cybersecurity Services"
+                              class="card-img-top"
+                            />
+                          </div>
+                          <h3 class="card-title">5. Cybersecurity Services</h3>
+                          <p class="card-description">
+                            Protect your business from digital threats with our
+                            comprehensive cybersecurity solutions.
+                          </p>
+                          <button
+                            class="btn btn-primary"
+                            onclick="toggleDetails(this)"
+                          >
+                            Show Info
+                          </button>
+                          <button
+                            class="btn btn-secondary"
+                            onclick="toggleGallery(this, 'gallery-cybersecurity')"
+                          >
+                            View Gallery
+                          </button>
+                          <!-- View Gallery Button -->
+
+                          <div class="card-details">
+                            <input type="hidden" value="-1.2921" class="lat" />
+                            <input type="hidden" value="36.8219" class="lon" />
+                            <p><strong>Service Cost:</strong> $300 per month</p>
+                            <p>
+                              <strong>Support:</strong> 24/7 Threat Monitoring
+                            </p>
+
+                            <h4>Included Activities:</h4>
+                            <ul>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Network Security"
+                                  />
+                                  Network Security</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Threat Detection"
+                                  />
+                                  Threat Detection</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Incident Response"
+                                  />
+                                  Incident Response</label
+                                >
+                              </li>
+                            </ul>
+
+                            <button class="btn btn-success">
+                              Secure My Business
+                            </button>
+                            <button
+                              class="btn btn-danger close-button"
+                              onclick="closeDetails(this)"
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- IT Consulting -->
+                  <div class="col-md-6">
+                    <div class="card shadow-sm service-card">
+                      <div class="card-body">
+                        <div class="content">
+                          <div class="image-wrapper">
+                            <img
+                              src="https://i.imgur.com/YsARXDm.jpeg"
+                              alt="IT Consulting"
+                              class="card-img-top"
+                            />
+                          </div>
+                          <h3 class="card-title">6. IT Consulting</h3>
+                          <p class="card-description">
+                            Tailored IT consulting to optimize your business
+                            processes and ensure your IT infrastructure is
+                            effective.
+                          </p>
+                          <button
+                            class="btn btn-primary"
+                            onclick="toggleDetails(this)"
+                          >
+                            Show Info
+                          </button>
+                          <button
+                            class="btn btn-secondary"
+                            onclick="toggleGallery(this, 'gallery-consulting')"
+                          >
+                            View Gallery
+                          </button>
+                          <!-- View Gallery Button -->
+
+                          <div class="card-details">
+                            <input type="hidden" value="37.7749" class="lat" />
+                            <input
+                              type="hidden"
+                              value="-122.4194"
+                              class="lon"
+                            />
+                            <p><strong>Service Cost:</strong> $200 per hour</p>
+                            <p>
+                              <strong>Support:</strong> On-Demand Consulting
+                            </p>
+
+                            <h4>Included Activities:</h4>
+                            <ul>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="IT Strategy Development"
+                                  />
+                                  IT Strategy Development</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Cloud Integration"
+                                  />
+                                  Cloud Integration</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Digital Transformation"
+                                  />
+                                  Digital Transformation</label
+                                >
+                              </li>
+                            </ul>
+
+                            <button class="btn btn-success">
+                              Schedule a Consultation
+                            </button>
+                            <button
+                              class="btn btn-danger close-button"
+                              onclick="closeDetails(this)"
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Data Analytics -->
+                  <div class="col-md-6">
+                    <div class="card shadow-sm service-card">
+                      <div class="card-body">
+                        <div class="content">
+                          <div class="image-wrapper">
+                            <img
+                              src="https://i.imgur.com/2luCbt1.jpeg"
+                              alt="Data Analytics"
+                              class="card-img-top"
+                            />
+                          </div>
+                          <h3 class="card-title">7. Data Analytics</h3>
+                          <p class="card-description">
+                            Transform raw data into actionable insights that
+                            drive your business decisions with our Data
+                            Analytics services.
+                          </p>
+                          <button
+                            class="btn btn-primary"
+                            onclick="toggleDetails(this)"
+                          >
+                            Show Info
+                          </button>
+                          <button
+                            class="btn btn-secondary"
+                            onclick="toggleGallery(this, 'gallery-analytics')"
+                          >
+                            View Gallery
+                          </button>
+                          <!-- View Gallery Button -->
+
+                          <div class="card-details">
+                            <input type="hidden" value="34.0522" class="lat" />
+                            <input
+                              type="hidden"
+                              value="-118.2437"
+                              class="lon"
+                            />
+                            <p><strong>Service Cost:</strong> $250 per month</p>
+                            <p><strong>Support:</strong> Weekly Reports</p>
+
+                            <h4>Included Activities:</h4>
+                            <ul>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Data Collection"
+                                  />
+                                  Data Collection</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Predictive Analysis"
+                                  />
+                                  Predictive Analysis</label
+                                >
+                              </li>
+                              <li>
+                                <label
+                                  ><input
+                                    type="checkbox"
+                                    value="Reporting & Visualization"
+                                  />
+                                  Reporting & Visualization</label
+                                >
+                              </li>
+                            </ul>
+
+                            <button class="btn btn-success">
+                              Get Insights
+                            </button>
+                            <button
+                              class="btn btn-danger close-button"
+                              onclick="closeDetails(this)"
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Map Section (Right Column) -->
+              <div id="map-section" class="col-md-4" style="height: 100%">
+                <div class="text-center w-100">
+                  <div
+                    id="map"
+                    class="border rounded"
+                    style="height: 100vh"
+                  ></div>
+                  <!-- Map container (You can integrate a real map here if needed) -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Proactive Systems Maintenance Tab Content -->
+          <div
+            class="tab-pane fade"
+            id="systems-maintenance"
+            role="tabpanel"
+            aria-labelledby="systems-maintenance-tab"
+          >
+            <h4><i class="fas fa-cogs"></i> Proactive Systems Maintenance</h4>
+            <p>
+              Ensure the smooth operation of your systems with our proactive IT
+              maintenance services. We offer regular system checks, updates, and
+              maintenance tasks to keep your IT infrastructure running
+              optimally, avoiding costly downtime.
+            </p>
+            <ul>
+              <li>Scheduled updates and patches to prevent vulnerabilities</li>
+              <li>
+                Regular health checks and diagnostics to catch issues early
+              </li>
+              <li>
+                Improved system performance and uptime to ensure operational
+                continuity
+              </li>
+            </ul>
+            <h5>Who Needs This Service?</h5>
+            <ul>
+              <li>
+                Small to mid-sized businesses looking for reliable IT support
+              </li>
+              <li>
+                Companies aiming to reduce the risk of downtime and security
+                threats
+              </li>
+              <li>
+                Organizations needing expert monitoring and support for critical
+                systems
+              </li>
+            </ul>
+            <a href="#contact" class="btn btn-primary mt-3"
+              >Contact Us for a Consultation</a
+            >
+          </div>
+
+          <!-- Software Installation & Support Tab Content -->
+          <div
+            class="tab-pane fade"
+            id="software-support"
+            role="tabpanel"
+            aria-labelledby="software-support-tab"
+          >
+            <h4>
+              <i class="fas fa-laptop"></i> Software Installation & Support
+            </h4>
+            <p>
+              Get expert support for software installations, updates, and
+              troubleshooting. We ensure your software is properly installed,
+              configured, and optimized for performance. Our team provides
+              prompt technical support to resolve issues quickly.
+            </p>
+            <ul>
+              <li>
+                Expert installation and configuration of a wide range of
+                software applications
+              </li>
+              <li>
+                Ongoing updates and patches to keep your software up-to-date and
+                secure
+              </li>
+              <li>
+                Rapid troubleshooting and technical support to resolve issues
+                without delay
+              </li>
+            </ul>
+            <h5>Why Choose Experts?</h5>
+            <ul>
+              <li>
+                Ensures compatibility and smooth functionality across devices
+                and systems
+              </li>
+              <li>
+                Minimizes system errors and downtime for uninterrupted business
+                operations
+              </li>
+              <li>
+                Access to timely support for software issues, reducing your
+                operational risks
+              </li>
+            </ul>
+            <a href="#contact" class="btn btn-primary mt-3"
+              >Get Expert Help Today</a
+            >
+          </div>
+
+          <!-- Data Backup & Security Tab Content -->
+          <div
+            class="tab-pane fade"
+            id="data-security"
+            role="tabpanel"
+            aria-labelledby="data-security-tab"
+          >
+            <h4><i class="fas fa-shield-alt"></i> Data Backup & Security</h4>
+            <p>
+              Protect your critical business data with secure, automated backup
+              solutions and ensure its integrity. We provide comprehensive data
+              protection strategies to safeguard against loss, corruption, and
+              unauthorized access.
+            </p>
+            <ul>
+              <li>
+                Automated cloud backups for secure, reliable data protection
+              </li>
+              <li>
+                Real-time monitoring to detect and prevent data breaches and
+                cyberattacks
+              </li>
+              <li>
+                Encryption to protect sensitive information from unauthorized
+                access
+              </li>
+            </ul>
+            <h5>Who Needs This Service?</h5>
+            <ul>
+              <li>
+                Companies handling sensitive or confidential data that require
+                regulatory compliance (e.g., GDPR, HIPAA)
+              </li>
+              <li>
+                Organizations seeking robust disaster recovery and data recovery
+                solutions
+              </li>
+              <li>
+                Businesses needing secure, automated data backup to prevent loss
+                or damage
+              </li>
+            </ul>
+            <a href="#contact" class="btn btn-primary mt-3"
+              >Secure Your Data Now</a
+            >
+          </div>
+
+          <!-- Networking Setup & Support Tab Content -->
+          <div
+            class="tab-pane fade"
+            id="networking"
+            role="tabpanel"
+            aria-labelledby="networking-tab"
+          >
+            <h4>
+              <i class="fas fa-network-wired"></i> Networking Setup & Support
+            </h4>
+            <p>
+              We offer comprehensive network setup and ongoing support to keep
+              your business connected and running smoothly. From local area
+              network (LAN) design to Wi-Fi optimization, our expert team
+              ensures your infrastructure is optimized for seamless
+              communication.
+            </p>
+            <ul>
+              <li>
+                Design and setup of scalable local area networks (LANs) for your
+                office
+              </li>
+              <li>
+                Wi-Fi setup, network optimization, and troubleshooting for
+                maximum speed and reliability
+              </li>
+              <li>
+                Ongoing network monitoring and expert support for quick
+                resolution of any issues
+              </li>
+            </ul>
+            <h5>Why Choose Us?</h5>
+            <ul>
+              <li>
+                Improve network performance and minimize disruptions to your
+                business operations
+              </li>
+              <li>
+                Scalable networking solutions that grow with your business needs
+              </li>
+              <li>
+                Expert support available for troubleshooting and network issues
+                at any time
+              </li>
+            </ul>
+            <a href="#contact" class="btn btn-primary mt-3"
+              >Get Network Support</a
+            >
+          </div>
+
+          <!-- GIS & Data Visualization Tab Content -->
+          <div
+            class="tab-pane fade"
+            id="gis"
+            role="tabpanel"
+            aria-labelledby="gis-tab"
+          >
+            <h4><i class="fas fa-globe"></i> GIS & Data Visualization</h4>
+            <p>
+              Unlock valuable insights with our GIS and data visualization
+              services. We help businesses analyze and visualize geographic data
+              for better decision-making. Our GIS solutions provide real-time
+              visual reports that enhance business strategies and planning.
+            </p>
+            <ul>
+              <li>
+                Real-time geographic data analysis and dynamic visualizations
+              </li>
+              <li>
+                Customizable maps and data visualizations tailored to your
+                specific business needs
+              </li>
+              <li>
+                Insight-driven decision-making and reporting for better
+                strategic planning
+              </li>
+            </ul>
+            <h5>Who Needs This Service?</h5>
+            <ul>
+              <li>
+                Companies in logistics and transportation to optimize routes and
+                operations
+              </li>
+              <li>
+                Urban planning and infrastructure projects requiring spatial
+                data analysis
+              </li>
+              <li>
+                Organizations in environmental or geographical studies seeking
+                data-driven insights
+              </li>
+            </ul>
+            <a href="#contact" class="btn btn-primary mt-3"
+              >Discover GIS Solutions</a
+            >
+          </div>
+
+          <!-- Web & System Development Tab Content -->
+          <div
+            class="tab-pane fade"
+            id="web-development"
+            role="tabpanel"
+            aria-labelledby="web-development-tab"
+          >
+            <h4><i class="fas fa-code"></i> Web & System Development</h4>
+            <p>
+              We specialize in building custom web solutions and system
+              development to meet your business goals. From responsive websites
+              to complex enterprise systems, we design, develop, and maintain
+              solutions that are tailored to your needs.
+            </p>
+            <ul>
+              <li>
+                Custom website and web application development, designed to fit
+                your business
+              </li>
+              <li>
+                Full-stack development expertise for both front-end and back-end
+                solutions
+              </li>
+              <li>
+                Ongoing maintenance and support to ensure your system's success
+                post-launch
+              </li>
+            </ul>
+            <h5>Why Choose Us?</h5>
+            <ul>
+              <li>
+                Scalable, tailored web solutions that grow with your business
+                and industry
+              </li>
+              <li>
+                Agile development processes for faster deployment and
+                flexibility
+              </li>
+              <li>
+                Post-launch support to ensure your system’s long-term
+                performance and success
+              </li>
+            </ul>
+            <a href="#contact" class="btn btn-primary mt-3"
+              >Start Your Project</a
+            >
+          </div>
+
+          <!-- Contact Us Tab Content -->
+          <div
+            class="tab-pane fade"
+            id="contact"
+            role="tabpanel"
+            aria-labelledby="contact-tab"
+          >
+            <h4><i class="fas fa-envelope"></i> Contact Us</h4>
+            <p>
+              If you have any questions or need assistance, feel free to reach
+              out. Our team is ready to help you with any inquiries, support
+              requests, or consultations. Get in touch through email, phone, or
+              by filling out our contact form.
+            </p>
+            <div class="accordion" id="contactAccordion">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <button
+                      class="btn btn-link"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-target="#collapseOne"
+                      aria-expanded="true"
+                      aria-controls="collapseOne"
+                    >
+                      How Can We Help You?
+                    </button>
+                  </h5>
+                </div>
+                <div
+                  id="collapseOne"
+                  class="collapse show"
+                  aria-labelledby="headingOne"
+                  data-parent="#contactAccordion"
+                >
+                  <div class="card-body">
+                    Whether you need IT support, software installation, or a
+                    consultation for any of our services, we are here to assist.
+                    Simply reach out to us, and we will respond promptly.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a
+              href="mailto:meetthexperts@gmail.com"
+              class="btn btn-primary mt-3"
+              >Email Us</a
+            >
+          </div>
+        </div>
+
+        <!-- IT Systems Maintenance Gallery -->
+        <div
+          id="gallery-it-systems"
+          class="gallery-overlay"
+          style="display: none"
+          onclick="closeOverlay(event, 'gallery-it-systems')"
+        >
+          <div class="gallery-content">
+            <div
+              id="carousel-it-systems"
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+                <div class="carousel-item active gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=1"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=2"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=3"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              <!-- Previous button -->
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel-it-systems"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+
+              <!-- Next button -->
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel-it-systems"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+
+              <button
+                class="btn btn-danger"
+                onclick="closeOverlay(event, 'gallery-it-systems')"
+              >
+                Close Gallery
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- GIS Services Gallery -->
+        <div
+          id="gallery-gis"
+          class="gallery-overlay"
+          style="display: none"
+          onclick="closeOverlay(event, 'gallery-gis')"
+        >
+          <div class="gallery-content">
+            <div
+              id="carousel-gis"
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+                <div class="carousel-item active gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=4"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=5"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=6"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              <!-- Previous button -->
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel-gis"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+
+              <!-- Next button -->
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel-gis"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+
+              <button
+                class="btn btn-danger"
+                onclick="closeOverlay(event, 'gallery-gis')"
+              >
+                Close Gallery
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- IT Software Support Gallery -->
+        <div
+          id="gallery-it-software"
+          class="gallery-overlay"
+          style="display: none"
+          onclick="closeOverlay(event, 'gallery-it-software')"
+        >
+          <div class="gallery-content">
+            <div
+              id="carousel-it-software"
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+                <div class="carousel-item active gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=7"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=8"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=9"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              <!-- Previous button -->
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel-it-software"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+
+              <!-- Next button -->
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel-it-software"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+
+              <button
+                class="btn btn-danger"
+                onclick="closeOverlay(event, 'gallery-it-software')"
+              >
+                Close Gallery
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cloud Services Gallery -->
+        <div
+          id="gallery-cloud"
+          class="gallery-overlay"
+          style="display: none"
+          onclick="closeOverlay(event, 'gallery-cloud')"
+        >
+          <div class="gallery-content">
+            <div
+              id="carousel-cloud"
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+                <div class="carousel-item active gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=10"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=11"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=12"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              <!-- Previous button -->
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel-cloud"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+
+              <!-- Next button -->
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel-cloud"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+
+              <button
+                class="btn btn-danger"
+                onclick="closeOverlay(event, 'gallery-cloud')"
+              >
+                Close Gallery
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cybersecurity Services Gallery -->
+        <div
+          id="gallery-cybersecurity"
+          class="gallery-overlay"
+          style="display: none"
+          onclick="closeOverlay(event, 'gallery-cybersecurity')"
+        >
+          <div class="gallery-content">
+            <div
+              id="carousel-cybersecurity"
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+                <div class="carousel-item active gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=13"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=14"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=15"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              <!-- Previous button -->
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel-cybersecurity"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+
+              <!-- Next button -->
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel-cybersecurity"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+
+              <button
+                class="btn btn-danger"
+                onclick="closeOverlay(event, 'gallery-cybersecurity')"
+              >
+                Close Gallery
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- IT Consulting Gallery -->
+        <div
+          id="gallery-it-consulting"
+          class="gallery-overlay"
+          style="display: none"
+          onclick="closeOverlay(event, 'gallery-it-consulting')"
+        >
+          <div class="gallery-content">
+            <div
+              id="carousel-it-consulting"
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+                <div class="carousel-item active gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=16"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=17"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=18"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              <!-- Previous button -->
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel-it-consulting"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+
+              <!-- Next button -->
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel-it-consulting"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+
+              <button
+                class="btn btn-danger"
+                onclick="closeOverlay(event, 'gallery-it-consulting')"
+              >
+                Close Gallery
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Analytics Gallery -->
+        <div
+          id="gallery-data-analytics"
+          class="gallery-overlay"
+          style="display: none"
+          onclick="closeOverlay(event, 'gallery-data-analytics')"
+        >
+          <div class="gallery-content">
+            <div
+              id="carousel-data-analytics"
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+                <div class="carousel-item active gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=19"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=20"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="carousel-item gallerysec_carousel-item">
+                  <img
+                    src="https://picsum.photos/800/600?random=21"
+                    class="d-block w-100"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              <!-- Previous button -->
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel-data-analytics"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+
+              <!-- Next button -->
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel-data-analytics"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+
+              <button
+                class="btn btn-danger"
+                onclick="closeOverlay(event, 'gallery-data-analytics')"
+              >
+                Close Gallery
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-5">
+          <div class="container">
+            <h2 class="text-center mb-4">
+              What Our Clients Say About Our Experts
+            </h2>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="card testimonial shadow-sm">
+                  <div class="card-body">
+                    <p class="blockquote">
+                      "The expertise of the team at Meet the Experts has
+                      transformed our business processes. Their knowledge is
+                      unmatched!"
+                    </p>
+                    <p class="blockquote-footer">
+                      Emily R., CEO of Tech Solutions
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="card testimonial shadow-sm">
+                  <div class="card-body">
+                    <p class="blockquote">
+                      "Working with MTE was a game changer. Their advice and
+                      strategies have taken our digital transformation to the
+                      next level."
+                    </p>
+                    <p class="blockquote-footer">
+                      Michael W., CTO at Innovate Corp
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Footer for Dark Theme -->
+        <footer
+          class="py-3 mt-auto"
+          style="background-color: var(--navbar-bg-color)"
+        >
+          <div class="container text-center text-light">
+            <p>&copy; 2024 Meet the Experts. All Rights Reserved.</p>
+            <p>
+              Stay Connected:
+              <a href="#" style="color: var(--navbar-brand-color)">LinkedIn</a>
+              |
+              <a href="#" style="color: var(--navbar-brand-color)">GitHub</a> |
+              <a href="#" style="color: var(--navbar-brand-color)">Twitter</a>
+            </p>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <!--script src="https://unpkg.com/ol@latest/dist/ol.js"></script-->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Check if the 'searchInput' element exists before adding the event listener
+      // Check if the 'searchInput' element exists before adding the event listener
+      const searchInput = document.getElementById("searchInput");
+
+if (searchInput) {
+  searchInput.addEventListener("input", function () {
+    // Get the search term and convert it to lowercase for case-insensitive comparison
+    const searchTerm = this.value.toLowerCase();
+
+    // Get all service cards
+    const serviceCards = document.querySelectorAll(".service-card");
+    const popupContainer = document.getElementById("searchPopup"); // Popup container to show suggestions
+
+    // Clear previous suggestions in the popup
+    popupContainer.innerHTML = "";
+
+    // Create a flag to check if any matches were found
+    let matchesFound = false;
+
+    // Loop through each card and match the title
+    serviceCards.forEach(function (card) {
+      const cardTitle = card
+        .querySelector(".card-title")
+        .textContent.toLowerCase();
+
+      if (searchTerm === "" || cardTitle.includes(searchTerm)) {
+        // Show the card if it matches or if the search term is empty
+        card.closest(".col-md-6").style.display = "";
+
+        // Create a new popup item for each matching service
+        if (searchTerm !== "") {
+          const suggestionItem = document.createElement("div");
+          suggestionItem.classList.add("search-suggestion");
+          suggestionItem.textContent =
+            card.querySelector(".card-title").textContent;
+
+          // Append suggestion to popup
+          popupContainer.appendChild(suggestionItem);
+          matchesFound = true;
+
+          // Add click event to suggestion for filling the input and hiding the popup
+          suggestionItem.addEventListener("click", function () {
+            // Fill the search input with the selected service title
+            searchInput.value = suggestionItem.textContent;
+
+            // Trigger the search by calling the input event handler manually
+            searchInput.dispatchEvent(new Event("input"));
+
+            // Hide the popup after selection
+            popupContainer.style.display = "none";
+          });
+        }
+      } else {
+        // Hide the card if it doesn't match
+        card.closest(".col-md-6").style.display = "none";
+      }
+    });
+
+    // If no matches and search term is not empty, hide the popup
+    if (!matchesFound && searchTerm !== "") {
+      popupContainer.style.display = "none";
+    } else {
+      popupContainer.style.display = "block"; // Show the popup with suggestions
+    }
+  });
+
+  // Optional: Close the popup if clicked outside of the search input or popup
+  document.addEventListener("click", function (event) {
+    if (
+      !searchInput.contains(event.target) &&
+      !document.getElementById("searchPopup").contains(event.target)
+    ) {
+      document.getElementById("searchPopup").style.display = "none";
+    }
+  });
+}
+
+      // Get the toggle button
+      const toggleButton = document.getElementById("theme-toggle");
+
+      // Function to set the theme based on the value from localStorage or default to light
+      function applyTheme() {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+          document.documentElement.setAttribute("data-theme", savedTheme);
+        } else {
+          // Set default theme to light if no theme is saved in localStorage
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      }
+
+      // Call applyTheme function when the page loads to check for any saved theme
+      applyTheme();
+
+      // Add event listener to toggle the theme
+      toggleButton.addEventListener("click", function () {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
+
+        // Toggle the theme
+        if (currentTheme === "light") {
+          document.documentElement.setAttribute("data-theme", "dark");
+          localStorage.setItem("theme", "dark"); // Save the dark theme to localStorage
+        } else {
+          document.documentElement.setAttribute("data-theme", "light");
+          localStorage.setItem("theme", "light"); // Save the light theme to localStorage
+        }
+      });
+
+      // Show the gallery when the "View Gallery" button is clicked
+      function toggleGallery(button, galleryId) {
+        const galleryOverlay = document.getElementById(galleryId);
+
+        // Show the gallery overlay
+        galleryOverlay.style.display = "flex"; // Use flex for centering the content
+        galleryOverlay.classList.add("show"); // Optionally, use a transition for smooth appearance
+      }
+
+      // Close the gallery overlay when clicking outside the gallery content
+      function closeOverlay(event, galleryId) {
+        // If the click is outside the gallery content, close it
+        if (
+          event.target.id === galleryId ||
+          event.target.classList.contains("btn-danger")
+        ) {
+          document.getElementById(galleryId).style.display = "none";
+          document.getElementById(galleryId).classList.remove("show");
+        }
+      }
+
+      // Toggle the details visibility
+      function toggleDetails(button) {
+        // Find the closest .service-card element, and then find the .card-details element within it
+        const details = button
+          .closest(".service-card")
+          .querySelector(".card-details");
+
+        // Toggle the visibility of the details section
+        if (details.style.display === "none" || details.style.display === "") {
+          details.style.display = "block"; // Show the details
+          button.textContent = "Hide Info"; // Change button text to "Hide Info"
+        } else {
+          details.style.display = "none"; // Hide the details
+          button.textContent = "Show Info"; // Change button text to "Show Info"
+        }
+      }
+
+      // Close the details when the "Close" button is clicked
+      function closeDetails(button) {
+        const details = button
+          .closest(".service-card")
+          .querySelector(".card-details");
+        details.style.display = "none"; // Hide the details
+        button
+          .closest(".service-card")
+          .querySelector(".btn-primary").textContent = "Show Info"; // Reset the button text to "Show Info"
+      }
+
+      // Toggle the sidebar for mobile view
+      const sidebarToggle = document.querySelector(".sidebar-toggle-btn");
+      const sidebar = document.querySelector(".sidebar");
+      const mainContent = document.querySelector(".main-content");
+
+      sidebarToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("active");
+        mainContent.classList.toggle("expanded");
+      });
+
+      // Initialize map
+      var map = L.map("map").setView([-1.2921, 36.8219], 4); // Center Africa
+
+      // Add OpenStreetMap tile layer
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      // Array of MTE office locations with their coordinates (lat, lon)
+      var locations = [
+        {
+          name: "MTE Soroti Office",
+          lat: 1.7128, // Soroti Latitude
+          lon: 33.6111, // Soroti Longitude
+          description:
+            "MTE Soroti Office: The heart of MTE's operations in Eastern Uganda, providing expert services to the community.",
+        },
+        {
+          name: "MTE Kampala Office",
+          lat: 0.3136, // Kampala Latitude
+          lon: 32.581, // Kampala Longitude
+          description:
+            "MTE Kampala Office: Our central hub located in the capital, offering a wide range of expert services to clients across Uganda.",
+        },
+      ];
+
+      // Function to fetch the nearest town using Nominatim API
+      async function getNearestTown(lat, lon) {
+        const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1`;
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data && data.address) {
+          const town =
+            data.address.town || data.address.city || data.address.village;
+          return { lat: lat, lon: lon, name: town || "Unknown" };
+        }
+        return { lat: lat, lon: lon, name: "Unknown" }; // Fallback if no town is found
+      }
+
+      // Function to calculate the distance between two lat/lon points using Leaflet's distanceTo method
+      function calculateDistance(lat1, lon1, lat2, lon2) {
+        var point1 = L.latLng(lat1, lon1);
+        var point2 = L.latLng(lat2, lon2);
+        return point1.distanceTo(point2); // Returns the distance in meters
+      }
+
+      // Sort locations based on distance from the current position
+      function sortLocationsByDistance(locations) {
+        let sortedLocations = [];
+        let remainingLocations = [...locations];
+        let currentLocation = { lat: -1.2921, lon: 36.8219 };
+
+        while (remainingLocations.length > 0) {
+          let nearestLocationIndex = 0;
+          let nearestDistance = Infinity;
+
+          for (let i = 0; i < remainingLocations.length; i++) {
+            const distance = calculateDistance(
+              currentLocation.lat,
+              currentLocation.lon,
+              remainingLocations[i].lat,
+              remainingLocations[i].lon
+            );
+            if (distance < nearestDistance) {
+              nearestDistance = distance;
+              nearestLocationIndex = i;
+            }
+          }
+
+          sortedLocations.push(remainingLocations[nearestLocationIndex]);
+          currentLocation = {
+            lat: remainingLocations[nearestLocationIndex].lat,
+            lon: remainingLocations[nearestLocationIndex].lon,
+          };
+          remainingLocations.splice(nearestLocationIndex, 1);
+        }
+
+        return sortedLocations;
+      }
+
+      // Loop through the locations, get nearest towns and add markers
+      async function initializeMap() {
+        const routePoints = [];
+        const markers = [];
+
+        // Sort the locations by distance from the starting point
+        const sortedLocations = sortLocationsByDistance(locations);
+
+        for (const location of sortedLocations) {
+          const nearestTown = await getNearestTown(location.lat, location.lon);
+          const popupContent = `<h3>${location.name}</h3><p>${location.description}</p>`;
+          const marker = L.marker([location.lat, location.lon]).addTo(map);
+          marker.bindPopup(popupContent); // Ensure popup binding
+          markers.push(marker);
+          routePoints.push(L.latLng(nearestTown.lat, nearestTown.lon)); // Use nearest town for routing
+        }
+
+        // Add routing control with sorted locations as waypoints
+        var routeControl = L.Routing.control({
+          waypoints: routePoints,
+          routeWhileDragging: false,
+          createMarker: function () {
+            return null;
+          }, // Disable marker popups from routing control
+          showAlternatives: false, // Hide alternative routes (optional)
+        }).addTo(map);
+
+        //map.removeControl(routeControl); // Call this if the control UI itself is unnecessary
+
+        // Fit the map view to include all the locations
+        map.fitBounds(L.latLngBounds(routePoints));
+
+        // Add a moving marker to simulate travel along the route
+        addMovingMarker(routeControl);
+      }
+
+      // Function to add a moving marker along the route
+      function addMovingMarker(routeControl) {
+        // Event listener for when the route is found by the routing control
+        routeControl.on("routesfound", function (event) {
+          // Get the first route found (in case there are multiple routes)
+          const route = event.routes[0];
+
+          // Extract the coordinates (latitudes and longitudes) of the route
+          const latLngs = route.coordinates;
+
+          // Create a marker at the start of the route with a custom icon
+          var movingMarker = L.marker(latLngs[0], {
+            icon: L.icon({
+              iconUrl: "https://i.imgur.com/IOx2MMP.png",
+              iconSize: [30, 30], // Set the icon size
+            }),
+          }).addTo(map); // Add the marker to the map
+
+          // Initialize the starting index for the route
+          let currentIndex = 0;
+
+          // Total distance of the route (in meters)
+          const totalDistance = route.summary.totalDistance;
+
+          // Set the total time for the animation to complete (in seconds)
+          const totalTime = 10;
+
+          // Calculate the speed of the moving marker (in meters per second)
+          const speed = totalDistance / totalTime;
+
+          // Time interval (in milliseconds) for updating the marker's position
+          let timeInterval = 10;
+
+          // Variable to keep track of the distance traveled by the marker
+          let distanceTraveled = 0;
+
+          // Capture the current time at the start of the animation
+          let startTime = Date.now();
+
+          // Function to move the marker along the route
+          function moveMarker() {
+            // Calculate how much time has passed since the animation started
+            let elapsedTime = (Date.now() - startTime) / 1000; // Time in seconds
+
+            // If the total time has not passed, continue moving the marker
+            if (elapsedTime < totalTime) {
+              // Calculate how far the marker should have traveled based on the elapsed time
+              distanceTraveled = speed * elapsedTime;
+
+              // Iterate over the route coordinates (latLngs) to move the marker along the path
+              for (let i = 1; i < latLngs.length; i++) {
+                // Calculate the distance between two consecutive points (segments)
+                const segmentDistance = latLngs[i - 1].distanceTo(latLngs[i]);
+
+                // If the distance traveled is less than the segment distance, move the marker to the new point
+                if (distanceTraveled < segmentDistance) {
+                  movingMarker.setLatLng(latLngs[i]); // Set the marker's position
+                  break; // Exit the loop after moving the marker
+                }
+
+                // If the distance traveled is more than the segment distance, reduce the remaining distance
+                distanceTraveled -= segmentDistance;
+              }
+            } else {
+              // Once the animation reaches the end of the route, reset the marker back to the start
+              movingMarker.setLatLng(latLngs[0]);
+              startTime = Date.now(); // Restart the animation by resetting the start time
+            }
+          }
+
+          // Set an interval to move the marker at regular intervals (every 10 milliseconds)
+          const moveInterval = setInterval(moveMarker, 10);
+        });
+      }
+
+      // Initialize map with markers and routing
+      initializeMap();
+    </script>
+  </body>
+</html>
