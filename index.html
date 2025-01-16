@@ -1495,14 +1495,14 @@
                 </li>
               </ul>
             </div>
-            <!-- Theme Toggle Button (Bootstrap 5) -->
-            <!-- <button
+
+            <button
               id="theme-toggle"
               class="btn btn-outline-secondary"
               type="button"
             >
               <i id="theme-icon" class="bi bi-moon-stars"></i> Toggle Theme
-            </button> -->
+            </button>
           </div>
         </nav>
 
@@ -1563,10 +1563,7 @@
                   <div class="row g-4">
                     <!-- IT Systems Maintenance -->
                     <div class="col-md-6">
-                      <div
-                        class="card shadow-sm service-card"
-                        id="it-systems-maintenance"
-                      >
+                      <div class="card shadow-sm service-card">
                         <div class="card-body">
                           <div class="content">
                             <div
@@ -3562,8 +3559,10 @@
 
       // Function to set the theme based on the value from localStorage or default to light
       function applyTheme() {
-        const savedTheme = localStorage.getItem("theme");
+        const savedTheme = localStorage.getItem("theme"); // Retrieve the saved theme from localStorage
+
         if (savedTheme) {
+          // Apply the saved theme
           document.documentElement.setAttribute("data-theme", savedTheme);
         } else {
           // Set default theme to light if no theme is saved in localStorage
@@ -3574,20 +3573,25 @@
       // Call applyTheme function when the page loads to check for any saved theme
       applyTheme();
 
-      // Add event listener to toggle the theme
-      toggleButton.addEventListener("click", function () {
-        const currentTheme =
-          document.documentElement.getAttribute("data-theme");
+      // Check if the toggle button exists before adding an event listener
+      if (toggleButton) {
+        // Add event listener to toggle the theme
+        toggleButton.addEventListener("click", function () {
+          const currentTheme =
+            document.documentElement.getAttribute("data-theme");
 
-        // Toggle the theme
-        if (currentTheme === "light") {
-          document.documentElement.setAttribute("data-theme", "dark");
-          localStorage.setItem("theme", "dark"); // Save the dark theme to localStorage
-        } else {
-          document.documentElement.setAttribute("data-theme", "light");
-          localStorage.setItem("theme", "light"); // Save the light theme to localStorage
-        }
-      });
+          // Toggle the theme between light and dark
+          if (currentTheme === "light") {
+            document.documentElement.setAttribute("data-theme", "dark");
+            localStorage.setItem("theme", "dark"); // Save the dark theme to localStorage
+          } else {
+            document.documentElement.setAttribute("data-theme", "light");
+            localStorage.setItem("theme", "light"); // Save the light theme to localStorage
+          }
+        });
+      } else {
+        console.warn("Theme toggle button not found in the DOM.");
+      }
 
       // Show the gallery when the "View Gallery" button is clicked
       function toggleGallery(button, galleryId) {
@@ -3919,7 +3923,6 @@
           // Open WhatsApp URL in a new window/tab
           window.open(whatsappURL, "_blank");
         });
-
       /**
        * Dynamically generates and opens the share URL for the selected platform and card ID.
        * @param {string} platform - The social media platform (facebook, twitter, linkedin, whatsapp).
