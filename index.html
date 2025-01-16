@@ -1503,7 +1503,6 @@
             >
               <i id="theme-icon" class="bi bi-moon-stars"></i> Toggle Theme
             </button> -->
-
           </div>
         </nav>
 
@@ -1564,7 +1563,10 @@
                   <div class="row g-4">
                     <!-- IT Systems Maintenance -->
                     <div class="col-md-6">
-                      <div class="card shadow-sm service-card">
+                      <div
+                        class="card shadow-sm service-card"
+                        id="it-systems-maintenance"
+                      >
                         <div class="card-body">
                           <div class="content">
                             <div
@@ -1661,41 +1663,37 @@
                               </button>
                             </div>
                             <!-- Social Media Sharing Section -->
-      <div class="social-share mt-3">
-        <p>Share this service:</p>
-        <a
-          href="https://www.facebook.com/sharer/sharer.php?u=https://yourwebsite.com/it-systems-maintenance"
-          target="_blank"
-          class="btn btn-outline-primary"
-          title="Share on Facebook"
-        >
-          <i class="fab fa-facebook"></i> Facebook
-        </a>
-        <a
-          href="https://twitter.com/intent/tweet?url=https://yourwebsite.com/it-systems-maintenance&text=Check out this IT Systems Maintenance service from our platform!"
-          target="_blank"
-          class="btn btn-outline-info"
-          title="Share on Twitter"
-        >
-          <i class="fab fa-twitter"></i> Twitter
-        </a>
-        <a
-          href="https://www.linkedin.com/shareArticle?mini=true&url=https://yourwebsite.com/it-systems-maintenance&title=IT%20Systems%20Maintenance&summary=Ensure%20the%20smooth%20operation%20of%20your%20systems%20with%20our%20proactive%20IT%20maintenance%20services.&source=LinkedIn"
-          target="_blank"
-          class="btn btn-outline-primary"
-          title="Share on LinkedIn"
-        >
-          <i class="fab fa-linkedin"></i> LinkedIn
-        </a>
-        <a
-          href="https://api.whatsapp.com/send?text=Check out this IT Systems Maintenance service: https://yourwebsite.com/it-systems-maintenance"
-          target="_blank"
-          class="btn btn-outline-success"
-          title="Share on WhatsApp"
-        >
-          <i class="fab fa-whatsapp"></i> WhatsApp
-        </a>
-      </div>
+                            <div class="social-share mt-3">
+                              <p>Share this service:</p>
+                              <button
+                                class="btn btn-outline-primary"
+                                onclick="shareService('facebook', 'it-systems-maintenance')"
+                                title="Share on Facebook"
+                              >
+                                <i class="fab fa-facebook"></i> Facebook
+                              </button>
+                              <button
+                                class="btn btn-outline-info"
+                                onclick="shareService('twitter', 'it-systems-maintenance')"
+                                title="Share on Twitter"
+                              >
+                                <i class="fab fa-twitter"></i> Twitter
+                              </button>
+                              <button
+                                class="btn btn-outline-primary"
+                                onclick="shareService('linkedin', 'it-systems-maintenance')"
+                                title="Share on LinkedIn"
+                              >
+                                <i class="fab fa-linkedin"></i> LinkedIn
+                              </button>
+                              <button
+                                class="btn btn-outline-success"
+                                onclick="shareService('whatsapp', 'it-systems-maintenance')"
+                                title="Share on WhatsApp"
+                              >
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -3922,7 +3920,49 @@
           window.open(whatsappURL, "_blank");
         });
 
-      
+      /**
+       * Dynamically generates and opens the share URL for the selected platform and card ID.
+       * @param {string} platform - The social media platform (facebook, twitter, linkedin, whatsapp).
+       * @param {string} cardId - The ID of the card to share.
+       */
+      function shareService(platform, cardId) {
+        const baseUrl = "https://meetthexperts.com";
+        const cardUrl = `${baseUrl}#${cardId}`;
+        let shareUrl = "";
+
+        switch (platform) {
+          case "facebook":
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+              cardUrl
+            )}`;
+            break;
+          case "twitter":
+            shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+              cardUrl
+            )}&text=${encodeURIComponent("Check out this amazing service!")}`;
+            break;
+          case "linkedin":
+            shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+              cardUrl
+            )}&title=${encodeURIComponent(
+              "Amazing IT Service"
+            )}&summary=${encodeURIComponent(
+              "Ensure the smooth operation of your systems with our proactive IT maintenance services."
+            )}&source=LinkedIn`;
+            break;
+          case "whatsapp":
+            shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+              `Check out this amazing service: ${cardUrl}`
+            )}`;
+            break;
+          default:
+            console.error("Unsupported platform:", platform);
+            return;
+        }
+
+        // Open the share URL in a new tab
+        window.open(shareUrl, "_blank");
+      }
     </script>
   </body>
 </html>
