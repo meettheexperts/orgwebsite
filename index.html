@@ -3,7 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MTE</title>
+    <title>Meet The Experts</title>
+
+    <!-- Open Graph meta tags for social media -->
+    <meta
+      property="og:title"
+      content="Meet The Experts - Professionals Within Reach"
+    />
+    <meta
+      property="og:description"
+      content="⚙️ IT Consulting and Training | 🌐 Websites and Database Systems Development | 👥 Connecting Experts in Various Fields. Located in Sonde, Mukono."
+    />
+    <meta property="og:url" content="https://meetthexperts.com/" />
+    <meta property="og:image" content="https://i.imgur.com/KgQ0CvO.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Meet The Experts" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter (X) Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@MeetTheExperts" />
+    <meta
+      name="twitter:title"
+      content="Meet The Experts - Professionals Within Reach"
+    />
+    <meta
+      name="twitter:description"
+      content="⚙️ IT Consulting and Training | 🌐 Websites and Database Systems Development | 👥 Connecting Experts in Various Fields. Located in Sonde, Mukono."
+    />
+    <meta name="twitter:image" content="https://i.imgur.com/KgQ0CvO.png" />
+
+    <!-- WhatsApp-specific meta tag -->
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- LinkedIn meta tags -->
+    <meta
+      property="og:title"
+      content="Meet The Experts - Professionals Within Reach"
+    />
+    <meta
+      property="og:description"
+      content="⚙️ IT Consulting and Training | 🌐 Websites and Database Systems Development | 👥 Connecting Experts in Various Fields. Located in Sonde, Mukono."
+    />
+    <meta property="og:image" content="https://i.imgur.com/KgQ0CvO.png" />
+    <meta property="og:type" content="website" />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      href="https://i.imgur.com/IVc70CQ.png"
+      type="image/x-icon"
+    />
+
     <!-- Bootstrap 5 CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -345,60 +397,59 @@
         color: #ffffff; /* White text on hover */
       }
       /* Base popup container style */
-.search-popup-container {
-  display: none;
-  position: absolute;
-  top: 100%; /* Position the popup below the search input */
-  left: 0;
-  width: 100%;
-  max-height: 200px;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-}
+      .search-popup-container {
+        display: none;
+        position: absolute;
+        top: 100%; /* Position the popup below the search input */
+        left: 0;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+      }
 
-/* Default search suggestion styling */
-.search-suggestion {
-  padding: 10px;
-  cursor: pointer;
-}
+      /* Default search suggestion styling */
+      .search-suggestion {
+        padding: 10px;
+        cursor: pointer;
+      }
 
-/* Hover effect for search suggestions */
-.search-suggestion:hover {
-  background-color: #f0f0f0;
-}
+      /* Hover effect for search suggestions */
+      .search-suggestion:hover {
+        background-color: #f0f0f0;
+      }
 
-/* Styling for light theme */
-[data-theme="light"] .search-popup-container {
-  background-color: #fff;
-  border-color: #ccc;
-}
+      /* Styling for light theme */
+      [data-theme="light"] .search-popup-container {
+        background-color: #fff;
+        border-color: #ccc;
+      }
 
-[data-theme="light"] .search-suggestion {
-  color: #000;
-  background-color: #fff;
-}
+      [data-theme="light"] .search-suggestion {
+        color: #000;
+        background-color: #fff;
+      }
 
-[data-theme="light"] .search-suggestion:hover {
-  background-color: #e0e0e0;
-}
+      [data-theme="light"] .search-suggestion:hover {
+        background-color: #e0e0e0;
+      }
 
-/* Styling for dark theme */
-[data-theme="dark"] .search-popup-container {
-  background-color: #333;
-  border-color: #555;
-}
+      /* Styling for dark theme */
+      [data-theme="dark"] .search-popup-container {
+        background-color: #333;
+        border-color: #555;
+      }
 
-[data-theme="dark"] .search-suggestion {
-  color: #fff;
-  background-color: #333;
-}
+      [data-theme="dark"] .search-suggestion {
+        color: #fff;
+        background-color: #333;
+      }
 
-[data-theme="dark"] .search-suggestion:hover {
-  background-color: #444;
-}
-
+      [data-theme="dark"] .search-suggestion:hover {
+        background-color: #444;
+      }
 
       /* Specific Element Styles */
       .navbar,
@@ -1143,7 +1194,21 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Navbar Brand (Logo or Text) -->
-            <a class="navbar-brand" href="#">Meet the Experts (MTE)</a>
+            <a class="navbar-brand d-flex align-items-center" href="#">
+              <img
+                src="https://i.imgur.com/fLIooHz.png"
+                alt="MTE Logo"
+                width="50"
+                height="50"
+                class="d-inline-block align-text-top me-2"
+              />
+              <div style="line-height: 1">
+                <strong>Meet The Experts</strong><br />
+                <small style="font-size: 0.8rem; color: rgb(20, 2, 54)"
+                  >Professionals Within Reach</small
+                >
+              </div>
+            </a>
             <div class="collapse navbar-collapse" id="navbarNav">
               <!-- Tab Navigation -->
               <ul class="nav nav-pills ms-auto" id="myTab" role="tablist">
@@ -2876,78 +2941,78 @@
       // Check if the 'searchInput' element exists before adding the event listener
       const searchInput = document.getElementById("searchInput");
 
-if (searchInput) {
-  searchInput.addEventListener("input", function () {
-    // Get the search term and convert it to lowercase for case-insensitive comparison
-    const searchTerm = this.value.toLowerCase();
+      if (searchInput) {
+        searchInput.addEventListener("input", function () {
+          // Get the search term and convert it to lowercase for case-insensitive comparison
+          const searchTerm = this.value.toLowerCase();
 
-    // Get all service cards
-    const serviceCards = document.querySelectorAll(".service-card");
-    const popupContainer = document.getElementById("searchPopup"); // Popup container to show suggestions
+          // Get all service cards
+          const serviceCards = document.querySelectorAll(".service-card");
+          const popupContainer = document.getElementById("searchPopup"); // Popup container to show suggestions
 
-    // Clear previous suggestions in the popup
-    popupContainer.innerHTML = "";
+          // Clear previous suggestions in the popup
+          popupContainer.innerHTML = "";
 
-    // Create a flag to check if any matches were found
-    let matchesFound = false;
+          // Create a flag to check if any matches were found
+          let matchesFound = false;
 
-    // Loop through each card and match the title
-    serviceCards.forEach(function (card) {
-      const cardTitle = card
-        .querySelector(".card-title")
-        .textContent.toLowerCase();
+          // Loop through each card and match the title
+          serviceCards.forEach(function (card) {
+            const cardTitle = card
+              .querySelector(".card-title")
+              .textContent.toLowerCase();
 
-      if (searchTerm === "" || cardTitle.includes(searchTerm)) {
-        // Show the card if it matches or if the search term is empty
-        card.closest(".col-md-6").style.display = "";
+            if (searchTerm === "" || cardTitle.includes(searchTerm)) {
+              // Show the card if it matches or if the search term is empty
+              card.closest(".col-md-6").style.display = "";
 
-        // Create a new popup item for each matching service
-        if (searchTerm !== "") {
-          const suggestionItem = document.createElement("div");
-          suggestionItem.classList.add("search-suggestion");
-          suggestionItem.textContent =
-            card.querySelector(".card-title").textContent;
+              // Create a new popup item for each matching service
+              if (searchTerm !== "") {
+                const suggestionItem = document.createElement("div");
+                suggestionItem.classList.add("search-suggestion");
+                suggestionItem.textContent =
+                  card.querySelector(".card-title").textContent;
 
-          // Append suggestion to popup
-          popupContainer.appendChild(suggestionItem);
-          matchesFound = true;
+                // Append suggestion to popup
+                popupContainer.appendChild(suggestionItem);
+                matchesFound = true;
 
-          // Add click event to suggestion for filling the input and hiding the popup
-          suggestionItem.addEventListener("click", function () {
-            // Fill the search input with the selected service title
-            searchInput.value = suggestionItem.textContent;
+                // Add click event to suggestion for filling the input and hiding the popup
+                suggestionItem.addEventListener("click", function () {
+                  // Fill the search input with the selected service title
+                  searchInput.value = suggestionItem.textContent;
 
-            // Trigger the search by calling the input event handler manually
-            searchInput.dispatchEvent(new Event("input"));
+                  // Trigger the search by calling the input event handler manually
+                  searchInput.dispatchEvent(new Event("input"));
 
-            // Hide the popup after selection
-            popupContainer.style.display = "none";
+                  // Hide the popup after selection
+                  popupContainer.style.display = "none";
+                });
+              }
+            } else {
+              // Hide the card if it doesn't match
+              card.closest(".col-md-6").style.display = "none";
+            }
           });
-        }
-      } else {
-        // Hide the card if it doesn't match
-        card.closest(".col-md-6").style.display = "none";
+
+          // If no matches and search term is not empty, hide the popup
+          if (!matchesFound && searchTerm !== "") {
+            popupContainer.style.display = "none";
+          } else {
+            popupContainer.style.display = "block"; // Show the popup with suggestions
+          }
+        });
+
+        // Optional: Close the popup if clicked outside of the search input or popup
+        document.addEventListener("click", function (event) {
+          if (
+            !searchInput.contains(event.target) &&
+            !document.getElementById("searchPopup").contains(event.target)
+          ) {
+            document.getElementById("searchPopup").style.display = "none";
+          }
+        });
       }
-    });
-
-    // If no matches and search term is not empty, hide the popup
-    if (!matchesFound && searchTerm !== "") {
-      popupContainer.style.display = "none";
-    } else {
-      popupContainer.style.display = "block"; // Show the popup with suggestions
-    }
-  });
-
-  // Optional: Close the popup if clicked outside of the search input or popup
-  document.addEventListener("click", function (event) {
-    if (
-      !searchInput.contains(event.target) &&
-      !document.getElementById("searchPopup").contains(event.target)
-    ) {
-      document.getElementById("searchPopup").style.display = "none";
-    }
-  });
-}
 
       // Get the toggle button
       const toggleButton = document.getElementById("theme-toggle");
