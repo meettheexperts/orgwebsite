@@ -2,8 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NextDoor</title>
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
+  <title>NextDoor - Discover Amazing Deals and Products Online</title>
+  <meta name="description" content="NextDoor is your ultimate shopping destination online. Explore a wide variety of products and amazing deals tailored just for you.">
+  <meta name="keywords" content="NextDoor, online shopping, amazing deals, products, shopping destination, buy online, best prices">
+  <meta name="author" content="NextDoor Team">
+
+  <!-- Add preconnect for faster loading of external resources -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://i.imgur.com">
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -96,7 +103,7 @@
 <body>
 
   <!-- Sidebar -->
-  <div class="sidebar">
+  <div class="sidebar" aria-label="Sidebar Navigation">
     <div class="d-flex justify-content-between align-items-center p-3">
       <h4>NextDoor</h4>
       <!-- Toggler button to toggle sidebar visibility -->
@@ -108,7 +115,7 @@
     
   </div>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="Main Navigation">
     <button class="navbar-toggler" type="button" id="toggle-sidebar" aria-label="Toggle sidebar">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -116,197 +123,108 @@
     <a class="navbar-brand" href="#">NextDoor</a>
   </nav>
 
+  <!-- Search Bar -->
+  <div class="container mt-3">
+    <div class="input-group">
+      <input type="text" id="search-bar" class="form-control" placeholder="Search for products by name or category..." aria-label="Search">
+      <button class="btn btn-outline-secondary" type="button" id="clear-search">Clear</button>
+    </div>
+  </div>
+
   <!-- Content -->
   <div class="content">
-    <!-- Navbar with Bootstrap 5 Hamburger Menu -->
-    
-
     <div class="container mt-5">
-          <div class="tab-content" id="tab-content">
-            <!-- Product cards will be inserted dynamically based on category -->
-          </div> 
+      <div class="tab-content" id="tab-content" role="tabpanel">
+        <!-- Product cards will be inserted dynamically based on category -->
+      </div>
     </div>
-    <!-- Footer Section -->
-  
   </div>
-  
 
   <!-- Bootstrap JS, Popper.js, and jQuery (optional for certain features) -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
   <script>
-    // URL of your deployed Google Apps Script Web App
-    const productUrl = "https://script.google.com/macros/s/AKfycbwemTn16gPS2OMbqRQCPWTHv7en78Qr8ULthfRdPbAj1TYUdoJbLTIDk7EtdiRWxlaa/exec"; // Replace with your actual Web App URL
+    const productUrl = "https://script.google.com/macros/s/AKfycbwemTn16gPS2OMbqRQCPWTHv7en78Qr8ULthfRdPbAj1TYUdoJbLTIDk7EtdiRWxlaa/exec";
 
-    // Fetch the product data from the Google Apps Script Web App
+    const createProductCard = (product, imageUrl) => {
+      return `
+        <div class="col-md-4 col-lg-3 col-sm-6 mb-4 d-flex justify-content-center">
+          <div class="card h-100" style="max-width: 300px; width: 100%;">
+            <!-- Product Image -->
+            <iframe src="${imageUrl}" 
+                    frameborder="0"
+                    onerror="this.onerror=null; this.src='https://via.placeholder.com/300?text=No+Image'"
+                    loading="lazy"
+                    style="width: 100%; height: 200px; object-fit: contain;"
+                    title="${product["What is the name of the product?"]} Image">
+            </iframe>
+            <!-- Product Information -->
+            <div class="card-body">
+              <h5 class="card-title">${product["What is the name of the product?"]}</h5>
+              <p class="card-text"><strong>Price:</strong> UGX ${product["What is the price of the product?"]}</p>
+              <small class="text-muted"><strong>Category:</strong> ${product["Select the product category:"]}</small>
+              <p class="card-text mt-2">${product["Please provide a description of the product."]}</p>
+            </div>
+
+            <!-- Social Sharing and Contact -->
+            <div class="card-footer d-flex flex-column align-items-start">
+              <div class="mb-2">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" 
+                   target="_blank" class="btn btn-sm btn-primary me-2">
+                  <i class="bi bi-facebook"></i> Share
+                </a>
+                <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(product["What is the name of the product?"])}" 
+                   target="_blank" class="btn btn-sm btn-info me-2">
+                  <i class="bi bi-twitter"></i> Tweet
+                </a>
+                <a href="https://wa.me/?text=${encodeURIComponent(product["What is the name of the product?"] + ' ' + window.location.href)}" 
+                   target="_blank" class="btn btn-sm btn-success">
+                  <i class="bi bi-whatsapp"></i> WhatsApp
+                </a>
+              </div>
+              <a href="https://wa.me/256777233322" target="_blank" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-chat-dots"></i> Contact Seller
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
     fetch(productUrl)
-      .then((response) => response.json()) // Parse JSON response
+      .then((response) => response.json())
       .then((data) => {
-        const products = data;
-        let productCardsHtml = "";
-        let navListHtml = "";
-        let tabContentHtml = "";
+        const products = data.map(cleanObject);
+        const categories = [...new Set(products.map(p => p["Select the product category:"]))];
+        const categoryNav = document.getElementById("category-nav");
+        const tabContent = document.getElementById("tab-content");
 
-        // Function to clean up keys and values in the JSON (optional)
-        const cleanObject = (obj) => {
-          const cleanedObj = {};
-          Object.keys(obj).forEach((key) => {
-            const cleanedKey = key.trim(); // Trim the key itself
-            const cleanedValue =
-              typeof obj[key] === "string" ? obj[key].trim() : obj[key]; // Trim the value if it's a string
-            cleanedObj[cleanedKey] = cleanedValue;
-          });
-          return cleanedObj;
-        };
+        categoryNav.innerHTML = categories.map((category, index) => `
+          <a class="nav-link ${index === 0 ? "active" : ""}" 
+             id="category-${index}-tab" 
+             data-bs-toggle="pill" 
+             href="#category-${index}" 
+             role="tab" 
+             aria-controls="category-${index}" 
+             aria-selected="${index === 0}">
+             ${category}
+          </a>
+        `).join("");
 
-        // Extract unique categories from product data
-        const categories = [
-          ...new Set(
-            products.map(
-              (product) =>
-                cleanObject(product)["Select the product category:"]
-            )
-          ),
-        ];
+        tabContent.innerHTML = categories.map((category, index) => `
+          <div class="tab-pane fade ${index === 0 ? "show active" : ""}" 
+               id="category-${index}" 
+               role="tabpanel" 
+               aria-labelledby="category-${index}-tab">
+            <div class="row" id="category-${index}-products"></div>
+          </div>
+        `).join("");
 
-        // Loop through categories to generate tab links and content
-        categories.forEach((category, index) => {
-          // Generate the nav link (tab) for each category
-          navListHtml += `
-            <a class="nav-link ${index === 0 ? "active" : ""}" 
-               id="category-${index}-tab" 
-               data-bs-toggle="pill" 
-               href="#category-${index}" 
-               role="tab" 
-               aria-controls="category-${index}" 
-               aria-selected="${index === 0 ? "true" : "false"}">
-               ${category}
-            </a>
-          `;
-
-          // Generate the tab content (pane) for each category
-          tabContentHtml += `
-            <div class="tab-pane fade ${index === 0 ? "show active" : ""}" 
-                 id="category-${index}" 
-                 role="tabpanel" 
-                 aria-labelledby="category-${index}-tab">
-              <div class="row" id="category-${index}-products">
-                <!-- Products for ${category} will be dynamically inserted here -->
-              </div>
-            </div>
-          `;
-        });
-
-        // Insert the generated HTML for tabs and tab content into the DOM
-        document.getElementById("category-nav").innerHTML = navListHtml;
-        document.getElementById("tab-content").innerHTML = tabContentHtml;
-
-        // Loop through the product data to generate product cards and place them under the respective category
         products.forEach((product) => {
-          const cleanedProduct = cleanObject(product);
-          const category = cleanedProduct["Select the product category:"];
-          const categoryIndex = categories.indexOf(category);
-
-          // Get the raw image URL
-          const rawImageUrl =
-            cleanedProduct["Upload images of the product (front, side, etc.)"];
-          let imageUrl = "";
-
-          // If the image URL exists and is a Google Drive link, transform it to the correct format
-          if (
-            rawImageUrl &&
-            rawImageUrl.includes("https://drive.google.com/open?id=")
-          ) {
-            const fileId = rawImageUrl.split(
-              "https://drive.google.com/open?id="
-            )[1];
-            imageUrl = `https://drive.google.com/file/d/${fileId}/preview`;
-          }
-
-          // Fallback image if the URL doesn't exist or is incorrect
-          const fallbackImage =
-            "https://via.placeholder.com/100?text=No+Image";
-
-
-            const phoneNumber = "256777233322";
-
-
-          // Create product card HTML for each product
-          const productCardHtml = `
-            <div class="col-md-4 col-lg-3 col-sm-6 mb-4 d-flex justify-content-center">
-              <div class="card h-100" style="max-width: 300px; width: 100%;">
-                <!-- Product Image -->
-                <iframe src="${imageUrl || fallbackImage}" 
-                        frameborder="0"
-                        onerror="this.onerror=null; this.src='${fallbackImage}'"
-                        loading="lazy"
-                        style="width: 100%; height: 200px; object-fit: contain;">
-                </iframe>
-
-                <!-- Product Information -->
-                <div class="card-body">
-                  <h5 class="card-title">${cleanedProduct["What is the name of the product?"]}</h5>
-                  <p class="card-text"><strong>Price:</strong> $${
-                    cleanedProduct["What is the price of the product?"]
-                  }</p>
-                  <small class="text-muted"><strong>Category:</strong> ${
-                    cleanedProduct["Select the product category:"]
-                  }</small>
-                  <!-- Button to show/hide details -->
-                  <button class="btn btn-primary show-details-btn mt-3" data-product-id="${
-                    cleanedProduct["What is the name of the product?"]
-                  }">Show Details</button>
-                </div>
-
-                <!-- Product Details (Initially Hidden) -->
-                <div class="card-footer">
-                  <div class="product-details d-none">
-                    <p><strong>Description:</strong> ${
-                      cleanedProduct["Please provide a description of the product."]
-                    }</p>
-                    <p><strong>Contact</strong> <a href="https://wa.me/${phoneNumber}" target="_blank">Click here to chat on WhatsApp</a></p>
-                    
-                    <p><strong>In Stock:</strong> ${
-                      cleanedProduct["Is this product currently in stock?"]
-                    }</p>
-                    <!-- Dismiss button -->
-                    <button class="btn btn-danger dismiss-details-btn mt-2">Dismiss</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          `;
-
-          // Append the product card to the correct category's tab content
-          document.getElementById(
-            `category-${categoryIndex}-products`
-          ).innerHTML += productCardHtml;
-        });
-
-        // Event listener for the "Show Details" button
-        document.querySelectorAll(".show-details-btn").forEach((button) => {
-          button.addEventListener("click", function () {
-            const productCard = this.closest(".card");
-            const details = productCard.querySelector(".product-details");
-            const showButton = productCard.querySelector(".show-details-btn");
-
-            // Toggle visibility of details and button text
-            details.classList.remove("d-none");
-            showButton.classList.add("d-none");
-          });
-        });
-
-        // Event listener for the "Dismiss" button
-        document.querySelectorAll(".dismiss-details-btn").forEach((button) => {
-          button.addEventListener("click", function () {
-            const productCard = this.closest(".card");
-            const details = productCard.querySelector(".product-details");
-            const showButton = productCard.querySelector(".show-details-btn");
-
-            // Hide the details and show the "Show Details" button again
-            details.classList.add("d-none");
-            showButton.classList.remove("d-none");
-          });
+          const categoryIndex = categories.indexOf(product["Select the product category:"]);
+          const imageUrl = transformImageUrl(product["Upload images of the product (front, side, etc.)"]);
+          const productCardHtml = createProductCard(product, imageUrl);
+          document.getElementById(`category-${categoryIndex}-products`).innerHTML += productCardHtml;
         });
       })
       .catch((error) => {
@@ -314,16 +232,83 @@
         document.getElementById("product-list").innerHTML = "Failed to load product data.";
       });
 
-     
-      // Toggle sidebar visibility using hamburger button
+    const cleanObject = (obj) => {
+      const cleanedObj = {};
+      Object.keys(obj).forEach((key) => {
+        const cleanedKey = key.trim();
+        const cleanedValue = typeof obj[key] === "string" ? obj[key].trim() : obj[key];
+        cleanedObj[cleanedKey] = cleanedValue;
+      });
+      return cleanedObj;
+    };
+
+    const transformImageUrl = (rawImageUrl) => {
+      if (rawImageUrl && rawImageUrl.includes("https://drive.google.com/open?id=")) {
+        const fileId = rawImageUrl.split("https://drive.google.com/open?id=")[1];
+        return `https://drive.google.com/file/d/${fileId}/preview`;
+      }
+      return "https://via.placeholder.com/300?text=No+Image";
+    };
+
+    // Add debounce to improve performance of event listeners
+    const debounce = (func, delay) => {
+      let timeout;
+      return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func(...args), delay);
+      };
+    };
+
+    // Optimize sidebar toggle for accessibility
     const navbarToggler = document.querySelector('.navbar-toggler');
     const sidebar = document.querySelector('.sidebar');
-    
-    navbarToggler.addEventListener('click', function() {
+    navbarToggler.addEventListener('click', debounce(() => {
       sidebar.classList.toggle('show');
+      sidebar.setAttribute('aria-hidden', !sidebar.classList.contains('show'));
+    }, 200));
+
+    // Lazy load images for better performance
+    const lazyLoadImages = () => {
+      const images = document.querySelectorAll('img[loading="lazy"]');
+      images.forEach((img) => {
+        if (img.getBoundingClientRect().top < window.innerHeight) {
+          img.src = img.dataset.src;
+        }
+      });
+    };
+    window.addEventListener('scroll', debounce(lazyLoadImages, 200));
+
+    // Add alt attributes dynamically for accessibility
+    const addAltAttributes = () => {
+      document.querySelectorAll('img').forEach((img) => {
+        if (!img.hasAttribute('alt')) {
+          img.setAttribute('alt', 'Product Image');
+        }
+      });
+    };
+    addAltAttributes();
+
+    // Search functionality
+    const searchBar = document.getElementById('search-bar');
+    const clearSearch = document.getElementById('clear-search');
+    const filterProducts = debounce(() => {
+      const query = searchBar.value.toLowerCase();
+      document.querySelectorAll('.card').forEach((card) => {
+        const productName = card.querySelector('.card-title').textContent.toLowerCase();
+        const productCategory = card.querySelector('.text-muted').textContent.toLowerCase();
+        if (productName.includes(query) || productCategory.includes(query)) {
+          card.parentElement.style.display = 'block';
+        } else {
+          card.parentElement.style.display = 'none';
+        }
+      });
+    }, 300);
+
+    searchBar.addEventListener('input', filterProducts);
+    clearSearch.addEventListener('click', () => {
+      searchBar.value = '';
+      filterProducts();
     });
-
-
   </script>
 
 </body>
