@@ -54,73 +54,36 @@
   <!-- General Favicon -->
   <link rel="icon" href="https://i.imgur.com/h1VWZop.png" type="image/x-icon">
   <style>
-    /* Custom styles */
-    
-   .sidebar {
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 250px;
-      background-color: #343a40;
-      color: white;
-      transition: transform 0.3s ease;
-      z-index: 1060; /* Ensure sidebar is above other elements */
-    }
-
-    .navbar{
-      z-index: 1060; /* Ensure sidebar is above other elements */
-
-    }
-    .sidebar .nav-link {
-      color: #ffffff;
-    }
-    .sidebar .nav-link:hover {
-      background-color: #495057;
-    }
+    /* Adjust content padding for better alignment with the offcanvas sidebar */
     .content {
-      margin-left: 250px;
       padding: 20px;
     }
-    @media (max-width: 768px) {
-      .sidebar {
-        transform: translateX(-250px);
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-      .sidebar.show {
-        transform: translateX(0);
-      }
-      .content {
-        margin-left: 0;
-      }
-    }
-
   </style>
 </head>
 
 <body>
 
-  <!-- Sidebar -->
-  <div class="sidebar" aria-label="Sidebar Navigation">
-    <div class="d-flex justify-content-between align-items-center p-3">
-      <h4>NextDoor</h4>
-      <!-- Toggler button to toggle sidebar visibility -->
-      
+  <!-- Sidebar (Offcanvas) -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="sidebarLabel">NextDoor</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="nav flex-column nav-pills category-nav" id="category-nav" role="tablist" aria-orientation="vertical">
-      <!-- Categories tabs will be dynamically inserted here -->
+    <div class="offcanvas-body">
+      <div class="nav flex-column nav-pills category-nav" id="category-nav" role="tablist" aria-orientation="vertical">
+        <!-- Categories tabs will be dynamically inserted here -->
+      </div>
     </div>
-    
   </div>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="Main Navigation">
-    <button class="navbar-toggler" type="button" id="toggle-sidebar" aria-label="Toggle sidebar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    <a class="navbar-brand" href="#">NextDoor</a>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <button class="btn btn-outline-primary me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+        <i class="bi bi-list"></i>
+      </button>
+      <a class="navbar-brand" href="#">NextDoor</a>
+    </div>
   </nav>
 
   <!-- Search Bar -->
@@ -148,7 +111,7 @@
 
     const createProductCard = (product, imageUrl) => {
       return `
-        <div class="col-md-4 col-lg-3 col-sm-6 mb-4 d-flex justify-content-center">
+        <div class="col-md-4 col-lg-3 col-sm-6 mb-4 d-flex justify-content-center" data-category="${product["Select the product category:"]}">
           <div class="card h-100" style="max-width: 300px; width: 100%;">
             <!-- Product Image -->
             <iframe src="${imageUrl}" 
@@ -165,27 +128,6 @@
               <small class="text-muted"><strong>Category:</strong> ${product["Select the product category:"]}</small>
               <p class="card-text mt-2">${product["Please provide a description of the product."]}</p>
             </div>
-
-            <!-- Social Sharing and Contact -->
-            <div class="card-footer d-flex flex-column align-items-start">
-              <div class="mb-2">
-                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" 
-                   target="_blank" class="btn btn-sm btn-primary me-2">
-                  <i class="bi bi-facebook"></i> Share
-                </a>
-                <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(product["What is the name of the product?"])}" 
-                   target="_blank" class="btn btn-sm btn-info me-2">
-                  <i class="bi bi-twitter"></i> Tweet
-                </a>
-                <a href="https://wa.me/?text=${encodeURIComponent(product["What is the name of the product?"] + ' ' + window.location.href)}" 
-                   target="_blank" class="btn btn-sm btn-success">
-                  <i class="bi bi-whatsapp"></i> WhatsApp
-                </a>
-              </div>
-              <a href="https://wa.me/256777233322" target="_blank" class="btn btn-sm btn-outline-primary">
-                <i class="bi bi-chat-dots"></i> Contact Seller
-              </a>
-            </div>
           </div>
         </div>
       `;
@@ -199,37 +141,45 @@
         const categoryNav = document.getElementById("category-nav");
         const tabContent = document.getElementById("tab-content");
 
+        // Populate sidebar with category selectors
         categoryNav.innerHTML = categories.map((category, index) => `
           <a class="nav-link ${index === 0 ? "active" : ""}" 
-             id="category-${index}-tab" 
-             data-bs-toggle="pill" 
-             href="#category-${index}" 
-             role="tab" 
-             aria-controls="category-${index}" 
-             aria-selected="${index === 0}">
+             href="#" 
+             data-category="${category}">
              ${category}
           </a>
         `).join("");
 
-        tabContent.innerHTML = categories.map((category, index) => `
-          <div class="tab-pane fade ${index === 0 ? "show active" : ""}" 
-               id="category-${index}" 
-               role="tabpanel" 
-               aria-labelledby="category-${index}-tab">
-            <div class="row" id="category-${index}-products"></div>
+        // Populate content with all products
+        tabContent.innerHTML = `
+          <div class="row">
+            ${products.map(product => {
+              const imageUrl = transformImageUrl(product["Upload images of the product (front, side, etc.)"]);
+              return createProductCard(product, imageUrl);
+            }).join("")}
           </div>
-        `).join("");
+        `;
 
-        products.forEach((product) => {
-          const categoryIndex = categories.indexOf(product["Select the product category:"]);
-          const imageUrl = transformImageUrl(product["Upload images of the product (front, side, etc.)"]);
-          const productCardHtml = createProductCard(product, imageUrl);
-          document.getElementById(`category-${categoryIndex}-products`).innerHTML += productCardHtml;
+        // Add event listeners to filter products by category
+        document.querySelectorAll(".category-nav .nav-link").forEach(link => {
+          link.addEventListener("click", (event) => {
+            event.preventDefault();
+            const selectedCategory = link.getAttribute("data-category");
+
+            // Highlight the active category
+            document.querySelectorAll(".category-nav .nav-link").forEach(navLink => navLink.classList.remove("active"));
+            link.classList.add("active");
+
+            // Filter products in the UI
+            document.querySelectorAll(".tab-content .col-md-4, .col-lg-3, .col-sm-6").forEach(card => {
+              card.style.display = card.getAttribute("data-category") === selectedCategory ? "flex" : "none";
+            });
+          });
         });
       })
       .catch((error) => {
         console.error("Error fetching product data:", error);
-        document.getElementById("product-list").innerHTML = "Failed to load product data.";
+        document.getElementById("tab-content").innerHTML = "Failed to load product data.";
       });
 
     const cleanObject = (obj) => {
@@ -259,14 +209,6 @@
       };
     };
 
-    // Optimize sidebar toggle for accessibility
-    const navbarToggler = document.querySelector('.navbar-toggler');
-    const sidebar = document.querySelector('.sidebar');
-    navbarToggler.addEventListener('click', debounce(() => {
-      sidebar.classList.toggle('show');
-      sidebar.setAttribute('aria-hidden', !sidebar.classList.contains('show'));
-    }, 200));
-
     // Lazy load images for better performance
     const lazyLoadImages = () => {
       const images = document.querySelectorAll('img[loading="lazy"]');
@@ -293,13 +235,23 @@
     const clearSearch = document.getElementById('clear-search');
     const filterProducts = debounce(() => {
       const query = searchBar.value.toLowerCase();
-      document.querySelectorAll('.card').forEach((card) => {
+      document.querySelectorAll('.tab-pane .card').forEach((card) => {
         const productName = card.querySelector('.card-title').textContent.toLowerCase();
         const productCategory = card.querySelector('.text-muted').textContent.toLowerCase();
+        const parentColumn = card.closest('.col-md-4, .col-lg-3, .col-sm-6');
         if (productName.includes(query) || productCategory.includes(query)) {
-          card.parentElement.style.display = 'block';
+          parentColumn.style.display = 'block';
+          parentColumn.closest('.tab-pane').classList.add('show', 'active'); // Ensure the tab is visible
         } else {
-          card.parentElement.style.display = 'none';
+          parentColumn.style.display = 'none';
+        }
+      });
+
+      // Hide tabs with no visible products
+      document.querySelectorAll('.tab-pane').forEach((tabPane) => {
+        const visibleProducts = tabPane.querySelectorAll('.col-md-4, .col-lg-3, .col-sm-6[style="display: block;"]');
+        if (visibleProducts.length === 0) {
+          tabPane.classList.remove('show', 'active');
         }
       });
     }, 300);
