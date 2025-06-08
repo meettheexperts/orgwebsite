@@ -132,6 +132,11 @@
           <a class="nav-link" id="contact-tab" data-bs-toggle="pill" href="#contact" role="tab" aria-controls="contact"
             aria-selected="false">Contact Us</a>
         </li>
+
+        <!-- About Tab -->
+        <li class="nav-item">
+          <a class="nav-link" id="about-tab" data-bs-toggle="pill" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
+        </li>
       </ul>
     </div>
 
@@ -231,6 +236,10 @@
                 <a class="nav-link" id="contact-tab" data-bs-toggle="pill" href="#contact" role="tab"
                   aria-controls="contact" aria-selected="false">Contact Us</a>
               </li>
+
+              <li class="nav-item">
+                <a class="nav-link" id="about-tab" data-bs-toggle="pill" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
+              </li>
             </ul>
           </div>
 
@@ -251,7 +260,7 @@
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="row">
               <!-- Services Section (Left Column) -->
-              <div id="services" class="col-md-8">
+              <div id="services" class="col-md-12">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 10000">
                   <div class="container-fluid">
                     <div class="search-popup-container" id="searchPopup" style="
@@ -281,14 +290,14 @@
                   </div>
                 </nav>
 
-                <div class="row g-4">
+                <div class="row g-3">
                   <!-- Software Development -->
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                     <div class="card shadow-sm service-card">
                       <div class="card-body">
                         <div class="content">
                           <div class="image-wrapper">
-                            <img src="https://i.imgur.com/fA75801.jpeg" alt="Software Development"
+                            <img src="images/software.png" alt="Software Development"
                               class="card-img-top" />
                           </div>
                           <h3 class="card-title">Software Development</h3>
@@ -319,12 +328,12 @@
                   </div>
 
                   <!-- Computer Training -->
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                     <div class="card shadow-sm service-card">
                       <div class="card-body">
                         <div class="content">
                           <div class="image-wrapper">
-                            <img src="https://i.imgur.com/JOWXWNw.jpeg" alt="Computer Training" class="card-img-top" />
+                            <img src="images/training.png" alt="Computer Training" class="card-img-top" />
                           </div>
                           <h3 class="card-title">Computer Training</h3>
                           <p class="card-description">
@@ -354,15 +363,15 @@
                   </div>
 
                   <!-- Surveying Solutions -->
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                     <div class="card shadow-sm service-card">
                       <div class="card-body">
                         <div class="content">
                           <div class="image-wrapper">
-                            <img src="https://i.imgur.com/2LnXOqR.jpeg" alt="Surveying Solutions"
+                            <img src="images/surveying.png" alt="Surveying Solutions"
                               class="card-img-top" />
                           </div>
-                          <h3 class="card-title">Surveying Solutions</h3>
+                          <h3 class="card-title">Land Surveying</h3>
                           <p class="card-description">
                             Delivering accurate and reliable land surveying services, including boundary opening, land
                             titling, and topographic surveys.
@@ -390,12 +399,12 @@
                   </div>
 
                   <!-- GIS Solutions -->
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                     <div class="card shadow-sm service-card">
                       <div class="card-body">
                         <div class="content">
                           <div class="image-wrapper">
-                            <img src="https://i.imgur.com/lvUhLGf.jpeg" alt="GIS Solutions" class="card-img-top" />
+                            <img src="images/gis.png" alt="GIS Solutions" class="card-img-top" />
                           </div>
                           <h3 class="card-title">GIS Solutions</h3>
                           <p class="card-description">
@@ -426,13 +435,7 @@
                 </div>
               </div>
 
-              <!-- Map Section (Right Column) -->
-              <div id="map-section" class="col-md-4" style="height: 100%">
-                <div class="text-center w-100">
-                  <div id="map" class="border rounded" style="height: 100vh"></div>
-                  <!-- Map container (You can integrate a real map here if needed) -->
-                </div>
-              </div>
+              
             </div>
           </div>
 
@@ -804,6 +807,25 @@
               </div>
             </div>
             <a href="mailto:meetthexperts@gmail.com" class="btn btn-primary mt-3">Email Us</a>
+          </div>
+
+          <!-- About Section -->
+          <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
+            <h4><i class="fas fa-info-circle"></i> About Us</h4>
+            <p>
+              Meet The Experts (MTE) is a dynamic technology company dedicated to empowering businesses and individuals through innovative solutions. Our expertise spans software development, embedded systems, professional training, and GIS services. With a commitment to excellence, we deliver cutting-edge websites, robust database systems, and tailored IT consultation to drive digital transformation.
+            </p>
+            <p>
+              At MTE, we believe in fostering growth, efficiency, and innovation. Whether you're seeking bespoke software solutions, advanced GIS systems, or comprehensive training programs, MTE is your trusted partner in technological advancement.
+            </p>
+            <h5>Our Mission</h5>
+            <p>
+              To empower businesses and individuals by providing innovative technology solutions and fostering digital transformation.
+            </p>
+            <h5>Our Vision</h5>
+            <p>
+              To be a global leader in technology solutions, driving growth and efficiency through innovation.
+            </p>
           </div>
 
           <!-- Embedded Systems Tab-Pane -->
@@ -1201,7 +1223,7 @@
       <!-- Footer for Dark Theme -->
       <footer class="py-3 mt-auto" style="background-color: var(--navbar-bg-color)">
         <div class="container text-center text-light">
-          <p>&copy; 2024 Meet the Experts. All Rights Reserved.</p>
+          <p>&copy; 2025 Meet the Experts. All Rights Reserved.</p>
           <p>
             Stay Connected:
             <a href="#" style="color: var(--navbar-brand-color)">LinkedIn</a>

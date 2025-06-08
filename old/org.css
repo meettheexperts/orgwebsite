@@ -687,15 +687,12 @@
       }
 
       /* Body Styles */
-      
       body {
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: "Arial", sans-serif;
         background-color: var(--main-bg-color);
         color: var(--paragraph-color);
         /* Or var(--text-color) depending on intent */
-       font-size: 18px;
-  line-height: 1.6;
-  
+        line-height: 1.6;
         margin: 0;
         padding: 0;
       }
