@@ -135,7 +135,8 @@
 
         <!-- About Tab -->
         <li class="nav-item">
-          <a class="nav-link" id="about-tab" data-bs-toggle="pill" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
+          <a class="nav-link" id="about-tab" data-bs-toggle="pill" href="#about" role="tab" aria-controls="about"
+            aria-selected="false">About</a>
         </li>
       </ul>
     </div>
@@ -238,7 +239,8 @@
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" id="about-tab" data-bs-toggle="pill" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
+                <a class="nav-link" id="about-tab" data-bs-toggle="pill" href="#about" role="tab" aria-controls="about"
+                  aria-selected="false">About</a>
               </li>
             </ul>
           </div>
@@ -260,45 +262,16 @@
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="row">
               <!-- Services Section (Left Column) -->
-              <div id="services" class="col-md-12">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 10000">
-                  <div class="container-fluid">
-                    <div class="search-popup-container" id="searchPopup" style="
-                          display: none;
-                          position: absolute;
-                          top: 100%;
-                          left: 0;
-                          z-index: 100;
-                          width: 100%;
-                          max-height: 200px;
-                          overflow-y: auto;
-                          background-color: #fff;
-                          border: 1px solid #ccc;
-                          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                        ">
-                      <!-- Matching service suggestions will be dynamically added here -->
-                    </div>
-
-                    <!-- Keep Search always visible -->
-                    <form class="d-flex ms-auto w-100" id="searchForm">
-                      <input class="form-control w-100 me-2" type="search" id="searchInput"
-                        placeholder="Search Services" aria-label="Search" />
-                      <button class="btn btn-outline-success" type="submit">
-                        Search
-                      </button>
-                    </form>
-                  </div>
-                </nav>
-
+              <div id="services" class="col-md-8">
+                <h2 class="mb-4">Our Services</h2>
                 <div class="row g-3">
                   <!-- Software Development -->
-                  <div class="col-md-3">
-                    <div class="card shadow-sm service-card">
-                      <div class="card-body">
-                        <div class="content">
-                          <div class="image-wrapper">
-                            <img src="images/software.png" alt="Software Development"
-                              class="card-img-top" />
+                  <div class="col-md-6 h-100">
+                    <div class="card shadow-sm service-card h-100 d-flex flex-column">
+                      <div class="card-body d-flex flex-column">
+                        <div class="content flex-grow-1">
+                          <div class="image-wrapper mb-3">
+                            <img src="images/software.png" alt="Software Development" class="card-img-top" />
                           </div>
                           <h3 class="card-title">Software Development</h3>
                           <p class="card-description">
@@ -308,7 +281,7 @@
                           <button class="btn btn-primary" onclick="toggleDetails(this)">
                             Show Info
                           </button>
-                          <div class="card-details">
+                          <div class="card-details mt-3">
                             <p><strong>Service Cost:</strong> Contact for Pricing</p>
                             <p><strong>Support:</strong> Comprehensive IT Consultation</p>
                             <h4>Included Activities:</h4>
@@ -317,10 +290,10 @@
                               <li>Database systems tailored to business needs</li>
                               <li>Responsive user interfaces for optimal performance</li>
                             </ul>
-                            <button class="btn btn-success request-quote">Request a Quote</button>
-                            <button class="btn btn-danger close-button" onclick="closeDetails(this)">
-                              Close
-                            </button>
+                            <div class="mt-auto">
+                              <button class="btn btn-success request-quote">Request a Quote</button>
+                              <button class="btn btn-danger close-button" onclick="closeDetails(this)">Close</button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -328,11 +301,11 @@
                   </div>
 
                   <!-- Computer Training -->
-                  <div class="col-md-3">
-                    <div class="card shadow-sm service-card">
-                      <div class="card-body">
-                        <div class="content">
-                          <div class="image-wrapper">
+                  <div class="col-md-6 h-100">
+                    <div class="card shadow-sm service-card h-100 d-flex flex-column">
+                      <div class="card-body d-flex flex-column">
+                        <div class="content flex-grow-1">
+                          <div class="image-wrapper mb-3">
                             <img src="images/training.png" alt="Computer Training" class="card-img-top" />
                           </div>
                           <h3 class="card-title">Computer Training</h3>
@@ -343,7 +316,7 @@
                           <button class="btn btn-primary" onclick="toggleDetails(this)">
                             Show Info
                           </button>
-                          <div class="card-details">
+                          <div class="card-details mt-3">
                             <p><strong>Service Cost:</strong> Contact for Pricing</p>
                             <p><strong>Support:</strong> Flexible Online and Physical Sessions</p>
                             <h4>Included Activities:</h4>
@@ -352,24 +325,23 @@
                               <li>Programming languages and cloud computing</li>
                               <li>Cybersecurity fundamentals and networking</li>
                             </ul>
-                            <button class="btn btn-success request-quote">Explore Training</button>
-                            <button class="btn btn-danger close-button" onclick="closeDetails(this)">
-                              Close
-                            </button>
+                            <div class="mt-auto">
+                              <button class="btn btn-success request-quote">Explore Training</button>
+                              <button class="btn btn-danger close-button" onclick="closeDetails(this)">Close</button>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <!-- Surveying Solutions -->
-                  <div class="col-md-3">
-                    <div class="card shadow-sm service-card">
-                      <div class="card-body">
-                        <div class="content">
-                          <div class="image-wrapper">
-                            <img src="images/surveying.png" alt="Surveying Solutions"
-                              class="card-img-top" />
+                  <!-- Land Surveying -->
+                  <div class="col-md-6 h-100">
+                    <div class="card shadow-sm service-card h-100 d-flex flex-column">
+                      <div class="card-body d-flex flex-column">
+                        <div class="content flex-grow-1">
+                          <div class="image-wrapper mb-3">
+                            <img src="images/surveying.png" alt="Surveying Solutions" class="card-img-top" />
                           </div>
                           <h3 class="card-title">Land Surveying</h3>
                           <p class="card-description">
@@ -379,7 +351,7 @@
                           <button class="btn btn-primary" onclick="toggleDetails(this)">
                             Show Info
                           </button>
-                          <div class="card-details">
+                          <div class="card-details mt-3">
                             <p><strong>Service Cost:</strong> Contact for Pricing</p>
                             <p><strong>Support:</strong> Advanced Surveying Technology</p>
                             <h4>Included Activities:</h4>
@@ -388,10 +360,10 @@
                               <li>Engineering surveys for construction planning</li>
                               <li>Mountain surveys in challenging terrains</li>
                             </ul>
-                            <button class="btn btn-success request-quote">Learn More</button>
-                            <button class="btn btn-danger close-button" onclick="closeDetails(this)">
-                              Close
-                            </button>
+                            <div class="mt-auto">
+                              <button class="btn btn-success request-quote">Learn More</button>
+                              <button class="btn btn-danger close-button" onclick="closeDetails(this)">Close</button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -399,11 +371,11 @@
                   </div>
 
                   <!-- GIS Solutions -->
-                  <div class="col-md-3">
-                    <div class="card shadow-sm service-card">
-                      <div class="card-body">
-                        <div class="content">
-                          <div class="image-wrapper">
+                  <div class="col-md-6 h-100">
+                    <div class="card shadow-sm service-card h-100 d-flex flex-column">
+                      <div class="card-body d-flex flex-column">
+                        <div class="content flex-grow-1">
+                          <div class="image-wrapper mb-3">
                             <img src="images/gis.png" alt="GIS Solutions" class="card-img-top" />
                           </div>
                           <h3 class="card-title">GIS Solutions</h3>
@@ -414,7 +386,7 @@
                           <button class="btn btn-primary" onclick="toggleDetails(this)">
                             Show Info
                           </button>
-                          <div class="card-details">
+                          <div class="card-details mt-3">
                             <p><strong>Service Cost:</strong> Contact for Pricing</p>
                             <p><strong>Support:</strong> GIS Data Integration</p>
                             <h4>Included Activities:</h4>
@@ -423,19 +395,76 @@
                               <li>Professional maps and predictive models</li>
                               <li>Training programs for GIS proficiency</li>
                             </ul>
-                            <button class="btn btn-success request-quote">Discover GIS Solutions</button>
-                            <button class="btn btn-danger close-button" onclick="closeDetails(this)">
-                              Close
-                            </button>
+                            <div class="mt-auto">
+                              <button class="btn btn-success request-quote">Discover GIS Solutions</button>
+                              <button class="btn btn-danger close-button" onclick="closeDetails(this)">Close</button>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+
                 </div>
               </div>
 
-              
+
+              <div class="col-md-4" style="height: 100%">
+                <div class="text-center w-100">
+                  <div id="image-carousel" class="carousel slide border rounded" data-bs-ride="carousel"
+                    style="height: 100vh;">
+                    <div class="carousel-inner h-100">
+                      <div class="carousel-item active h-100">
+                        <a href="https://example.com/page1" target="_blank" class="d-block h-100">
+                          <div class="p-3 h-100">
+                            <img src="images/mte (1).png" class="d-block w-100 h-100 rounded object-fit-cover"
+                              alt="Image 1">
+                          </div>
+                        </a>
+                      </div>
+                      <div class="carousel-item h-100">
+                        <a href="https://example.com/page2" target="_blank" class="d-block h-100">
+                          <div class="p-3 h-100">
+                            <img src="images/mte (2).png" class="d-block w-100 h-100 rounded object-fit-cover"
+                              alt="Image 2">
+                          </div>
+                        </a>
+                      </div>
+                      <div class="carousel-item h-100">
+                        <a href="https://example.com/page3" target="_blank" class="d-block h-100">
+                          <div class="p-3 h-100">
+                            <img src="images/mte (3).png" class="d-block w-100 h-100 rounded object-fit-cover"
+                              alt="Image 3">
+                          </div>
+                        </a>
+                      </div>
+                      <div class="carousel-item h-100">
+                        <a href="https://example.com/page4" target="_blank" class="d-block h-100">
+                          <div class="p-3 h-100">
+                            <img src="images/mte (4).png" class="d-block w-100 h-100 rounded object-fit-cover"
+                              alt="Image 4">
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#image-carousel"
+                      data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#image-carousel"
+                      data-bs-slide="next">
+                      <span class="carousel-control-next-icon"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
             </div>
           </div>
 
@@ -813,14 +842,20 @@
           <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
             <h4><i class="fas fa-info-circle"></i> About Us</h4>
             <p>
-              Meet The Experts (MTE) is a dynamic technology company dedicated to empowering businesses and individuals through innovative solutions. Our expertise spans software development, embedded systems, professional training, and GIS services. With a commitment to excellence, we deliver cutting-edge websites, robust database systems, and tailored IT consultation to drive digital transformation.
+              Meet The Experts (MTE) is a dynamic technology company dedicated to empowering businesses and individuals
+              through innovative solutions. Our expertise spans software development, embedded systems, professional
+              training, and GIS services. With a commitment to excellence, we deliver cutting-edge websites, robust
+              database systems, and tailored IT consultation to drive digital transformation.
             </p>
             <p>
-              At MTE, we believe in fostering growth, efficiency, and innovation. Whether you're seeking bespoke software solutions, advanced GIS systems, or comprehensive training programs, MTE is your trusted partner in technological advancement.
+              At MTE, we believe in fostering growth, efficiency, and innovation. Whether you're seeking bespoke
+              software solutions, advanced GIS systems, or comprehensive training programs, MTE is your trusted partner
+              in technological advancement.
             </p>
             <h5>Our Mission</h5>
             <p>
-              To empower businesses and individuals by providing innovative technology solutions and fostering digital transformation.
+              To empower businesses and individuals by providing innovative technology solutions and fostering digital
+              transformation.
             </p>
             <h5>Our Vision</h5>
             <p>
