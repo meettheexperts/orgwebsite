@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Essential Christian Memory Verses</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#f9f9f9">
+  <style>
+    body {
+      background-color: #f9f9f9;
+    }
+
+    .verse-card {
+      margin-bottom: 1rem;
+    }
+
+    .highlight {
+      background-color: yellow;
+    }
+
+    /* Minimalist controls bar */
+    .controls-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5em;
+      margin-bottom: 0.5em;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      padding: 0.4em 0.6em;
+      font-size: 1.2em;
+      cursor: pointer;
+      color: #333;
+      transition: color 0.2s;
+    }
+
+    .icon-btn:hover,
+    .icon-btn.active {
+      color: #0078d4;
+    }
+
+    .more-menu {
+      position: relative;
+      display: inline-block;
+    }
+
+    .more-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      background: #fff;
+      min-width: 160px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      z-index: 10;
+      border-radius: 0.25rem;
+      border: 1px solid #eee;
+      padding: 0.5em 0;
+    }
+
+    .more-menu.show .more-dropdown {
+      display: block;
+    }
+
+    .more-dropdown button {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 0.5em 1em;
+      font-size: 1em;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .more-dropdown button:hover {
+      background: #f5f5f5;
+    }
+
+    /* Verse text styling */
+    .verse-text {
+      font-style: italic;
+      font-size: 1.15em;
+      margin-bottom: 0.2em;
+    }
+
+    .verse-reference {
+      color: #888;
+      font-size: 0.95em;
+      margin-bottom: 0.2em;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 2em;
+      color: #aaa;
+      font-size: 0.95em;
+      padding: 1em 0 0.5em 0;
+      border-top: 1px solid #eee;
+    }
+
+    .single-view-outer {
+      display: flex;
+      flex-direction: column;
+      min-height: 50vh;
+      height: calc(80vh - 120px);
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .single-view-card {
+      flex: 0 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 0;
+      width: 100%;
+      max-width: 500px;
+      margin: auto;
+      max-height: 420px;
+    }
+
+    .single-view-card .card {
+      height: 100%;
+      max-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .single-view-card .card-body {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .single-view-card .verse-text {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      text-align: center;
+      font-size: 1.15em;
+      min-height: 3em;
+      max-height: 8em;
+    }
+
+    .single-view-card .verse-reference {
+      margin-bottom: 0.5em;
+    }
+
+    @media (max-width: 600px) {
+      .single-view-card {
+        max-width: 98vw;
+        max-height: 320px;
+      }
+
+      .single-view-card .card {
+        max-height: 320px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container py-4" id="mainContainer">
+    <h1 class="text-center mb-4">Key Bibles Verses</h1>
+    <div id="sticky-controls" class="bg-white pb-2" style="position:sticky;top:0;z-index:100;border-bottom:1px solid #eee;">
+      <input type="text" id="search" class="form-control mb-2" placeholder="Search by keyword or scripture..." />
+      <div class="controls-bar">
+        <button id="showBoth" class="icon-btn" title="Show Both"><i class="fa-solid fa-list"></i></button>
+        <button id="showVerseOnly" class="icon-btn" title="Show Verse Only"><i class="fa-solid fa-font"></i></button>
+        <button id="showRefOnly" class="icon-btn" title="Show Reference Only"><i class="fa-solid fa-book-bible"></i></button>
+        <button id="toggleViewMode" class="icon-btn" title="Single View"><i class="fa-solid fa-clone"></i></button>
+        <button id="toggleFavorites" class="icon-btn" title="View Favorites"><i class="fa-solid fa-star"></i></button>
+        <div class="more-menu" id="moreMenu">
+          <button class="icon-btn" title="More Options" id="moreMenuBtn"><i class="fa-solid fa-ellipsis"></i></button>
+          <div class="more-dropdown" id="moreDropdown">
+            <button id="aboutBtn">About</button>
+            <button id="helpBtn">Help</button>
+            <!-- Add more less-used options here -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="verseList" class="row"></div>
+    <div id="singleNav" class="mb-2 text-center" style="display:none;">
+      <button id="prevBtn" class="btn btn-outline-secondary btn-sm me-2">Previous</button>
+      <span id="singleCounter"></span>
+      <button id="nextBtn" class="btn btn-outline-secondary btn-sm ms-2">Next</button>
+    </div>
+  </div>
+  <footer class="footer">
+    <small>&copy; <span id="footerYear"></span> MTE &mdash; "Thy word have I hid in mine heart..."</small>
+  </footer>
+  <script>
+    const verses = [
+      { ref: "John 3:16", text: "For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life." },
+      { ref: "Romans 6:23", text: "For the wages of sin is death, but the free gift of God is eternal life in Christ Jesus our Lord." },
+      { ref: "Romans 3:23", text: "For all have sinned and fall short of the glory of God." },
+      { ref: "Ephesians 2:8-9", text: "For by grace you have been saved through faith..." },
+      { ref: "Romans 5:8", text: "But God shows his love for us in that while we were still sinners, Christ died for us." },
+      { ref: "Isaiah 53:5", text: "He was pierced for our transgressions... by his wounds we are healed." },
+      { ref: "Acts 4:12", text: "There is salvation in no one else..." },
+      { ref: "Romans 10:9", text: "If you confess with your mouth that Jesus is Lord... you will be saved." },
+      { ref: "2 Corinthians 5:21", text: "For our sake he made him to be sin who knew no sin..." },
+      { ref: "1 John 1:9", text: "If we confess our sins, he is faithful and just to forgive us..." },
+      { ref: "Matthew 28:19-20", text: "Go therefore and make disciples of all nations..." },
+      { ref: "Galatians 2:20", text: "I have been crucified with Christ. It is no longer I who live..." },
+      { ref: "Philippians 4:13", text: "I can do all things through Christ who strengthens me." },
+      { ref: "Psalm 119:11", text: "I have stored up your word in my heart, that I might not sin against you." },
+      { ref: "Hebrews 11:1", text: "Now faith is the assurance of things hoped for..." },
+      { ref: "Proverbs 3:5-6", text: "Trust in the Lord with all your heart..." },
+      { ref: "1 Corinthians 10:13", text: "No temptation has overtaken you that is not common to man..." },
+      { ref: "James 1:22", text: "Be doers of the word, and not hearers only..." },
+      { ref: "Romans 12:2", text: "Do not be conformed to this world, but be transformed..." },
+      { ref: "Matthew 6:33", text: "But seek first the kingdom of God and his righteousness..." },
+      { ref: "John 14:6", text: "Jesus said to him, 'I am the way, and the truth, and the life. No one comes to the Father except through me.'" },
+      { ref: "Galatians 5:22-23", text: "But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control..." },
+      { ref: "Matthew 22:37-39", text: "Love the Lord your God with all your heart... and love your neighbor as yourself." },
+      { ref: "1 Thessalonians 5:16-18", text: "Rejoice always, pray without ceasing, give thanks in all circumstances..." },
+      { ref: "Isaiah 41:10", text: "Fear not, for I am with you; be not dismayed, for I am your God..." },
+      { ref: "Jeremiah 29:11", text: "For I know the plans I have for you, declares the Lord, plans for welfare and not for evil..." },
+      { ref: "Psalm 23:1", text: "The Lord is my shepherd; I shall not want." },
+      { ref: "2 Timothy 1:7", text: "For God gave us a spirit not of fear but of power and love and self-control." },
+      { ref: "Hebrews 13:5", text: "I will never leave you nor forsake you." },
+      { ref: "Revelation 3:20", text: "Behold, I stand at the door and knock..." },
+      { ref: "Colossians 3:23", text: "Whatever you do, work heartily, as for the Lord and not for men." },
+      { ref: "James 1:5", text: "If any of you lacks wisdom, let him ask God, who gives generously to all..." },
+      { ref: "Micah 6:8", text: "What does the Lord require of you but to do justice, and to love kindness, and to walk humbly with your God?" },
+      {
+        ref: "Genesis 1:1",
+        text: "In the beginning, God created the heavens and the earth."
+      },
+      {
+        ref: "Exodus 14:14",
+        text: "The Lord will fight for you; you need only to be still."
+      },
+      {
+        ref: "Leviticus 19:18",
+        text: "Love your neighbor as yourself. I am the Lord."
+      },
+      {
+        ref: "Deuteronomy 6:5",
+        text: "Love the Lord your God with all your heart and with all your soul and with all your strength."
+      },
+      {
+        ref: "Joshua 1:9",
+        text: "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go."
+      },
+      {
+        ref: "1 Samuel 16:7",
+        text: "The Lord does not look at the things people look at. People look at the outward appearance, but the Lord looks at the heart."
+      },
+      {
+        ref: "2 Samuel 22:31",
+        text: "As for God, his way is perfect: The Lord’s word is flawless; he shields all who take refuge in him."
+      },
+      {
+        ref: "1 Kings 8:61",
+        text: "Let your heart therefore be wholly true to the Lord our God, walking in his statutes and keeping his commandments."
+      },
+      {
+        ref: "2 Chronicles 7:14",
+        text: "If my people, who are called by my name, will humble themselves and pray and seek my face and turn from their wicked ways..."
+      },
+      {
+        ref: "Nehemiah 8:10",
+        text: "The joy of the Lord is your strength."
+      },
+      {
+        ref: "Job 1:21",
+        text: "The Lord gave and the Lord has taken away; blessed be the name of the Lord."
+      },
+      {
+        ref: "Psalm 1:1-2",
+        text: "Blessed is the man who does not walk in the counsel of the wicked... but his delight is in the law of the Lord."
+      },
+      {
+        ref: "Psalm 23:4",
+        text: "Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me..."
+      },
+      {
+        ref: "Psalm 27:1",
+        text: "The Lord is my light and my salvation—whom shall I fear?"
+      },
+      {
+        ref: "Psalm 46:10",
+        text: "Be still, and know that I am God."
+      },
+      {
+        ref: "Psalm 51:10",
+        text: "Create in me a clean heart, O God, and renew a right spirit within me."
+      },
+      {
+        ref: "Proverbs 4:23",
+        text: "Above all else, guard your heart, for everything you do flows from it."
+      },
+      {
+        ref: "Ecclesiastes 3:1",
+        text: "There is a time for everything, and a season for every activity under the heavens."
+      },
+      {
+        ref: "Isaiah 40:31",
+        text: "But those who hope in the Lord will renew their strength... they will run and not grow weary."
+      },
+      {
+        ref: "Jeremiah 17:7",
+        text: "Blessed is the one who trusts in the Lord, whose confidence is in him."
+      },
+      {
+        ref: "Lamentations 3:22-23",
+        text: "The steadfast love of the Lord never ceases; his mercies never come to an end; they are new every morning."
+      },
+      {
+        ref: "Ezekiel 36:26",
+        text: "I will give you a new heart and put a new spirit in you..."
+      },
+      {
+        ref: "Daniel 3:17-18",
+        text: "If we are thrown into the blazing furnace, the God we serve is able to deliver us..."
+      },
+      {
+        ref: "Hosea 6:6",
+        text: "For I desire mercy, not sacrifice, and acknowledgment of God rather than burnt offerings."
+      },
+      {
+        ref: "Joel 2:12",
+        text: "Return to me with all your heart, with fasting and weeping and mourning."
+      },
+      {
+        ref: "Amos 5:24",
+        text: "Let justice roll on like a river, righteousness like a never-failing stream!"
+      },
+      {
+        ref: "Habakkuk 3:19",
+        text: "The Sovereign Lord is my strength; he makes my feet like the feet of a deer..."
+      },
+      {
+        ref: "Zephaniah 3:17",
+        text: "The Lord your God is with you, the Mighty Warrior who saves..."
+      },
+      {
+        ref: "Zechariah 4:6",
+        text: "Not by might nor by power, but by my Spirit,' says the Lord Almighty."
+      },
+      {
+        ref: "Malachi 3:10",
+        text: "Bring the whole tithe into the storehouse... Test me in this, says the Lord Almighty..."
+      },
+      {
+        ref: "Matthew 5:14",
+        text: "You are the light of the world. A city set on a hill cannot be hidden."
+      },
+      {
+        ref: "Matthew 7:7",
+        text: "Ask, and it will be given to you; seek, and you will find; knock, and it will be opened to you."
+      },
+      {
+        ref: "Matthew 11:28",
+        text: "Come to me, all who labor and are heavy laden, and I will give you rest."
+      },
+      {
+        ref: "Matthew 16:24",
+        text: "If anyone would come after me, let him deny himself and take up his cross and follow me."
+      },
+      {
+        ref: "Matthew 22:37",
+        text: "Love the Lord your God with all your heart and with all your soul and with all your mind."
+      },
+      {
+        ref: "Mark 10:45",
+        text: "For even the Son of Man came not to be served but to serve, and to give his life as a ransom for many."
+      },
+      {
+        ref: "Luke 6:31",
+        text: "Do to others as you would have them do to you."
+      },
+      {
+        ref: "Luke 9:23",
+        text: "Whoever wants to be my disciple must deny themselves and take up their cross daily and follow me."
+      },
+      {
+        ref: "Luke 24:6-7",
+        text: "He is not here; he has risen! Remember how he told you..."
+      },
+      {
+        ref: "John 8:12",
+        text: "I am the light of the world. Whoever follows me will not walk in darkness..."
+      },
+      {
+        ref: "John 10:10",
+        text: "I came that they may have life and have it abundantly."
+      },
+      {
+        ref: "John 11:25",
+        text: "I am the resurrection and the life. Whoever believes in me, though he die, yet shall he live."
+      },
+      {
+        ref: "John 13:35",
+        text: "By this everyone will know that you are my disciples, if you love one another."
+      },
+      {
+        ref: "John 15:5",
+        text: "I am the vine; you are the branches... apart from me you can do nothing."
+      },
+      {
+        ref: "Acts 1:8",
+        text: "You will receive power when the Holy Spirit has come upon you..."
+      },
+      {
+        ref: "Acts 2:38",
+        text: "Repent and be baptized, every one of you, in the name of Jesus Christ for the forgiveness of your sins."
+      },
+      {
+        ref: "Acts 17:28",
+        text: "For in him we live and move and have our being."
+      },
+      {
+        ref: "Romans 1:16",
+        text: "For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes."
+      },
+      {
+        ref: "Romans 8:1",
+        text: "There is now no condemnation for those who are in Christ Jesus."
+      },
+      {
+        ref: "Romans 8:28",
+        text: "We know that in all things God works for the good of those who love him..."
+      },
+      {
+        ref: "Psalm 100:4",
+        text: "Enter his gates with thanksgiving and his courts with praise; give thanks to him and praise his name."
+      },
+      {
+        ref: "Isaiah 26:3",
+        text: "You will keep in perfect peace those whose minds are steadfast, because they trust in you."
+      },
+      {
+        ref: "Matthew 6:9-13",
+        text: "Our Father in heaven, hallowed be your name... (The Lord’s Prayer)."
+      },
+      {
+        ref: "Luke 23:34",
+        text: "Jesus said, 'Father, forgive them, for they know not what they do.'"
+      },
+      {
+        ref: "John 16:33",
+        text: "In this world you will have trouble. But take heart! I have overcome the world."
+      },
+      {
+        ref: "1 Corinthians 13:4-7",
+        text: "Love is patient, love is kind... It always protects, always trusts, always hopes, always perseveres."
+      },
+      {
+        ref: "Ephesians 6:11",
+        text: "Put on the full armor of God, so that you can take your stand against the devil’s schemes."
+      },
+      {
+        ref: "Philippians 1:6",
+        text: "He who began a good work in you will carry it on to completion until the day of Christ Jesus."
+      },
+      {
+        ref: "Philippians 4:6-7",
+        text: "Do not be anxious about anything... And the peace of God, which transcends all understanding, will guard your hearts..."
+      },
+      {
+        ref: "Titus 3:5",
+        text: "He saved us, not because of righteous things we had done, but because of his mercy..."
+      },
+      {
+        ref: "Hebrews 4:12",
+        text: "For the word of God is alive and active. Sharper than any double-edged sword..."
+      },
+      {
+        ref: "Hebrews 12:1-2",
+        text: "Let us run with endurance the race that is set before us, looking to Jesus..."
+      },
+      {
+        ref: "James 4:7",
+        text: "Submit yourselves therefore to God. Resist the devil, and he will flee from you."
+      },
+      {
+        ref: "1 Peter 5:7",
+        text: "Cast all your anxiety on him because he cares for you."
+      },
+      {
+        ref: "1 John 4:4",
+        text: "He who is in you is greater than he who is in the world."
+      },
+      {
+        ref: "Revelation 21:4",
+        text: "He will wipe away every tear from their eyes. Death shall be no more..."
+      }
+
+    ];
+    const verseList = document.getElementById('verseList');
+    const search = document.getElementById('search');
+    let displayMode = "both"; // "both", "verse", "ref"
+    let viewMode = "all"; // "all" or "single"
+    let filteredIndexes = [];
+    let singleIndex = 0;
+    let showFavoritesOnly = false;
+
+    // --- Minimalist controls bar logic ---
+    function updateDisplayModeButtons() {
+      document.getElementById('showBoth').classList.toggle('active', displayMode === "both");
+      document.getElementById('showVerseOnly').classList.toggle('active', displayMode === "verse");
+      document.getElementById('showRefOnly').classList.toggle('active', displayMode === "ref");
+    }
+
+    function updateViewModeButton() {
+      const btn = document.getElementById('toggleViewMode');
+      btn.classList.toggle('active', viewMode === "single");
+      btn.title = viewMode === "single" ? "View All" : "Single View";
+      btn.querySelector('i').className = viewMode === "single" ? "fa-solid fa-table-cells-large" : "fa-solid fa-clone";
+    }
+
+    function updateFavoritesButton() {
+      const btn = document.getElementById('toggleFavorites');
+      btn.classList.toggle('active', showFavoritesOnly);
+      btn.title = showFavoritesOnly ? "View All Verses" : "View Favorites";
+      btn.querySelector('i').className = showFavoritesOnly ? "fa-solid fa-star" : "fa-regular fa-star";
+    }
+
+    // --- More menu logic ---
+    const moreMenu = document.getElementById('moreMenu');
+    const moreMenuBtn = document.getElementById('moreMenuBtn');
+    moreMenuBtn.onclick = function(e) {
+      e.stopPropagation();
+      moreMenu.classList.toggle('show');
+    };
+    document.body.addEventListener('click', function() {
+      moreMenu.classList.remove('show');
+    });
+    document.getElementById('aboutBtn').onclick = function() {
+      alert("Essential Christian Memory Verses\nby MTE\nMinimalist controls, compact view, and easy navigation.");
+    };
+    document.getElementById('helpBtn').onclick = function() {
+      alert("• Use the icons to switch views or filter verses.\n• Click the star to favorite a verse.\n• Use the ellipsis for more options.");
+    };
+
+    // --- Footer year ---
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    // Restore single view state if present
+    function restoreSingleViewState() {
+      const lastViewMode = localStorage.getItem('lastViewMode');
+      if (lastViewMode === "single") {
+        viewMode = "single";
+        singleIndex = parseInt(localStorage.getItem('singleIndex') || "0", 10);
+        search.value = localStorage.getItem('singleSearch') || "";
+      }
+      // Restore favorites view state
+      const favState = localStorage.getItem('showFavoritesOnly');
+      showFavoritesOnly = favState === "true";
+      // Restore displayMode state
+      const savedDisplayMode = localStorage.getItem('displayMode');
+      if (savedDisplayMode === "verse" || savedDisplayMode === "ref" || savedDisplayMode === "both") {
+        displayMode = savedDisplayMode;
+      }
+      // Update all button states
+      updateDisplayModeButtons();
+      updateViewModeButton();
+      updateFavoritesButton();
+    }
+
+    // Save single view state
+    function saveSingleViewState() {
+      if (viewMode === "single") {
+        localStorage.setItem('lastViewMode', 'single');
+        localStorage.setItem('singleIndex', singleIndex);
+        localStorage.setItem('singleSearch', search.value);
+      } else {
+        localStorage.setItem('lastViewMode', 'all');
+      }
+    }
+
+    function getFavorites() {
+      return JSON.parse(localStorage.getItem('favoriteVerses') || '[]');
+    }
+
+    function setFavorites(favs) {
+      localStorage.setItem('favoriteVerses', JSON.stringify(favs));
+    }
+
+    function isFavorite(idx) {
+      const favs = getFavorites();
+      return favs.includes(idx);
+    }
+
+    function toggleFavorite(idx) {
+      let favs = getFavorites();
+      if (favs.includes(idx)) {
+        favs = favs.filter(i => i !== idx);
+      } else {
+        favs.push(idx);
+      }
+      setFavorites(favs);
+      displayVerses(search.value);
+    }
+
+    function getFilteredIndexes(filter = "") {
+      const lowerFilter = filter.toLowerCase();
+      let indexes = verses
+        .map((verse, idx) =>
+          (verse.text.toLowerCase().includes(lowerFilter) ||
+            (verse.ref && verse.ref.toLowerCase().includes(lowerFilter)))
+            ? idx
+            : -1
+        )
+        .filter(idx => idx !== -1);
+      if (showFavoritesOnly) {
+        const favs = getFavorites();
+        indexes = indexes.filter(idx => favs.includes(idx));
+      }
+      return indexes;
+    }
+
+    function displayVerses(filter = "") {
+      verseList.innerHTML = "";
+      filteredIndexes = getFilteredIndexes(filter);
+      if (viewMode === "single") {
+        document.getElementById('singleNav').style.display = "block";
+        // --- single view: fill viewport and meet footer ---
+        verseList.className = "single-view-outer";
+        if (filteredIndexes.length === 0) {
+          verseList.innerHTML = "<div class='text-center'>No verses found.</div>";
+          document.getElementById('singleCounter').textContent = "";
+          saveSingleViewState();
+          return;
+        }
+        if (singleIndex >= filteredIndexes.length) singleIndex = filteredIndexes.length - 1;
+        if (singleIndex < 0) singleIndex = 0;
+        showSingleVerse(filteredIndexes[singleIndex]);
+        document.getElementById('singleCounter').textContent =
+          (singleIndex + 1) + " / " + filteredIndexes.length;
+        saveSingleViewState();
+      } else {
+        document.getElementById('singleNav').style.display = "none";
+        verseList.className = "row";
+        filteredIndexes.forEach(idx => showSingleVerse(idx, true));
+        saveSingleViewState();
+      }
+    }
+
+    function showSingleVerse(idx, isAllMode = false) {
+      const verse = verses[idx];
+      const col = document.createElement('div');
+      if (isAllMode) {
+        col.className = "col-md-6 verse-card";
+      } else {
+        col.className = "single-view-card";
+      }
+      const card = document.createElement('div');
+      card.className = "card shadow-sm";
+      const cardBody = document.createElement('div');
+      cardBody.className = "card-body";
+      // Favorite star button
+      const favBtn = document.createElement('button');
+      favBtn.className = "btn btn-sm btn-link p-0 float-end";
+      favBtn.title = isFavorite(idx) ? "Remove from favorites" : "Add to favorites";
+      favBtn.innerHTML = isFavorite(idx) ? "&#9733;" : "&#9734;";
+      favBtn.style.fontSize = "1.5rem";
+      favBtn.onclick = function(e) {
+        e.stopPropagation();
+        toggleFavorite(idx);
+      };
+      cardBody.appendChild(favBtn);
+      // --- Verse reference and text styling ---
+      if (displayMode !== "verse" && verse.ref) {
+        const refEl = document.createElement('div');
+        refEl.className = "verse-reference";
+        refEl.textContent = verse.ref;
+        cardBody.appendChild(refEl);
+      }
+      if (displayMode !== "ref") {
+        const textEl = document.createElement('div');
+        textEl.className = "verse-text";
+        textEl.textContent = verse.text;
+        cardBody.appendChild(textEl);
+      }
+      // ...existing code for share/bible buttons...
+      const btnGroup = document.createElement('div');
+      btnGroup.className = "mt-2 d-flex gap-2";
+      const shareBtn = document.createElement('button');
+      shareBtn.className = "btn btn-sm btn-outline-secondary";
+      shareBtn.textContent = "Share";
+      shareBtn.onclick = function() {
+        let shareText = "";
+        if (displayMode === "both") {
+          shareText = (verse.ref ? verse.ref + ": " : "") + verse.text;
+        } else if (displayMode === "verse") {
+          shareText = verse.text;
+        } else if (displayMode === "ref") {
+          shareText = verse.ref || "";
+        }
+        if (navigator.share) {
+          navigator.share({
+            text: shareText
+          }).catch(() => {});
+        } else {
+          // fallback: clipboard
+          navigator.clipboard.writeText(shareText).then(() => {
+            shareBtn.textContent = "Copied!";
+            setTimeout(() => { shareBtn.textContent = "Share"; }, 1200);
+          });
+        }
+      };
+      btnGroup.appendChild(shareBtn);
+      // Open in Bible button
+      if (verse.ref) {
+        const bibleBtn = document.createElement('button');
+        bibleBtn.className = "btn btn-sm btn-outline-primary";
+        bibleBtn.textContent = "Open in Bible";
+        bibleBtn.onclick = function(e) {
+          e.stopPropagation();
+          const url = "https://www.biblegateway.com/passage/?search=" + encodeURIComponent(verse.ref);
+          window.open(url, "_blank");
+        };
+        btnGroup.appendChild(bibleBtn);
+      }
+      cardBody.appendChild(btnGroup);
+      card.appendChild(cardBody);
+      col.appendChild(card);
+      verseList.appendChild(col);
+    }
+
+    document.getElementById('toggleFavorites').onclick = function() {
+      showFavoritesOnly = !showFavoritesOnly;
+      localStorage.setItem('showFavoritesOnly', showFavoritesOnly);
+      updateFavoritesButton();
+      displayVerses(search.value);
+    };
+
+    document.getElementById('showBoth').onclick = function() {
+      displayMode = "both";
+      localStorage.setItem('displayMode', displayMode);
+      updateDisplayModeButtons();
+      displayVerses(search.value);
+    };
+    document.getElementById('showVerseOnly').onclick = function() {
+      displayMode = "verse";
+      localStorage.setItem('displayMode', displayMode);
+      updateDisplayModeButtons();
+      displayVerses(search.value);
+    };
+    document.getElementById('showRefOnly').onclick = function() {
+      displayMode = "ref";
+      localStorage.setItem('displayMode', displayMode);
+      updateDisplayModeButtons();
+      displayVerses(search.value);
+    };
+
+    document.getElementById('toggleViewMode').onclick = function() {
+      if (viewMode === "all") {
+        viewMode = "single";
+        // Restore last singleIndex if available
+        singleIndex = parseInt(localStorage.getItem('singleIndex') || "0", 10);
+      } else {
+        viewMode = "all";
+      }
+      updateViewModeButton();
+      displayVerses(search.value);
+    };
+
+    document.getElementById('prevBtn').onclick = function() {
+      if (singleIndex > 0) {
+        singleIndex--;
+        displayVerses(search.value);
+      }
+    };
+    document.getElementById('nextBtn').onclick = function() {
+      if (singleIndex < filteredIndexes.length - 1) {
+        singleIndex++;
+        displayVerses(search.value);
+      }
+    };
+
+    search.addEventListener('input', e => {
+      singleIndex = 0;
+      displayVerses(e.target.value);
+    });
+    window.onload = () => {
+      restoreSingleViewState();
+      displayVerses(search.value);
+    };
+
+    // --- Swipe navigation for single view ---
+    let touchStartX = null;
+    let touchEndX = null;
+
+    document.body.addEventListener('touchstart', function(e) {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+      }
+    });
+
+    document.body.addEventListener('touchend', function(e) {
+      if (touchStartX === null) return;
+      touchEndX = (e.changedTouches && e.changedTouches[0].clientX) || null;
+      if (touchEndX !== null && viewMode === "single" && filteredIndexes.length > 0) {
+        const dx = touchEndX - touchStartX;
+        if (Math.abs(dx) > 50) { // threshold for swipe
+          if (dx < 0 && singleIndex < filteredIndexes.length - 1) {
+            // Swipe left: next
+            singleIndex++;
+            displayVerses(search.value);
+          } else if (dx > 0 && singleIndex > 0) {
+            // Swipe right: previous
+            singleIndex--;
+            displayVerses(search.value);
+          }
+        }
+      }
+      touchStartX = null;
+      touchEndX = null;
+    });
+
+    // Register service worker for offline/PWA support
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
+  </script>
+</body>
+
+</html>
