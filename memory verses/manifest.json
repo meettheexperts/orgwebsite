@@ -1,7 +1,7 @@
 {
   "name": "Essential Christian Memory Verses",
   "short_name": "Memory Verses",
-  "start_url": "memory_verses.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#f9f9f9",
   "theme_color": "#f9f9f9",
