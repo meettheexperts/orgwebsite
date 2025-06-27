@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Essential Bible Stories</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f9f9f9">
+    <style>
+        body {
+            background-color: #f9f9f9;
+        }
+
+        .story-card {
+            margin-bottom: 1rem;
+        }
+
+        .story-title {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .story-ref {
+            color: #888;
+            font-size: 0.97em;
+        }
+
+        .controls-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            padding: 0.4em 0.6em;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #333;
+            transition: color 0.2s;
+        }
+
+        .icon-btn:hover,
+        .icon-btn.active {
+            color: #0078d4;
+        }
+
+        .more-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .more-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: #fff;
+            min-width: 160px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            z-index: 10;
+            border-radius: 0.25rem;
+            border: 1px solid #eee;
+            padding: 0.5em 0;
+        }
+
+        .more-menu.show .more-dropdown {
+            display: block;
+        }
+
+        .more-dropdown button {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 0.5em 1em;
+            font-size: 1em;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .more-dropdown button:hover {
+            background: #f5f5f5;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2em;
+            color: #aaa;
+            font-size: 0.95em;
+            padding: 1em 0 0.5em 0;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 600px) {
+            .story-title {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-4" id="mainContainer">
+        <!-- Navigation bar -->
+        <nav class="mb-3">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Key Bible Verses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="bible_questions.html">Bible Questions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="books_of_the_bible.html">Books of the Bible</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active fw-bold" aria-current="page" href="bible_stories.html">Bible Stories</a>
+                </li>
+            </ul>
+        </nav>
+        <h1 class="text-center mb-4">Key Bible Stories</h1>
+        <div id="sticky-controls" class="bg-white pb-2"
+            style="position:sticky;top:0;z-index:100;border-bottom:1px solid #eee;">
+            <input type="text" id="search" class="form-control mb-2" placeholder="Search by story or reference..." />
+            <div class="controls-bar">
+                <button id="showAll" class="icon-btn active" title="Show All"><i class="fa-solid fa-list"></i></button>
+                <button id="toggleFavorites" class="icon-btn" title="View Favorites"><i
+                        class="fa-solid fa-star"></i></button>
+                <div class="more-menu" id="moreMenu">
+                    <button class="icon-btn" title="More Options" id="moreMenuBtn"><i
+                            class="fa-solid fa-ellipsis"></i></button>
+                    <div class="more-dropdown" id="moreDropdown">
+                        <button id="aboutBtn">About</button>
+                        <button id="helpBtn">Help</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="storyList" class="row"></div>
+    </div>
+    <footer class="footer">
+        <small>
+            &copy; <span id="footerYear"></span> MTE &mdash; "Thy word have I hid in mine heart..."<br>
+            <span>
+                Product of MTE &mdash; oburu ephraim (<a href="mailto:oburuephraim2@gmail.com" id="footerEmail">oburuephraim2@gmail.com</a>)<br>
+                <button id="footerWhatsapp" class="btn btn-link p-0" style="color:#25d366;text-decoration:underline;">Chat on WhatsApp</button>
+                <button id="footerDonate" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Support This Ministry</button>
+            </span>
+        </small>
+    </footer>
+
+    <!-- Modal Structure -->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="infoModalLabel"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="infoModalBody"></div>
+          <div class="modal-footer" id="infoModalFooter"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        const stories = [
+            { title: "Creation", summary: "God spoke the universe into existence, forming light, sky, land, seas, plants, stars, animals, and finally humans in His own image. He blessed the seventh day as a day of rest, establishing the pattern for all creation.", ref: "Genesis 1-2" },
+            { title: "The Fall", summary: "Adam and Eve lived in perfect fellowship with God in the Garden of Eden. Tempted by the serpent, they ate the forbidden fruit, bringing sin and death into the world. God clothed them and sent them out of the garden, but promised a future Redeemer.", ref: "Genesis 3" },
+            { title: "Noah and the Flood", summary: "As humanity grew wicked, God chose righteous Noah to build an ark. Noah, his family, and pairs of animals survived a worldwide flood. After the waters receded, God made a covenant with Noah, symbolized by a rainbow, promising never to flood the earth again.", ref: "Genesis 6-9" },
+            { title: "Tower of Babel", summary: "People united to build a tower to reach the heavens, seeking to make a name for themselves. God confused their language, causing them to scatter across the earth, halting their project and spreading humanity into nations.", ref: "Genesis 11" },
+            { title: "Abraham's Call and Promise", summary: "God called Abraham to leave his homeland and promised to make him the father of a great nation. Abraham trusted God, journeyed in faith, and received the covenant that all nations would be blessed through his descendants.", ref: "Genesis 12, 15, 17" },
+            { title: "Sacrifice of Isaac", summary: "God tested Abraham's faith by asking him to sacrifice his beloved son Isaac. Abraham obeyed, but God stopped him and provided a ram, reaffirming His promise and Abraham's trust in Him.", ref: "Genesis 22" },
+            { title: "Jacob and Esau", summary: "Jacob and Esau, twin sons of Isaac, struggled over birthright and blessing. Jacob deceived his father to receive the blessing, fled from Esau, and after years of hardship, was reconciled with his brother through humility and God's grace.", ref: "Genesis 25-33" },
+            { title: "Joseph and His Brothers", summary: "Joseph, favored by his father, was sold into slavery by his jealous brothers. In Egypt, he rose from prisoner to ruler by interpreting dreams. During famine, he forgave his brothers and saved his family, showing God's providence in suffering.", ref: "Genesis 37-50" },
+            { title: "Moses and the Burning Bush", summary: "While tending sheep, Moses saw a bush that burned but was not consumed. God spoke from the bush, calling Moses to return to Egypt and lead His people out of slavery, assuring him of divine help.", ref: "Exodus 3" },
+            { title: "The Ten Plagues", summary: "God sent ten devastating plagues upon Egypt when Pharaoh refused to release the Israelites. The final plague, the death of the firstborn, led to the first Passover and Israel's deliverance.", ref: "Exodus 7-12" },
+            { title: "The Exodus and Red Sea", summary: "Moses led the Israelites out of Egypt. When Pharaoh's army pursued, God parted the Red Sea, allowing Israel to cross on dry ground and drowning the Egyptians, demonstrating His mighty power.", ref: "Exodus 14" },
+            { title: "The Ten Commandments", summary: "At Mount Sinai, God gave Moses the Ten Commandments, laws for living in covenant relationship with Him and with others, forming the foundation of Israel's moral code.", ref: "Exodus 20" },
+            { title: "Walls of Jericho", summary: "After entering the Promised Land, Joshua led Israel to march around Jericho for seven days. On the seventh day, the walls miraculously collapsed, and Israel claimed victory by God's power.", ref: "Joshua 6" },
+            { title: "Gideon and the 300", summary: "God called Gideon to deliver Israel from the Midianites. With only 300 men, Gideon defeated a vast enemy army by trusting God's unconventional strategy, proving victory comes from the Lord.", ref: "Judges 6-7" },
+            { title: "Samson and Delilah", summary: "Samson, blessed with great strength, struggled with temptation. Betrayed by Delilah, he lost his strength and was captured. In his final act, Samson prayed to God and brought down the Philistine temple, defeating Israel's enemies.", ref: "Judges 13-16" },
+            { title: "Ruth and Boaz", summary: "Ruth, a Moabite widow, showed loyalty to her mother-in-law Naomi and faith in Israel's God. She gleaned in Boaz's fields, and through his kindness and God's providence, became part of the lineage of King David and Jesus.", ref: "Ruth 1-4" },
+            { title: "Samuel Hears God's Voice", summary: "As a boy serving in the temple, Samuel heard God calling him at night. Guided by Eli, he responded, 'Speak, Lord, for your servant is listening,' beginning his life as a faithful prophet.", ref: "1 Samuel 3" },
+            { title: "David and Goliath", summary: "Young David, trusting in God, faced the giant Goliath with only a sling and a stone. He defeated Goliath, showing that faith in God is greater than any earthly strength.", ref: "1 Samuel 17" },
+            { title: "Elijah and the Prophets of Baal", summary: "Elijah challenged the prophets of Baal on Mount Carmel. God answered Elijah's prayer with fire from heaven, proving He alone is God and turning Israel's hearts back to Him.", ref: "1 Kings 18" },
+            { title: "Elisha and Naaman", summary: "Naaman, a Syrian commander with leprosy, sought healing from Elisha. After humbling himself and washing in the Jordan River as instructed, he was healed, learning that God's grace is for all who obey in faith.", ref: "2 Kings 5" },
+            { title: "Esther Saves Her People", summary: "Queen Esther risked her life to approach King Xerxes and reveal Haman's plot to destroy the Jews. Through her courage and wisdom, God delivered His people from annihilation.", ref: "Esther 4-7" },
+            { title: "Daniel in the Lion's Den", summary: "Daniel continued to pray to God despite a royal decree. He was thrown into a den of lions, but God shut the lions' mouths, saving Daniel and demonstrating His power to protect the faithful.", ref: "Daniel 6" },
+            { title: "Jonah and the Big Fish", summary: "Jonah ran from God's call to preach to Nineveh and was swallowed by a great fish. After repenting, he obeyed, and the people of Nineveh turned from their evil ways, showing God's mercy to all who repent.", ref: "Jonah 1-4" },
+            { title: "Shadrach, Meshach, and Abednego", summary: "Refusing to worship a golden image, these three men were thrown into a fiery furnace. God protected them, and they emerged unharmed, leading King Nebuchadnezzar to praise the true God.", ref: "Daniel 3" },
+            { title: "Birth of Jesus", summary: "Jesus, the promised Messiah, was born to Mary in Bethlehem. Angels announced His birth to shepherds, and wise men came to worship Him, fulfilling ancient prophecies.", ref: "Luke 2, Matthew 1" },
+            { title: "Jesus' Baptism", summary: "John the Baptist baptized Jesus in the Jordan River. The Holy Spirit descended like a dove, and God's voice declared Jesus as His beloved Son, marking the start of Jesus' ministry.", ref: "Matthew 3, Mark 1, Luke 3" },
+            { title: "Jesus Feeds 5,000", summary: "A large crowd followed Jesus, and with five loaves and two fish, He miraculously fed over 5,000 people, demonstrating His compassion and divine power.", ref: "Matthew 14, Mark 6, Luke 9, John 6" },
+            { title: "Jesus Walks on Water", summary: "During a storm, Jesus walked on the sea to His disciples' boat. Peter briefly walked on water toward Jesus, but began to sink when he doubted. Jesus rescued him, teaching faith over fear.", ref: "Matthew 14, Mark 6, John 6" },
+            { title: "The Good Samaritan", summary: "Jesus told a parable of a man beaten by robbers. A Samaritan, considered an outsider, showed compassion and cared for him, teaching that true neighborly love crosses all boundaries.", ref: "Luke 10:25-37" },
+            { title: "The Prodigal Son", summary: "A wayward son squandered his inheritance but returned home in repentance. His father welcomed him with open arms, illustrating God's forgiveness and joy over every sinner who returns.", ref: "Luke 15:11-32" },
+            { title: "Zacchaeus the Tax Collector", summary: "Zacchaeus, a despised tax collector, climbed a tree to see Jesus. Jesus visited his home, leading Zacchaeus to repent and make restitution, showing that salvation is for all who turn to God.", ref: "Luke 19:1-10" },
+            { title: "The Last Supper", summary: "On the night before His crucifixion, Jesus shared Passover with His disciples, instituted the Lord's Supper, and foretold His betrayal, preparing them for His sacrifice.", ref: "Matthew 26, Mark 14, Luke 22, John 13" },
+            { title: "Jesus' Crucifixion", summary: "Jesus was arrested, tried, and crucified on a cross, bearing the sins of the world. He forgave His executioners and died, fulfilling God's plan of redemption.", ref: "Matthew 27, Mark 15, Luke 23, John 19" },
+            { title: "Jesus' Resurrection", summary: "On the third day after His death, Jesus rose from the grave. He appeared to His followers, proving His victory over sin and death and offering new life to all who believe.", ref: "Matthew 28, Mark 16, Luke 24, John 20" },
+            { title: "The Ascension", summary: "After teaching His disciples for forty days, Jesus ascended into heaven before their eyes, promising to send the Holy Spirit and to return again.", ref: "Acts 1" },
+            { title: "Pentecost", summary: "The Holy Spirit descended on the disciples with tongues of fire. They spoke in many languages, boldly preached the gospel, and thousands believed, marking the birth of the Church.", ref: "Acts 2" },
+            { title: "Paul's Conversion", summary: "Saul, a fierce persecutor of Christians, encountered the risen Jesus on the road to Damascus. Blinded and humbled, he became Paul, a devoted apostle and missionary.", ref: "Acts 9" },
+            { title: "Peter Freed from Prison", summary: "Peter was imprisoned for preaching about Jesus. While the church prayed, an angel miraculously freed him from his chains and led him safely out of prison.", ref: "Acts 12" },
+            { title: "Paul and Silas in Prison", summary: "Paul and Silas were jailed for their faith. They prayed and sang hymns at midnight, and God sent an earthquake that opened the doors. The jailer and his family believed in Jesus.", ref: "Acts 16" },
+            { title: "New Heaven and New Earth", summary: "John saw a vision of God making all things new: a new heaven and earth, where God dwells with His people, wiping away every tear and ending death, sorrow, and pain forever.", ref: "Revelation 21-22" },
+            { title: "Hagar and Ishmael in the Desert", summary: "After being sent away, Hagar and her son Ishmael wandered in the desert. God heard their cries, provided water, and promised to make Ishmael a great nation.", ref: "Genesis 21:8-21" },
+            { title: "Jacob's Ladder Dream", summary: "Fleeing from Esau, Jacob dreamed of a ladder reaching to heaven with angels ascending and descending. God renewed His covenant with Jacob, assuring him of His presence.", ref: "Genesis 28:10-22" },
+            { title: "Moses Strikes the Rock", summary: "When the Israelites complained of thirst, Moses struck a rock at God's command and water flowed out, showing God's provision in the wilderness.", ref: "Exodus 17:1-7" },
+            { title: "Balaam's Donkey Speaks", summary: "Balaam was hired to curse Israel, but his donkey saw an angel and spoke to him, warning him of God's displeasure.", ref: "Numbers 22:21-35" },
+            { title: "Joshua Commands the Sun to Stand Still", summary: "During battle, Joshua prayed and God made the sun stand still, giving Israel victory over their enemies.", ref: "Joshua 10:6-15" },
+            { title: "Hannah Prays for a Son", summary: "Hannah, barren and distressed, prayed earnestly for a child. God answered her prayer with the birth of Samuel, whom she dedicated to the Lord.", ref: "1 Samuel 1" },
+            { title: "David Spares Saul's Life", summary: "David, pursued by King Saul, had opportunities to kill him but chose mercy, demonstrating respect for God's anointed and a heart of forgiveness.", ref: "1 Samuel 24, 26" },
+            { title: "Solomon's Wisdom", summary: "God appeared to Solomon in a dream and offered him anything he wanted. Solomon asked for wisdom, and God granted him wisdom and great riches.", ref: "1 Kings 3:3-28" },
+            { title: "Elijah Fed by Ravens", summary: "During a drought, God sent ravens to bring Elijah bread and meat while he hid by the brook Cherith.", ref: "1 Kings 17:1-6" },
+            { title: "Widow's Oil Multiplied", summary: "A widow in debt sought Elisha's help. God miraculously multiplied her small jar of oil, enabling her to pay her debts and live on the rest.", ref: "2 Kings 4:1-7" },
+            { title: "Josiah Finds the Book of the Law", summary: "King Josiah discovered the lost Book of the Law during temple repairs. He led the nation in repentance and renewed covenant with God.", ref: "2 Kings 22-23" },
+            { title: "Nehemiah Rebuilds Jerusalem's Walls", summary: "Despite opposition, Nehemiah led the people to rebuild Jerusalem's walls in just 52 days, trusting God and persevering through adversity.", ref: "Nehemiah 1-6" },
+            { title: "Isaiah's Vision of God's Throne", summary: "Isaiah saw the Lord seated on a high throne, surrounded by seraphim. Overwhelmed by his sin, he was cleansed and called to be God's prophet.", ref: "Isaiah 6" },
+            { title: "Valley of Dry Bones", summary: "Ezekiel saw a vision of dry bones coming to life, symbolizing God's promise to restore and revive His people Israel.", ref: "Ezekiel 37:1-14" },
+            { title: "The Fiery Furnace", summary: "Shadrach, Meshach, and Abednego refused to worship an idol and were thrown into a blazing furnace. God protected them, and they emerged unharmed.", ref: "Daniel 3" },
+            { title: "Daniel Interprets the Writing on the Wall", summary: "During King Belshazzar's feast, mysterious writing appeared on the wall. Daniel interpreted it as God's judgment, and the kingdom fell that night.", ref: "Daniel 5" },
+            { title: "Queen Vashti Refuses the King", summary: "Queen Vashti refused King Xerxes' command to appear at his banquet, leading to her removal and paving the way for Esther to become queen.", ref: "Esther 1" },
+            { title: "Ezra Reads the Law", summary: "Ezra the scribe read the Book of the Law to the returned exiles, and the people wept, repented, and celebrated God's faithfulness.", ref: "Nehemiah 8" },
+            { title: "Jesus Calms the Storm", summary: "While crossing the sea, a violent storm arose. Jesus rebuked the wind and waves, and there was a great calm, amazing His disciples.", ref: "Matthew 8:23-27; Mark 4:35-41; Luke 8:22-25" },
+            { title: "The Transfiguration", summary: "Jesus was transfigured on a mountain before Peter, James, and John. His face shone like the sun, and Moses and Elijah appeared, affirming His divine identity.", ref: "Matthew 17:1-9; Mark 9:2-8; Luke 9:28-36" },
+            { title: "Raising of Lazarus", summary: "Jesus raised Lazarus from the dead after four days in the tomb, demonstrating His power over death and foreshadowing His own resurrection.", ref: "John 11:1-44" },
+            { title: "The Woman at the Well", summary: "Jesus spoke with a Samaritan woman at Jacob's well, revealing her life and offering her living water. She believed and led many in her town to faith.", ref: "John 4:1-42" },
+            { title: "The Good Shepherd", summary: "Jesus described Himself as the Good Shepherd who lays down His life for the sheep, emphasizing His care, guidance, and sacrificial love.", ref: "John 10:1-18" },
+            { title: "The Road to Emmaus", summary: "After His resurrection, Jesus walked with two disciples on the road to Emmaus, explaining the Scriptures and revealing Himself in the breaking of bread.", ref: "Luke 24:13-35" },
+            { title: "Philip and the Ethiopian Eunuch", summary: "Philip explained the gospel to an Ethiopian official, who believed and was baptized, showing the gospel's reach to all nations.", ref: "Acts 8:26-39" },
+            { title: "Peter and Cornelius", summary: "God gave Peter a vision and sent him to Cornelius, a Gentile centurion. The Holy Spirit fell on Cornelius' household, showing that salvation is for all.", ref: "Acts 10" },
+            { title: "Paul Shipwrecked on Malta", summary: "On his way to Rome, Paul was shipwrecked on Malta. God protected everyone on board, and Paul performed miracles, leading many to faith.", ref: "Acts 27-28" },
+            { title: "The Council at Jerusalem", summary: "Early church leaders met to decide whether Gentile believers must follow Jewish law. They affirmed salvation by grace through faith for all.", ref: "Acts 15" },
+            { title: "John's Vision of Christ", summary: "On the island of Patmos, John saw a vision of the risen Christ, who gave messages to the seven churches and revealed future events.", ref: "Revelation 1-3" }
+        ];
+
+        const storyList = document.getElementById('storyList');
+        const search = document.getElementById('search');
+        let showFavoritesOnly = false;
+
+        function getFavorites() {
+            return JSON.parse(localStorage.getItem('favoriteStories') || '[]');
+        }
+        function setFavorites(favs) {
+            localStorage.setItem('favoriteStories', JSON.stringify(favs));
+        }
+        function isFavorite(idx) {
+            const favs = getFavorites();
+            return favs.includes(idx);
+        }
+        function toggleFavorite(idx) {
+            let favs = getFavorites();
+            if (favs.includes(idx)) {
+                favs = favs.filter(i => i !== idx);
+            } else {
+                favs.push(idx);
+            }
+            setFavorites(favs);
+            displayStories(search.value);
+        }
+        function getFilteredIndexes(filter = "") {
+            const lowerFilter = filter.toLowerCase();
+            let indexes = stories
+                .map((s, idx) =>
+                    (s.title.toLowerCase().includes(lowerFilter) ||
+                        (s.summary && s.summary.toLowerCase().includes(lowerFilter)) ||
+                        (s.ref && s.ref.toLowerCase().includes(lowerFilter)))
+                        ? idx
+                        : -1
+                )
+                .filter(idx => idx !== -1);
+            if (showFavoritesOnly) {
+                const favs = getFavorites();
+                indexes = indexes.filter(idx => favs.includes(idx));
+            }
+            return indexes;
+        }
+        function displayStories(filter = "") {
+            storyList.innerHTML = "";
+            const filteredIndexes = getFilteredIndexes(filter);
+            if (filteredIndexes.length === 0) {
+                storyList.innerHTML = "<div class='text-center'>No stories found.</div>";
+                return;
+            }
+            filteredIndexes.forEach(idx => {
+                const s = stories[idx];
+                const col = document.createElement('div');
+                col.className = "col-md-6 story-card";
+                const card = document.createElement('div');
+                card.className = "card shadow-sm";
+                const cardBody = document.createElement('div');
+                cardBody.className = "card-body";
+                // Favorite star button
+                const favBtn = document.createElement('button');
+                favBtn.className = "btn btn-sm btn-link p-0 float-end";
+                favBtn.title = isFavorite(idx) ? "Remove from favorites" : "Add to favorites";
+                favBtn.innerHTML = isFavorite(idx) ? "&#9733;" : "&#9734;";
+                favBtn.style.fontSize = "1.5rem";
+                favBtn.onclick = function (e) {
+                    e.stopPropagation();
+                    toggleFavorite(idx);
+                };
+                cardBody.appendChild(favBtn);
+                // Story title and summary
+                const titleEl = document.createElement('div');
+                titleEl.className = "story-title";
+                titleEl.textContent = s.title;
+                cardBody.appendChild(titleEl);
+                if (s.summary) {
+                    const summaryEl = document.createElement('div');
+                    summaryEl.textContent = s.summary;
+                    cardBody.appendChild(summaryEl);
+                }
+                if (s.ref) {
+                    const refEl = document.createElement('div');
+                    refEl.className = "story-ref";
+                    refEl.textContent = s.ref;
+                    cardBody.appendChild(refEl);
+                }
+                // Share button
+                const btnGroup = document.createElement('div');
+                btnGroup.className = "mt-2 d-flex gap-2";
+                const shareBtn = document.createElement('button');
+                shareBtn.className = "btn btn-sm btn-outline-secondary";
+                shareBtn.textContent = "Share";
+                shareBtn.onclick = function () {
+                    let shareText = s.title + (s.summary ? ": " + s.summary : "") + (s.ref ? " (" + s.ref + ")" : "");
+                    if (navigator.share) {
+                        navigator.share({ text: shareText }).catch(() => { });
+                    } else {
+                        navigator.clipboard.writeText(shareText).then(() => {
+                            shareBtn.textContent = "Copied!";
+                            setTimeout(() => { shareBtn.textContent = "Share"; }, 1200);
+                        });
+                    }
+                };
+                btnGroup.appendChild(shareBtn);
+                // Open in Bible button
+                if (s.ref) {
+                    const bibleBtn = document.createElement('button');
+                    bibleBtn.className = "btn btn-sm btn-outline-primary";
+                    bibleBtn.textContent = "Open in Bible";
+                    bibleBtn.onclick = function (e) {
+                        e.stopPropagation();
+                        const url = "https://www.biblegateway.com/passage/?search=" + encodeURIComponent(s.ref);
+                        window.open(url, "_blank");
+                    };
+                    btnGroup.appendChild(bibleBtn);
+                }
+                cardBody.appendChild(btnGroup);
+                card.appendChild(cardBody);
+                col.appendChild(card);
+                storyList.appendChild(col);
+            });
+        }
+        document.getElementById('toggleFavorites').onclick = function () {
+            showFavoritesOnly = !showFavoritesOnly;
+            displayStories(search.value);
+            this.classList.toggle('active', showFavoritesOnly);
+            this.title = showFavoritesOnly ? "View All Stories" : "View Favorites";
+            this.querySelector('i').className = showFavoritesOnly ? "fa-solid fa-star" : "fa-regular fa-star";
+        };
+        document.getElementById('showAll').onclick = function () {
+            showFavoritesOnly = false;
+            displayStories(search.value);
+            document.getElementById('toggleFavorites').classList.remove('active');
+        };
+
+        // Bootstrap modal helper
+        function showModal(title, body, footerHtml = "") {
+            document.getElementById('infoModalLabel').textContent = title;
+            document.getElementById('infoModalBody').innerHTML = body;
+            document.getElementById('infoModalFooter').innerHTML = footerHtml;
+            // Show modal (Bootstrap 5)
+            var modal = new bootstrap.Modal(document.getElementById('infoModal'));
+            modal.show();
+        }
+
+        // More menu logic (show/hide dropdown and handle About/Help) -- mimic bible_questions.html
+        const moreMenu = document.getElementById('moreMenu');
+        const moreMenuBtn = document.getElementById('moreMenuBtn');
+        moreMenuBtn.onclick = function (e) {
+            e.stopPropagation();
+            moreMenu.classList.toggle('show');
+        };
+        document.body.addEventListener('click', function () {
+            moreMenu.classList.remove('show');
+        });
+
+        document.getElementById('aboutBtn').onclick = function (e) {
+            e.stopPropagation();
+            moreMenu.classList.remove('show');
+            showModal(
+                "About",
+                `<b>Essential Bible Stories</b><br>
+                by MTE<br>
+                A quick reference to the most important stories in the Bible.<br><br>
+                Product of MTE<br>
+                Contact: oburu ephraim<br>
+                <button id="modalEmail" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Email Me</button>
+                <button id="modalWhatsapp" class="btn btn-link p-0" style="color:#25d366;text-decoration:underline;">Chat on WhatsApp</button>
+                <button id="modalDonate" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Support This Ministry</button>
+                `,
+                ""
+            );
+            setTimeout(setupModalLinks, 100); // Wait for DOM
+        };
+
+        document.getElementById('helpBtn').onclick = function (e) {
+            e.stopPropagation();
+            moreMenu.classList.remove('show');
+            showModal(
+                "Help",
+                `• Search by story or reference.<br>
+                • Click the star to favorite a story.<br>
+                • Use the ellipsis for more options.<br><br>
+                <button id="modalEmail" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Email Me</button>
+                <button id="modalWhatsapp" class="btn btn-link p-0" style="color:#25d366;text-decoration:underline;">Chat on WhatsApp</button>
+                <button id="modalDonate" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Support This Ministry</button>
+                `,
+                ""
+            );
+            setTimeout(setupModalLinks, 100);
+        };
+
+        function setupModalLinks() {
+            const whatsappMsg = encodeURIComponent("Hello Ephraim, I am contacting you from the Bible Study Initiative app.");
+            const emailSubject = encodeURIComponent("Bible Study Initiative - Contact");
+            const emailBody = encodeURIComponent("Hello Ephraim,\n\nI am reaching out from the Bible Study Initiative app.\n\n");
+            // WhatsApp
+            const whatsappBtn = document.getElementById('modalWhatsapp');
+            if (whatsappBtn) {
+                whatsappBtn.onclick = function () {
+                    window.open("https://wa.me/256777233322?text=" + whatsappMsg, "_blank");
+                };
+            }
+            // Email
+            const emailBtn = document.getElementById('modalEmail');
+            if (emailBtn) {
+                emailBtn.onclick = function () {
+                    window.location.href = "mailto:oburuephraim2@gmail.com?subject=" + emailSubject + "&body=" + emailBody;
+                };
+            }
+            // Donate
+            const donateBtn = document.getElementById('modalDonate');
+            if (donateBtn) {
+                donateBtn.onclick = function () {
+                    showModal(
+                        "Support This Ministry",
+                        `<b>Help us spread God's Word!</b><br>
+                        If this Bible Study Initiative has blessed you, please consider donating.<br>
+                        <span style="font-size:1.2em;color:#0078d4;">Mobile Money: <b>+256777233322</b></span><br>
+                        <small>Tap the button below to copy the number and open WhatsApp to confirm your support.</small>`,
+                        `<button class="btn btn-success" id="donateCopyBtn">Copy Number &amp; WhatsApp</button>`
+                    );
+                    setTimeout(() => {
+                        const btn = document.getElementById('donateCopyBtn');
+                        if (btn) {
+                            btn.onclick = function () {
+                                navigator.clipboard.writeText("+256777233322");
+                                window.open("https://wa.me/256777233322?text=" + encodeURIComponent("Hello Ephraim, I would like to support the Bible Study Initiative."), "_blank");
+                            };
+                        }
+                    }, 100);
+                };
+            }
+        }
+
+        // Footer WhatsApp and Email
+        document.getElementById('footerWhatsapp').onclick = function () {
+            window.open("https://wa.me/256777233322?text=" + encodeURIComponent("Hello Ephraim, I am contacting you from the Bible Study Initiative app."), "_blank");
+        };
+        document.getElementById('footerEmail').onclick = function (e) {
+            e.preventDefault();
+            window.location.href = "mailto:oburuephraim2@gmail.com?subject=" +
+                encodeURIComponent("Bible Study Initiative - Contact") +
+                "&body=" + encodeURIComponent("Hello Ephraim,\n\nI am reaching out from the Bible Study Initiative app.\n\n");
+        };
+        document.getElementById('footerDonate').onclick = function () {
+            showModal(
+                "Support This Ministry",
+                `<b>Help us spread God's Word!</b><br>
+                If this Bible Study Initiative has blessed you, please consider donating.<br>
+                <span style="font-size:1.2em;color:#0078d4;">Mobile Money: <b>+256777233322</b></span><br>
+                <small>Tap the button below to copy the number and open WhatsApp to confirm your support.</small>`,
+                `<button class="btn btn-success" id="donateCopyBtn">Copy Number &amp; WhatsApp</button>`
+            );
+            setTimeout(() => {
+                const btn = document.getElementById('donateCopyBtn');
+                if (btn) {
+                    btn.onclick = function () {
+                        navigator.clipboard.writeText("+256777233322");
+                        window.open("https://wa.me/256777233322?text=" + encodeURIComponent("Hello Ephraim, I would like to support the Bible Study Initiative."), "_blank");
+                    };
+                }
+            }, 100);
+        };
+
+        document.getElementById('footerYear').textContent = new Date().getFullYear();
+        search.addEventListener('input', e => {
+            displayStories(e.target.value);
+        });
+        window.onload = () => {
+            displayStories(search.value);
+        };
+    </script>
+    <!-- Bootstrap JS for modal support -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -2,6 +2,7 @@
   "name": "Essential Christian Memory Verses",
   "short_name": "Memory Verses",
   "start_url": "index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#f9f9f9",
   "theme_color": "#f9f9f9",
@@ -16,6 +17,24 @@
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Key Bible Verses",
+      "url": "index.html"
+    },
+    {
+      "name": "Bible Questions",
+      "url": "bible_questions.html"
+    },
+    {
+      "name": "Books of the Bible",
+      "url": "books_of_the_bible.html"
+    },
+    {
+      "name": "Bible Stories",
+      "url": "bible_stories.html"
     }
   ]
 }

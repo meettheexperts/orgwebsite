@@ -176,13 +176,32 @@
 
 <body>
   <div class="container py-4" id="mainContainer">
+    <!-- Add navigation bar -->
+    <nav class="mb-3">
+      <ul class="nav justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link active fw-bold" aria-current="page" href="index.html">Key Bible Verses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="bible_questions.html">Bible Questions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="books_of_the_bible.html">Books of the Bible</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="bible_stories.html">Bible Stories</a>
+        </li>
+      </ul>
+    </nav>
     <h1 class="text-center mb-4">Key Bibles Verses</h1>
-    <div id="sticky-controls" class="bg-white pb-2" style="position:sticky;top:0;z-index:100;border-bottom:1px solid #eee;">
+    <div id="sticky-controls" class="bg-white pb-2"
+      style="position:sticky;top:0;z-index:100;border-bottom:1px solid #eee;">
       <input type="text" id="search" class="form-control mb-2" placeholder="Search by keyword or scripture..." />
       <div class="controls-bar">
         <button id="showBoth" class="icon-btn" title="Show Both"><i class="fa-solid fa-list"></i></button>
         <button id="showVerseOnly" class="icon-btn" title="Show Verse Only"><i class="fa-solid fa-font"></i></button>
-        <button id="showRefOnly" class="icon-btn" title="Show Reference Only"><i class="fa-solid fa-book-bible"></i></button>
+        <button id="showRefOnly" class="icon-btn" title="Show Reference Only"><i
+            class="fa-solid fa-book-bible"></i></button>
         <button id="toggleViewMode" class="icon-btn" title="Single View"><i class="fa-solid fa-clone"></i></button>
         <button id="toggleFavorites" class="icon-btn" title="View Favorites"><i class="fa-solid fa-star"></i></button>
         <div class="more-menu" id="moreMenu">
@@ -203,307 +222,200 @@
     </div>
   </div>
   <footer class="footer">
-    <small>&copy; <span id="footerYear"></span> MTE &mdash; "Thy word have I hid in mine heart..."</small>
+    <small>
+      &copy; <span id="footerYear"></span> MTE &mdash; "Thy word have I hid in mine heart..."<br>
+      <span>
+        Product of MTE &mdash; oburu ephraim (<a href="mailto:oburuephraim2@gmail.com"
+          id="footerEmail">oburuephraim2@gmail.com</a>)<br>
+        <button id="footerWhatsapp" class="btn btn-link p-0" style="color:#25d366;text-decoration:underline;">Chat on
+          WhatsApp</button>
+        <button id="footerDonate" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Support This
+          Ministry</button>
+      </span>
+    </small>
   </footer>
+
+  <!-- Modal Structure -->
+  <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="infoModalLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="infoModalBody"></div>
+        <div class="modal-footer" id="infoModalFooter"></div>
+      </div>
+    </div>
+  </div>
   <script>
     const verses = [
       { ref: "John 3:16", text: "For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life." },
       { ref: "Romans 6:23", text: "For the wages of sin is death, but the free gift of God is eternal life in Christ Jesus our Lord." },
       { ref: "Romans 3:23", text: "For all have sinned and fall short of the glory of God." },
-      { ref: "Ephesians 2:8-9", text: "For by grace you have been saved through faith..." },
+      { ref: "Ephesians 2:8-9", text: "For by grace you have been saved through faith. And this is not your own doing; it is the gift of God, not a result of works, so that no one may boast." },
       { ref: "Romans 5:8", text: "But God shows his love for us in that while we were still sinners, Christ died for us." },
-      { ref: "Isaiah 53:5", text: "He was pierced for our transgressions... by his wounds we are healed." },
-      { ref: "Acts 4:12", text: "There is salvation in no one else..." },
-      { ref: "Romans 10:9", text: "If you confess with your mouth that Jesus is Lord... you will be saved." },
-      { ref: "2 Corinthians 5:21", text: "For our sake he made him to be sin who knew no sin..." },
-      { ref: "1 John 1:9", text: "If we confess our sins, he is faithful and just to forgive us..." },
-      { ref: "Matthew 28:19-20", text: "Go therefore and make disciples of all nations..." },
-      { ref: "Galatians 2:20", text: "I have been crucified with Christ. It is no longer I who live..." },
-      { ref: "Philippians 4:13", text: "I can do all things through Christ who strengthens me." },
+      { ref: "Isaiah 53:5", text: "But he was pierced for our transgressions; he was crushed for our iniquities; upon him was the chastisement that brought us peace, and with his wounds we are healed." },
+      { ref: "Acts 4:12", text: "And there is salvation in no one else, for there is no other name under heaven given among men by which we must be saved." },
+      { ref: "Romans 10:9", text: "If you confess with your mouth that Jesus is Lord and believe in your heart that God raised him from the dead, you will be saved." },
+      { ref: "2 Corinthians 5:21", text: "For our sake he made him to be sin who knew no sin, so that in him we might become the righteousness of God." },
+      { ref: "1 John 1:9", text: "If we confess our sins, he is faithful and just to forgive us our sins and to cleanse us from all unrighteousness." },
+      { ref: "Matthew 28:19-20", text: "Go therefore and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, teaching them to observe all that I have commanded you. And behold, I am with you always, to the end of the age." },
+      { ref: "Galatians 2:20", text: "I have been crucified with Christ. It is no longer I who live, but Christ who lives in me. And the life I now live in the flesh I live by faith in the Son of God, who loved me and gave himself for me." },
+      { ref: "Philippians 4:13", text: "I can do all things through him who strengthens me." },
       { ref: "Psalm 119:11", text: "I have stored up your word in my heart, that I might not sin against you." },
-      { ref: "Hebrews 11:1", text: "Now faith is the assurance of things hoped for..." },
-      { ref: "Proverbs 3:5-6", text: "Trust in the Lord with all your heart..." },
-      { ref: "1 Corinthians 10:13", text: "No temptation has overtaken you that is not common to man..." },
-      { ref: "James 1:22", text: "Be doers of the word, and not hearers only..." },
-      { ref: "Romans 12:2", text: "Do not be conformed to this world, but be transformed..." },
-      { ref: "Matthew 6:33", text: "But seek first the kingdom of God and his righteousness..." },
+      { ref: "Hebrews 11:1", text: "Now faith is the assurance of things hoped for, the conviction of things not seen." },
+      { ref: "Proverbs 3:5-6", text: "Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge him, and he will make straight your paths." },
+      { ref: "1 Corinthians 10:13", text: "No temptation has overtaken you that is not common to man. God is faithful, and he will not let you be tempted beyond your ability, but with the temptation he will also provide the way of escape, that you may be able to endure it." },
+      { ref: "James 1:22", text: "But be doers of the word, and not hearers only, deceiving yourselves." },
+      { ref: "Romans 12:2", text: "Do not be conformed to this world, but be transformed by the renewal of your mind, that by testing you may discern what is the will of God, what is good and acceptable and perfect." },
+      { ref: "Matthew 6:33", text: "But seek first the kingdom of God and his righteousness, and all these things will be added to you." },
       { ref: "John 14:6", text: "Jesus said to him, 'I am the way, and the truth, and the life. No one comes to the Father except through me.'" },
-      { ref: "Galatians 5:22-23", text: "But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control..." },
-      { ref: "Matthew 22:37-39", text: "Love the Lord your God with all your heart... and love your neighbor as yourself." },
-      { ref: "1 Thessalonians 5:16-18", text: "Rejoice always, pray without ceasing, give thanks in all circumstances..." },
-      { ref: "Isaiah 41:10", text: "Fear not, for I am with you; be not dismayed, for I am your God..." },
-      { ref: "Jeremiah 29:11", text: "For I know the plans I have for you, declares the Lord, plans for welfare and not for evil..." },
+      { ref: "Galatians 5:22-23", text: "But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control; against such things there is no law." },
+      { ref: "Matthew 22:37-39", text: "And he said to him, 'You shall love the Lord your God with all your heart and with all your soul and with all your mind. This is the great and first commandment. And a second is like it: You shall love your neighbor as yourself.'" },
+      { ref: "1 Thessalonians 5:16-18", text: "Rejoice always, pray without ceasing, give thanks in all circumstances; for this is the will of God in Christ Jesus for you." },
+      { ref: "Isaiah 41:10", text: "Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you, I will uphold you with my righteous right hand." },
+      { ref: "Jeremiah 29:11", text: "For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope." },
       { ref: "Psalm 23:1", text: "The Lord is my shepherd; I shall not want." },
       { ref: "2 Timothy 1:7", text: "For God gave us a spirit not of fear but of power and love and self-control." },
-      { ref: "Hebrews 13:5", text: "I will never leave you nor forsake you." },
-      { ref: "Revelation 3:20", text: "Behold, I stand at the door and knock..." },
+      { ref: "Hebrews 13:5", text: "Keep your life free from love of money, and be content with what you have, for he has said, 'I will never leave you nor forsake you.'" },
+      { ref: "Revelation 3:20", text: "Behold, I stand at the door and knock. If anyone hears my voice and opens the door, I will come in to him and eat with him, and he with me." },
       { ref: "Colossians 3:23", text: "Whatever you do, work heartily, as for the Lord and not for men." },
-      { ref: "James 1:5", text: "If any of you lacks wisdom, let him ask God, who gives generously to all..." },
-      { ref: "Micah 6:8", text: "What does the Lord require of you but to do justice, and to love kindness, and to walk humbly with your God?" },
-      {
-        ref: "Genesis 1:1",
-        text: "In the beginning, God created the heavens and the earth."
-      },
-      {
-        ref: "Exodus 14:14",
-        text: "The Lord will fight for you; you need only to be still."
-      },
-      {
-        ref: "Leviticus 19:18",
-        text: "Love your neighbor as yourself. I am the Lord."
-      },
-      {
-        ref: "Deuteronomy 6:5",
-        text: "Love the Lord your God with all your heart and with all your soul and with all your strength."
-      },
-      {
-        ref: "Joshua 1:9",
-        text: "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go."
-      },
-      {
-        ref: "1 Samuel 16:7",
-        text: "The Lord does not look at the things people look at. People look at the outward appearance, but the Lord looks at the heart."
-      },
-      {
-        ref: "2 Samuel 22:31",
-        text: "As for God, his way is perfect: The Lord’s word is flawless; he shields all who take refuge in him."
-      },
-      {
-        ref: "1 Kings 8:61",
-        text: "Let your heart therefore be wholly true to the Lord our God, walking in his statutes and keeping his commandments."
-      },
-      {
-        ref: "2 Chronicles 7:14",
-        text: "If my people, who are called by my name, will humble themselves and pray and seek my face and turn from their wicked ways..."
-      },
-      {
-        ref: "Nehemiah 8:10",
-        text: "The joy of the Lord is your strength."
-      },
-      {
-        ref: "Job 1:21",
-        text: "The Lord gave and the Lord has taken away; blessed be the name of the Lord."
-      },
-      {
-        ref: "Psalm 1:1-2",
-        text: "Blessed is the man who does not walk in the counsel of the wicked... but his delight is in the law of the Lord."
-      },
-      {
-        ref: "Psalm 23:4",
-        text: "Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me..."
-      },
-      {
-        ref: "Psalm 27:1",
-        text: "The Lord is my light and my salvation—whom shall I fear?"
-      },
-      {
-        ref: "Psalm 46:10",
-        text: "Be still, and know that I am God."
-      },
-      {
-        ref: "Psalm 51:10",
-        text: "Create in me a clean heart, O God, and renew a right spirit within me."
-      },
-      {
-        ref: "Proverbs 4:23",
-        text: "Above all else, guard your heart, for everything you do flows from it."
-      },
-      {
-        ref: "Ecclesiastes 3:1",
-        text: "There is a time for everything, and a season for every activity under the heavens."
-      },
-      {
-        ref: "Isaiah 40:31",
-        text: "But those who hope in the Lord will renew their strength... they will run and not grow weary."
-      },
-      {
-        ref: "Jeremiah 17:7",
-        text: "Blessed is the one who trusts in the Lord, whose confidence is in him."
-      },
-      {
-        ref: "Lamentations 3:22-23",
-        text: "The steadfast love of the Lord never ceases; his mercies never come to an end; they are new every morning."
-      },
-      {
-        ref: "Ezekiel 36:26",
-        text: "I will give you a new heart and put a new spirit in you..."
-      },
-      {
-        ref: "Daniel 3:17-18",
-        text: "If we are thrown into the blazing furnace, the God we serve is able to deliver us..."
-      },
-      {
-        ref: "Hosea 6:6",
-        text: "For I desire mercy, not sacrifice, and acknowledgment of God rather than burnt offerings."
-      },
-      {
-        ref: "Joel 2:12",
-        text: "Return to me with all your heart, with fasting and weeping and mourning."
-      },
-      {
-        ref: "Amos 5:24",
-        text: "Let justice roll on like a river, righteousness like a never-failing stream!"
-      },
-      {
-        ref: "Habakkuk 3:19",
-        text: "The Sovereign Lord is my strength; he makes my feet like the feet of a deer..."
-      },
-      {
-        ref: "Zephaniah 3:17",
-        text: "The Lord your God is with you, the Mighty Warrior who saves..."
-      },
-      {
-        ref: "Zechariah 4:6",
-        text: "Not by might nor by power, but by my Spirit,' says the Lord Almighty."
-      },
-      {
-        ref: "Malachi 3:10",
-        text: "Bring the whole tithe into the storehouse... Test me in this, says the Lord Almighty..."
-      },
-      {
-        ref: "Matthew 5:14",
-        text: "You are the light of the world. A city set on a hill cannot be hidden."
-      },
-      {
-        ref: "Matthew 7:7",
-        text: "Ask, and it will be given to you; seek, and you will find; knock, and it will be opened to you."
-      },
-      {
-        ref: "Matthew 11:28",
-        text: "Come to me, all who labor and are heavy laden, and I will give you rest."
-      },
-      {
-        ref: "Matthew 16:24",
-        text: "If anyone would come after me, let him deny himself and take up his cross and follow me."
-      },
-      {
-        ref: "Matthew 22:37",
-        text: "Love the Lord your God with all your heart and with all your soul and with all your mind."
-      },
-      {
-        ref: "Mark 10:45",
-        text: "For even the Son of Man came not to be served but to serve, and to give his life as a ransom for many."
-      },
-      {
-        ref: "Luke 6:31",
-        text: "Do to others as you would have them do to you."
-      },
-      {
-        ref: "Luke 9:23",
-        text: "Whoever wants to be my disciple must deny themselves and take up their cross daily and follow me."
-      },
-      {
-        ref: "Luke 24:6-7",
-        text: "He is not here; he has risen! Remember how he told you..."
-      },
-      {
-        ref: "John 8:12",
-        text: "I am the light of the world. Whoever follows me will not walk in darkness..."
-      },
-      {
-        ref: "John 10:10",
-        text: "I came that they may have life and have it abundantly."
-      },
-      {
-        ref: "John 11:25",
-        text: "I am the resurrection and the life. Whoever believes in me, though he die, yet shall he live."
-      },
-      {
-        ref: "John 13:35",
-        text: "By this everyone will know that you are my disciples, if you love one another."
-      },
-      {
-        ref: "John 15:5",
-        text: "I am the vine; you are the branches... apart from me you can do nothing."
-      },
-      {
-        ref: "Acts 1:8",
-        text: "You will receive power when the Holy Spirit has come upon you..."
-      },
-      {
-        ref: "Acts 2:38",
-        text: "Repent and be baptized, every one of you, in the name of Jesus Christ for the forgiveness of your sins."
-      },
-      {
-        ref: "Acts 17:28",
-        text: "For in him we live and move and have our being."
-      },
-      {
-        ref: "Romans 1:16",
-        text: "For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes."
-      },
-      {
-        ref: "Romans 8:1",
-        text: "There is now no condemnation for those who are in Christ Jesus."
-      },
-      {
-        ref: "Romans 8:28",
-        text: "We know that in all things God works for the good of those who love him..."
-      },
-      {
-        ref: "Psalm 100:4",
-        text: "Enter his gates with thanksgiving and his courts with praise; give thanks to him and praise his name."
-      },
-      {
-        ref: "Isaiah 26:3",
-        text: "You will keep in perfect peace those whose minds are steadfast, because they trust in you."
-      },
-      {
-        ref: "Matthew 6:9-13",
-        text: "Our Father in heaven, hallowed be your name... (The Lord’s Prayer)."
-      },
-      {
-        ref: "Luke 23:34",
-        text: "Jesus said, 'Father, forgive them, for they know not what they do.'"
-      },
-      {
-        ref: "John 16:33",
-        text: "In this world you will have trouble. But take heart! I have overcome the world."
-      },
-      {
-        ref: "1 Corinthians 13:4-7",
-        text: "Love is patient, love is kind... It always protects, always trusts, always hopes, always perseveres."
-      },
-      {
-        ref: "Ephesians 6:11",
-        text: "Put on the full armor of God, so that you can take your stand against the devil’s schemes."
-      },
-      {
-        ref: "Philippians 1:6",
-        text: "He who began a good work in you will carry it on to completion until the day of Christ Jesus."
-      },
-      {
-        ref: "Philippians 4:6-7",
-        text: "Do not be anxious about anything... And the peace of God, which transcends all understanding, will guard your hearts..."
-      },
-      {
-        ref: "Titus 3:5",
-        text: "He saved us, not because of righteous things we had done, but because of his mercy..."
-      },
-      {
-        ref: "Hebrews 4:12",
-        text: "For the word of God is alive and active. Sharper than any double-edged sword..."
-      },
-      {
-        ref: "Hebrews 12:1-2",
-        text: "Let us run with endurance the race that is set before us, looking to Jesus..."
-      },
-      {
-        ref: "James 4:7",
-        text: "Submit yourselves therefore to God. Resist the devil, and he will flee from you."
-      },
-      {
-        ref: "1 Peter 5:7",
-        text: "Cast all your anxiety on him because he cares for you."
-      },
-      {
-        ref: "1 John 4:4",
-        text: "He who is in you is greater than he who is in the world."
-      },
-      {
-        ref: "Revelation 21:4",
-        text: "He will wipe away every tear from their eyes. Death shall be no more..."
-      }
+      { ref: "James 1:5", text: "If any of you lacks wisdom, let him ask God, who gives generously to all without reproach, and it will be given him." },
+      { ref: "Micah 6:8", text: "He has told you, O man, what is good; and what does the Lord require of you but to do justice, and to love kindness, and to walk humbly with your God?" },
+      { ref: "Genesis 1:1", text: "In the beginning, God created the heavens and the earth." },
+      { ref: "Exodus 14:14", text: "The Lord will fight for you, and you have only to be silent." },
+      { ref: "Leviticus 19:18", text: "You shall not take vengeance or bear a grudge against the sons of your own people, but you shall love your neighbor as yourself: I am the Lord." },
+      { ref: "Deuteronomy 6:5", text: "You shall love the Lord your God with all your heart and with all your soul and with all your might." },
+      { ref: "Joshua 1:9", text: "Have I not commanded you? Be strong and courageous. Do not be frightened, and do not be dismayed, for the Lord your God is with you wherever you go." },
+      { ref: "1 Samuel 16:7", text: "But the Lord said to Samuel, 'Do not look on his appearance or on the height of his stature, because I have rejected him. For the Lord sees not as man sees: man looks on the outward appearance, but the Lord looks on the heart.'" },
+      { ref: "2 Samuel 22:31", text: "This God—his way is perfect; the word of the Lord proves true; he is a shield for all those who take refuge in him." },
+      { ref: "1 Kings 8:61", text: "Let your heart therefore be wholly true to the Lord our God, walking in his statutes and keeping his commandments, as at this day." },
+      { ref: "2 Chronicles 7:14", text: "If my people who are called by my name humble themselves, and pray and seek my face and turn from their wicked ways, then I will hear from heaven and will forgive their sin and heal their land." },
+      { ref: "Nehemiah 8:10", text: "Then he said to them, 'Go your way. Eat the fat and drink sweet wine and send portions to anyone who has nothing ready, for this day is holy to our Lord. And do not be grieved, for the joy of the Lord is your strength.'" },
+      { ref: "Job 1:21", text: "And he said, 'Naked I came from my mother's womb, and naked shall I return. The Lord gave, and the Lord has taken away; blessed be the name of the Lord.'" },
+      { ref: "Psalm 1:1-2", text: "Blessed is the man who walks not in the counsel of the wicked, nor stands in the way of sinners, nor sits in the seat of scoffers; but his delight is in the law of the Lord, and on his law he meditates day and night." },
+      { ref: "Psalm 23:4", text: "Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me; your rod and your staff, they comfort me." },
+      { ref: "Psalm 27:1", text: "The Lord is my light and my salvation; whom shall I fear? The Lord is the stronghold of my life; of whom shall I be afraid?" },
+      { ref: "Psalm 46:10", text: "Be still, and know that I am God. I will be exalted among the nations, I will be exalted in the earth!" },
+      { ref: "Psalm 51:10", text: "Create in me a clean heart, O God, and renew a right spirit within me." },
+      { ref: "Proverbs 4:23", text: "Keep your heart with all vigilance, for from it flow the springs of life." },
+      { ref: "Ecclesiastes 3:1", text: "For everything there is a season, and a time for every matter under heaven." },
+      { ref: "Isaiah 40:31", text: "But they who wait for the Lord shall renew their strength; they shall mount up with wings like eagles; they shall run and not be weary; they shall walk and not faint." },
+      { ref: "Jeremiah 17:7", text: "Blessed is the man who trusts in the Lord, whose trust is the Lord." },
+      { ref: "Lamentations 3:22-23", text: "The steadfast love of the Lord never ceases; his mercies never come to an end; they are new every morning; great is your faithfulness." },
+      { ref: "Ezekiel 36:26", text: "And I will give you a new heart, and a new spirit I will put within you. And I will remove the heart of stone from your flesh and give you a heart of flesh." },
+      { ref: "Daniel 3:17-18", text: "If this be so, our God whom we serve is able to deliver us from the burning fiery furnace, and he will deliver us out of your hand, O king. But if not, be it known to you, O king, that we will not serve your gods or worship the golden image that you have set up." },
+      { ref: "Hosea 6:6", text: "For I desire steadfast love and not sacrifice, the knowledge of God rather than burnt offerings." },
+      { ref: "Joel 2:12", text: "Yet even now, declares the Lord, return to me with all your heart, with fasting, with weeping, and with mourning." },
+      { ref: "Amos 5:24", text: "But let justice roll down like waters, and righteousness like an ever-flowing stream." },
+      { ref: "Habakkuk 3:19", text: "God, the Lord, is my strength; he makes my feet like the deer's; he makes me tread on my high places." },
+      { ref: "Zephaniah 3:17", text: "The Lord your God is in your midst, a mighty one who will save; he will rejoice over you with gladness; he will quiet you by his love; he will exult over you with loud singing." },
+      { ref: "Zechariah 4:6", text: "Then he said to me, 'This is the word of the Lord to Zerubbabel: Not by might, nor by power, but by my Spirit, says the Lord of hosts.'" },
+      { ref: "Malachi 3:10", text: "Bring the full tithe into the storehouse, that there may be food in my house. And thereby put me to the test, says the Lord of hosts, if I will not open the windows of heaven for you and pour down for you a blessing until there is no more need." },
+      { ref: "Matthew 5:14", text: "You are the light of the world. A city set on a hill cannot be hidden." },
+      { ref: "Matthew 7:7", text: "Ask, and it will be given to you; seek, and you will find; knock, and it will be opened to you." },
+      { ref: "Matthew 11:28", text: "Come to me, all who labor and are heavy laden, and I will give you rest." },
+      { ref: "Matthew 16:24", text: "Then Jesus told his disciples, 'If anyone would come after me, let him deny himself and take up his cross and follow me.'" },
+      { ref: "Matthew 22:37", text: "And he said to him, 'You shall love the Lord your God with all your heart and with all your soul and with all your mind.'" },
+      { ref: "Mark 10:45", text: "For even the Son of Man came not to be served but to serve, and to give his life as a ransom for many." },
+      { ref: "Luke 6:31", text: "And as you wish that others would do to you, do so to them." },
+      { ref: "Luke 9:23", text: "And he said to all, 'If anyone would come after me, let him deny himself and take up his cross daily and follow me.'" },
+      { ref: "Luke 24:6-7", text: "'He is not here, but has risen. Remember how he told you, while he was still in Galilee, that the Son of Man must be delivered into the hands of sinful men and be crucified and on the third day rise.'" },
+      { ref: "John 8:12", text: "Again Jesus spoke to them, saying, 'I am the light of the world. Whoever follows me will not walk in darkness, but will have the light of life.'" },
+      { ref: "John 10:10", text: "The thief comes only to steal and kill and destroy. I came that they may have life and have it abundantly." },
+      { ref: "John 11:25", text: "Jesus said to her, 'I am the resurrection and the life. Whoever believes in me, though he die, yet shall he live.'" },
+      { ref: "John 13:35", text: "By this all people will know that you are my disciples, if you have love for one another." },
+      { ref: "John 15:5", text: "I am the vine; you are the branches. Whoever abides in me and I in him, he it is that bears much fruit, for apart from me you can do nothing." },
+      { ref: "Acts 1:8", text: "But you will receive power when the Holy Spirit has come upon you, and you will be my witnesses in Jerusalem and in all Judea and Samaria, and to the end of the earth." },
+      { ref: "Acts 2:38", text: "And Peter said to them, 'Repent and be baptized every one of you in the name of Jesus Christ for the forgiveness of your sins, and you will receive the gift of the Holy Spirit.'" },
+      { ref: "Acts 17:28", text: "'For in him we live and move and have our being'; as even some of your own poets have said, 'For we are indeed his offspring.'" },
+      { ref: "Romans 1:16", text: "For I am not ashamed of the gospel, for it is the power of God for salvation to everyone who believes, to the Jew first and also to the Greek." },
+      { ref: "Romans 8:1", text: "There is therefore now no condemnation for those who are in Christ Jesus." },
+      { ref: "Romans 8:28", text: "And we know that for those who love God all things work together for good, for those who are called according to his purpose." },
+      { ref: "Psalm 100:4", text: "Enter his gates with thanksgiving, and his courts with praise! Give thanks to him; bless his name!" },
+      { ref: "Isaiah 26:3", text: "You keep him in perfect peace whose mind is stayed on you, because he trusts in you." },
+      { ref: "Matthew 6:9-13", text: "Pray then like this: 'Our Father in heaven, hallowed be your name. Your kingdom come, your will be done, on earth as it is in heaven. Give us this day our daily bread, and forgive us our debts, as we also have forgiven our debtors. And lead us not into temptation, but deliver us from evil.'" },
+      { ref: "Luke 23:34", text: "And Jesus said, 'Father, forgive them, for they know not what they do.' And they cast lots to divide his garments." },
+      { ref: "John 16:33", text: "I have said these things to you, that in me you may have peace. In the world you will have tribulation. But take heart; I have overcome the world." },
+      { ref: "1 Corinthians 13:4-7", text: "Love is patient and kind; love does not envy or boast; it is not arrogant or rude. It does not insist on its own way; it is not irritable or resentful; it does not rejoice at wrongdoing, but rejoices with the truth. Love bears all things, believes all things, hopes all things, endures all things." },
+      { ref: "Ephesians 6:11", text: "Put on the whole armor of God, that you may be able to stand against the schemes of the devil." },
+      { ref: "Philippians 1:6", text: "And I am sure of this, that he who began a good work in you will bring it to completion at the day of Jesus Christ." },
+      { ref: "Philippians 4:6-7", text: "Do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus." },
+      { ref: "Titus 3:5", text: "He saved us, not because of works done by us in righteousness, but according to his own mercy, by the washing of regeneration and renewal of the Holy Spirit." },
+      { ref: "Hebrews 4:12", text: "For the word of God is living and active, sharper than any two-edged sword, piercing to the division of soul and of spirit, of joints and of marrow, and discerning the thoughts and intentions of the heart." },
+      { ref: "Hebrews 12:1-2", text: "Therefore, since we are surrounded by so great a cloud of witnesses, let us also lay aside every weight, and sin which clings so closely, and let us run with endurance the race that is set before us, looking to Jesus, the founder and perfecter of our faith, who for the joy that was set before him endured the cross, despising the shame, and is seated at the right hand of the throne of God." },
+      { ref: "James 4:7", text: "Submit yourselves therefore to God. Resist the devil, and he will flee from you." },
+      { ref: "1 Peter 5:7", text: "Casting all your anxieties on him, because he cares for you." },
+      { ref: "1 John 4:4", text: "Little children, you are from God and have overcome them, for he who is in you is greater than he who is in the world." },
+      { ref: "Revelation 21:4", text: "He will wipe away every tear from their eyes, and death shall be no more, neither shall there be mourning, nor crying, nor pain anymore, for the former things have passed away." },
+      // Add more key/favorite verses, one or two from each book (where possible)
+      { ref: "Genesis 50:20", text: "As for you, you meant evil against me, but God meant it for good, to bring it about that many people should be kept alive, as they are today." },
+      { ref: "Exodus 20:12", text: "Honor your father and your mother, that your days may be long in the land that the Lord your God is giving you." },
+      { ref: "Leviticus 19:2", text: "Speak to all the congregation of the people of Israel and say to them: You shall be holy, for I the Lord your God am holy." },
+      { ref: "Numbers 6:24-26", text: "The Lord bless you and keep you; the Lord make his face to shine upon you and be gracious to you; the Lord lift up his countenance upon you and give you peace." },
+      { ref: "Deuteronomy 31:6", text: "Be strong and courageous. Do not fear or be in dread of them, for it is the Lord your God who goes with you. He will not leave you or forsake you." },
+      { ref: "Joshua 24:15", text: "But as for me and my house, we will serve the Lord." },
+      { ref: "Judges 21:25", text: "In those days there was no king in Israel. Everyone did what was right in his own eyes." },
+      { ref: "Ruth 1:16", text: "But Ruth said, 'Do not urge me to leave you or to return from following you. For where you go I will go, and where you lodge I will lodge. Your people shall be my people, and your God my God.'" },
+      { ref: "1 Samuel 12:24", text: "Only fear the Lord and serve him faithfully with all your heart. For consider what great things he has done for you." },
+      { ref: "2 Samuel 7:22", text: "Therefore you are great, O Lord God. For there is none like you, and there is no God besides you." },
+      { ref: "1 Kings 8:23", text: "O Lord, God of Israel, there is no God like you, in heaven above or on earth beneath, keeping covenant and showing steadfast love to your servants." },
+      { ref: "2 Kings 6:16", text: "He said, 'Do not be afraid, for those who are with us are more than those who are with them.'" },
+      { ref: "1 Chronicles 16:34", text: "Oh give thanks to the Lord, for he is good; for his steadfast love endures forever!" },
+      { ref: "2 Chronicles 20:15", text: "Do not be afraid and do not be dismayed at this great horde, for the battle is not yours but God's." },
+      { ref: "Ezra 7:10", text: "For Ezra had set his heart to study the Law of the Lord, and to do it and to teach his statutes and rules in Israel." },
+      { ref: "Nehemiah 8:10", text: "And do not be grieved, for the joy of the Lord is your strength." },
+      { ref: "Esther 4:14", text: "And who knows whether you have not come to the kingdom for such a time as this?" },
+      { ref: "Job 19:25", text: "For I know that my Redeemer lives, and at the last he will stand upon the earth." },
+      { ref: "Psalms 19:14", text: "Let the words of my mouth and the meditation of my heart be acceptable in your sight, O Lord, my rock and my redeemer." },
+      { ref: "Proverbs 18:10", text: "The name of the Lord is a strong tower; the righteous man runs into it and is safe." },
+      { ref: "Ecclesiastes 12:13", text: "The end of the matter; all has been heard. Fear God and keep his commandments, for this is the whole duty of man." },
+      { ref: "Song of Solomon 2:4", text: "He brought me to the banqueting house, and his banner over me was love." },
+      { ref: "Isaiah 9:6", text: "For to us a child is born, to us a son is given; and the government shall be upon his shoulder, and his name shall be called Wonderful Counselor, Mighty God, Everlasting Father, Prince of Peace." },
+      { ref: "Jeremiah 33:3", text: "Call to me and I will answer you, and will tell you great and hidden things that you have not known." },
+      { ref: "Lamentations 3:22-23", text: "The steadfast love of the Lord never ceases; his mercies never come to an end; they are new every morning; great is your faithfulness." },
+      { ref: "Ezekiel 36:26", text: "And I will give you a new heart, and a new spirit I will put within you." },
+      { ref: "Daniel 6:27", text: "He delivers and rescues; he works signs and wonders in heaven and on earth, he who has saved Daniel from the power of the lions." },
+      { ref: "Hosea 6:6", text: "For I desire steadfast love and not sacrifice, the knowledge of God rather than burnt offerings." },
+      { ref: "Joel 2:28", text: "And it shall come to pass afterward, that I will pour out my Spirit on all flesh." },
+      { ref: "Amos 5:24", text: "But let justice roll down like waters, and righteousness like an ever-flowing stream." },
+      { ref: "Obadiah 1:15", text: "For the day of the Lord is near upon all the nations. As you have done, it shall be done to you." },
+      { ref: "Jonah 2:2", text: "I called out to the Lord, out of my distress, and he answered me." },
+      { ref: "Micah 6:8", text: "He has told you, O man, what is good; and what does the Lord require of you but to do justice, and to love kindness, and to walk humbly with your God?" },
+      { ref: "Nahum 1:7", text: "The Lord is good, a stronghold in the day of trouble; he knows those who take refuge in him." },
+      { ref: "Habakkuk 3:19", text: "God, the Lord, is my strength; he makes my feet like the deer's; he makes me tread on my high places." },
+      { ref: "Zephaniah 3:17", text: "The Lord your God is in your midst, a mighty one who will save; he will rejoice over you with gladness." },
+      { ref: "Haggai 2:9", text: "The latter glory of this house shall be greater than the former, says the Lord of hosts. And in this place I will give peace." },
+      { ref: "Zechariah 4:6", text: "Not by might, nor by power, but by my Spirit, says the Lord of hosts." },
+      { ref: "Malachi 4:2", text: "But for you who fear my name, the sun of righteousness shall rise with healing in its wings." },
+      { ref: "Matthew 5:16", text: "In the same way, let your light shine before others, so that they may see your good works and give glory to your Father who is in heaven." },
+      { ref: "Mark 12:30-31", text: "And you shall love the Lord your God with all your heart and with all your soul and with all your mind and with all your strength. The second is this: You shall love your neighbor as yourself." },
+      { ref: "Luke 1:37", text: "For nothing will be impossible with God." },
+      { ref: "John 1:1", text: "In the beginning was the Word, and the Word was with God, and the Word was God." },
+      { ref: "Acts 16:31", text: "And they said, 'Believe in the Lord Jesus, and you will be saved, you and your household.'" },
+      { ref: "Romans 5:1", text: "Therefore, since we have been justified by faith, we have peace with God through our Lord Jesus Christ." },
+      { ref: "1 Corinthians 6:19-20", text: "Or do you not know that your body is a temple of the Holy Spirit within you, whom you have from God? You are not your own, for you were bought with a price. So glorify God in your body." },
+      { ref: "2 Corinthians 12:9", text: "But he said to me, 'My grace is sufficient for you, for my power is made perfect in weakness.'" },
+      { ref: "Galatians 6:9", text: "And let us not grow weary of doing good, for in due season we will reap, if we do not give up." },
+      { ref: "Ephesians 3:20", text: "Now to him who is able to do far more abundantly than all that we ask or think, according to the power at work within us." },
+      { ref: "Philippians 2:3", text: "Do nothing from selfish ambition or conceit, but in humility count others more significant than yourselves." },
+      { ref: "Colossians 2:6-7", text: "Therefore, as you received Christ Jesus the Lord, so walk in him, rooted and built up in him and established in the faith." },
+      { ref: "1 Thessalonians 5:24", text: "He who calls you is faithful; he will surely do it." },
+      { ref: "2 Thessalonians 3:3", text: "But the Lord is faithful. He will establish you and guard you against the evil one." },
+      { ref: "1 Timothy 4:12", text: "Let no one despise you for your youth, but set the believers an example in speech, in conduct, in love, in faith, in purity." },
+      { ref: "2 Timothy 3:16-17", text: "All Scripture is breathed out by God and profitable for teaching, for reproof, for correction, and for training in righteousness, that the man of God may be complete, equipped for every good work." },
+      { ref: "Titus 2:11-12", text: "For the grace of God has appeared, bringing salvation for all people, training us to renounce ungodliness and worldly passions." },
+      { ref: "Philemon 1:6", text: "And I pray that the sharing of your faith may become effective for the full knowledge of every good thing that is in us for the sake of Christ." },
+      { ref: "Hebrews 10:23", text: "Let us hold fast the confession of our hope without wavering, for he who promised is faithful." },
+      { ref: "James 1:17", text: "Every good gift and every perfect gift is from above, coming down from the Father of lights." },
+      { ref: "1 Peter 2:9", text: "But you are a chosen race, a royal priesthood, a holy nation, a people for his own possession, that you may proclaim the excellencies of him who called you out of darkness into his marvelous light." },
+      { ref: "2 Peter 3:9", text: "The Lord is not slow to fulfill his promise as some count slowness, but is patient toward you, not wishing that any should perish, but that all should reach repentance." },
+      { ref: "1 John 1:7", text: "But if we walk in the light, as he is in the light, we have fellowship with one another, and the blood of Jesus his Son cleanses us from all sin." },
+      { ref: "2 John 1:6", text: "And this is love, that we walk according to his commandments." },
+      { ref: "3 John 1:4", text: "I have no greater joy than to hear that my children are walking in the truth." },
+      { ref: "Jude 1:24", text: "Now to him who is able to keep you from stumbling and to present you blameless before the presence of his glory with great joy." },
+      { ref: "Revelation 22:13", text: "I am the Alpha and the Omega, the first and the last, the beginning and the end." }
 
     ];
     const verseList = document.getElementById('verseList');
@@ -535,22 +447,135 @@
       btn.querySelector('i').className = showFavoritesOnly ? "fa-solid fa-star" : "fa-regular fa-star";
     }
 
+    // Bootstrap modal helper
+    function showModal(title, body, footerHtml = "") {
+      document.getElementById('infoModalLabel').textContent = title;
+      document.getElementById('infoModalBody').innerHTML = body;
+      document.getElementById('infoModalFooter').innerHTML = footerHtml;
+      // Show modal (Bootstrap 5)
+      var modal = new bootstrap.Modal(document.getElementById('infoModal'));
+      modal.show();
+    }
+
     // --- More menu logic ---
     const moreMenu = document.getElementById('moreMenu');
     const moreMenuBtn = document.getElementById('moreMenuBtn');
-    moreMenuBtn.onclick = function(e) {
+    moreMenuBtn.onclick = function (e) {
       e.stopPropagation();
       moreMenu.classList.toggle('show');
     };
-    document.body.addEventListener('click', function() {
+    document.body.addEventListener('click', function () {
       moreMenu.classList.remove('show');
     });
-    document.getElementById('aboutBtn').onclick = function() {
-      alert("Essential Christian Memory Verses\nby MTE\nMinimalist controls, compact view, and easy navigation.");
-    };
-    document.getElementById('helpBtn').onclick = function() {
-      alert("• Use the icons to switch views or filter verses.\n• Click the star to favorite a verse.\n• Use the ellipsis for more options.");
-    };
+    
+        document.getElementById('aboutBtn').onclick = function (e) {
+            e.stopPropagation();
+            moreMenu.classList.remove('show');
+            showModal(
+                "About",
+                `<b>Essential Bible Stories</b><br>
+                by MTE<br>
+                A quick reference to the most important stories in the Bible.<br><br>
+                Product of MTE<br>
+                Contact: oburu ephraim<br>
+                <button id="modalEmail" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Email Me</button>
+                <button id="modalWhatsapp" class="btn btn-link p-0" style="color:#25d366;text-decoration:underline;">Chat on WhatsApp</button>
+                <button id="modalDonate" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Support This Ministry</button>
+                `,
+                ""
+            );
+            setTimeout(setupModalLinks, 100); // Wait for DOM
+        };
+
+        document.getElementById('helpBtn').onclick = function (e) {
+            e.stopPropagation();
+            moreMenu.classList.remove('show');
+            showModal(
+                "Help",
+                `• Search by story or reference.<br>
+                • Click the star to favorite a story.<br>
+                • Use the ellipsis for more options.<br><br>
+                <button id="modalEmail" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Email Me</button>
+                <button id="modalWhatsapp" class="btn btn-link p-0" style="color:#25d366;text-decoration:underline;">Chat on WhatsApp</button>
+                <button id="modalDonate" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Support This Ministry</button>
+                `,
+                ""
+            );
+            setTimeout(setupModalLinks, 100);
+        };
+
+        function setupModalLinks() {
+            const whatsappMsg = encodeURIComponent("Hello Ephraim, I am contacting you from the Bible Study Initiative app.");
+            const emailSubject = encodeURIComponent("Bible Study Initiative - Contact");
+            const emailBody = encodeURIComponent("Hello Ephraim,\n\nI am reaching out from the Bible Study Initiative app.\n\n");
+            // WhatsApp
+            const whatsappBtn = document.getElementById('modalWhatsapp');
+            if (whatsappBtn) {
+                whatsappBtn.onclick = function () {
+                    window.open("https://wa.me/256777233322?text=" + whatsappMsg, "_blank");
+                };
+            }
+            // Email
+            const emailBtn = document.getElementById('modalEmail');
+            if (emailBtn) {
+                emailBtn.onclick = function () {
+                    window.location.href = "mailto:oburuephraim2@gmail.com?subject=" + emailSubject + "&body=" + emailBody;
+                };
+            }
+            // Donate
+            const donateBtn = document.getElementById('modalDonate');
+            if (donateBtn) {
+                donateBtn.onclick = function () {
+                    showModal(
+                        "Support This Ministry",
+                        `<b>Help us spread God's Word!</b><br>
+                        If this Bible Study Initiative has blessed you, please consider donating.<br>
+                        <span style="font-size:1.2em;color:#0078d4;">Mobile Money: <b>+256777233322</b></span><br>
+                        <small>Tap the button below to copy the number and open WhatsApp to confirm your support.</small>`,
+                        `<button class="btn btn-success" id="donateCopyBtn">Copy Number &amp; WhatsApp</button>`
+                    );
+                    setTimeout(() => {
+                        const btn = document.getElementById('donateCopyBtn');
+                        if (btn) {
+                            btn.onclick = function () {
+                                navigator.clipboard.writeText("+256777233322");
+                                window.open("https://wa.me/256777233322?text=" + encodeURIComponent("Hello Ephraim, I would like to support the Bible Study Initiative."), "_blank");
+                            };
+                        }
+                    }, 100);
+                };
+            }
+        }
+
+        // Footer WhatsApp and Email
+        document.getElementById('footerWhatsapp').onclick = function () {
+            window.open("https://wa.me/256777233322?text=" + encodeURIComponent("Hello Ephraim, I am contacting you from the Bible Study Initiative app."), "_blank");
+        };
+        document.getElementById('footerEmail').onclick = function (e) {
+            e.preventDefault();
+            window.location.href = "mailto:oburuephraim2@gmail.com?subject=" +
+                encodeURIComponent("Bible Study Initiative - Contact") +
+                "&body=" + encodeURIComponent("Hello Ephraim,\n\nI am reaching out from the Bible Study Initiative app.\n\n");
+        };
+        document.getElementById('footerDonate').onclick = function () {
+            showModal(
+                "Support This Ministry",
+                `<b>Help us spread God's Word!</b><br>
+                If this Bible Study Initiative has blessed you, please consider donating.<br>
+                <span style="font-size:1.2em;color:#0078d4;">Mobile Money: <b>+256777233322</b></span><br>
+                <small>Tap the button below to copy the number and open WhatsApp to confirm your support.</small>`,
+                `<button class="btn btn-success" id="donateCopyBtn">Copy Number &amp; WhatsApp</button>`
+            );
+            setTimeout(() => {
+                const btn = document.getElementById('donateCopyBtn');
+                if (btn) {
+                    btn.onclick = function () {
+                        navigator.clipboard.writeText("+256777233322");
+                        window.open("https://wa.me/256777233322?text=" + encodeURIComponent("Hello Ephraim, I would like to support the Bible Study Initiative."), "_blank");
+                    };
+                }
+            }, 100);
+        };
 
     // --- Footer year ---
     document.getElementById('footerYear').textContent = new Date().getFullYear();
@@ -674,7 +699,7 @@
       favBtn.title = isFavorite(idx) ? "Remove from favorites" : "Add to favorites";
       favBtn.innerHTML = isFavorite(idx) ? "&#9733;" : "&#9734;";
       favBtn.style.fontSize = "1.5rem";
-      favBtn.onclick = function(e) {
+      favBtn.onclick = function (e) {
         e.stopPropagation();
         toggleFavorite(idx);
       };
@@ -698,7 +723,7 @@
       const shareBtn = document.createElement('button');
       shareBtn.className = "btn btn-sm btn-outline-secondary";
       shareBtn.textContent = "Share";
-      shareBtn.onclick = function() {
+      shareBtn.onclick = function () {
         let shareText = "";
         if (displayMode === "both") {
           shareText = (verse.ref ? verse.ref + ": " : "") + verse.text;
@@ -710,7 +735,7 @@
         if (navigator.share) {
           navigator.share({
             text: shareText
-          }).catch(() => {});
+          }).catch(() => { });
         } else {
           // fallback: clipboard
           navigator.clipboard.writeText(shareText).then(() => {
@@ -725,7 +750,7 @@
         const bibleBtn = document.createElement('button');
         bibleBtn.className = "btn btn-sm btn-outline-primary";
         bibleBtn.textContent = "Open in Bible";
-        bibleBtn.onclick = function(e) {
+        bibleBtn.onclick = function (e) {
           e.stopPropagation();
           const url = "https://www.biblegateway.com/passage/?search=" + encodeURIComponent(verse.ref);
           window.open(url, "_blank");
@@ -738,33 +763,33 @@
       verseList.appendChild(col);
     }
 
-    document.getElementById('toggleFavorites').onclick = function() {
+    document.getElementById('toggleFavorites').onclick = function () {
       showFavoritesOnly = !showFavoritesOnly;
       localStorage.setItem('showFavoritesOnly', showFavoritesOnly);
       updateFavoritesButton();
       displayVerses(search.value);
     };
 
-    document.getElementById('showBoth').onclick = function() {
+    document.getElementById('showBoth').onclick = function () {
       displayMode = "both";
       localStorage.setItem('displayMode', displayMode);
       updateDisplayModeButtons();
       displayVerses(search.value);
     };
-    document.getElementById('showVerseOnly').onclick = function() {
+    document.getElementById('showVerseOnly').onclick = function () {
       displayMode = "verse";
       localStorage.setItem('displayMode', displayMode);
       updateDisplayModeButtons();
       displayVerses(search.value);
     };
-    document.getElementById('showRefOnly').onclick = function() {
+    document.getElementById('showRefOnly').onclick = function () {
       displayMode = "ref";
       localStorage.setItem('displayMode', displayMode);
       updateDisplayModeButtons();
       displayVerses(search.value);
     };
 
-    document.getElementById('toggleViewMode').onclick = function() {
+    document.getElementById('toggleViewMode').onclick = function () {
       if (viewMode === "all") {
         viewMode = "single";
         // Restore last singleIndex if available
@@ -776,13 +801,13 @@
       displayVerses(search.value);
     };
 
-    document.getElementById('prevBtn').onclick = function() {
+    document.getElementById('prevBtn').onclick = function () {
       if (singleIndex > 0) {
         singleIndex--;
         displayVerses(search.value);
       }
     };
-    document.getElementById('nextBtn').onclick = function() {
+    document.getElementById('nextBtn').onclick = function () {
       if (singleIndex < filteredIndexes.length - 1) {
         singleIndex++;
         displayVerses(search.value);
@@ -802,13 +827,13 @@
     let touchStartX = null;
     let touchEndX = null;
 
-    document.body.addEventListener('touchstart', function(e) {
+    document.body.addEventListener('touchstart', function (e) {
       if (e.touches.length === 1) {
         touchStartX = e.touches[0].clientX;
       }
     });
 
-    document.body.addEventListener('touchend', function(e) {
+    document.body.addEventListener('touchend', function (e) {
       if (touchStartX === null) return;
       touchEndX = (e.changedTouches && e.changedTouches[0].clientX) || null;
       if (touchEndX !== null && viewMode === "single" && filteredIndexes.length > 0) {
@@ -831,11 +856,14 @@
 
     // Register service worker for offline/PWA support
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
+      window.addEventListener('load', function () {
         navigator.serviceWorker.register('service-worker.js');
       });
     }
   </script>
+   <!-- Bootstrap JS for modal support -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

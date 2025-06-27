@@ -1,6 +1,9 @@
 const CACHE_NAME = 'memory-verses-v1';
 const URLS_TO_CACHE = [
-  'memory_verses.html',
+  'index.html',
+  'bible_questions.html',
+  'books_of_the_bible.html',
+  'bible_stories.html',
   'manifest.json',
   'icon-192.png',
   'icon-512.png',

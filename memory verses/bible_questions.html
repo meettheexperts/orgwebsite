@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Essential Bible Questions & Answers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f9f9f9">
+    <style>
+        /* ...copy the same CSS from memory_verses.html... */
+        body {
+            background-color: #f9f9f9;
+        }
+
+        .verse-card {
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background-color: yellow;
+        }
+
+        .controls-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            padding: 0.4em 0.6em;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #333;
+            transition: color 0.2s;
+        }
+
+        .icon-btn:hover,
+        .icon-btn.active {
+            color: #0078d4;
+        }
+
+        .more-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .more-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: #fff;
+            min-width: 160px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            z-index: 10;
+            border-radius: 0.25rem;
+            border: 1px solid #eee;
+            padding: 0.5em 0;
+        }
+
+        .more-menu.show .more-dropdown {
+            display: block;
+        }
+
+        .more-dropdown button {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 0.5em 1em;
+            font-size: 1em;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .more-dropdown button:hover {
+            background: #f5f5f5;
+        }
+
+        .verse-text {
+            font-style: italic;
+            font-size: 1.15em;
+            margin-bottom: 0.2em;
+        }
+
+        .verse-reference {
+            color: #888;
+            font-size: 0.95em;
+            margin-bottom: 0.2em;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2em;
+            color: #aaa;
+            font-size: 0.95em;
+            padding: 1em 0 0.5em 0;
+            border-top: 1px solid #eee;
+        }
+
+        .single-view-outer {
+            display: flex;
+            flex-direction: column;
+            min-height: 50vh;
+            height: calc(80vh - 120px);
+            justify-content: center;
+            align-items: stretch;
+        }
+
+        .single-view-card {
+            flex: 0 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 0;
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            max-height: 420px;
+        }
+
+        .single-view-card .card {
+            height: 100%;
+            max-height: 420px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .single-view-card .card-body {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .single-view-card .verse-text {
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            text-align: center;
+            font-size: 1.15em;
+            min-height: 3em;
+            max-height: 8em;
+        }
+
+        .single-view-card .verse-reference {
+            margin-bottom: 0.5em;
+        }
+
+        @media (max-width: 600px) {
+            .single-view-card {
+                max-width: 98vw;
+                max-height: 320px;
+            }
+
+            .single-view-card .card {
+                max-height: 320px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-4" id="mainContainer">
+        <!-- Navigation bar -->
+        <nav class="mb-3">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Key Bible Verses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active fw-bold" aria-current="page" href="bible_questions.html">Bible
+                        Questions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="books_of_the_bible.html">Books of the Bible</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="bible_stories.html">Bible Stories</a>
+                </li>
+            </ul>
+        </nav>
+        <h1 class="text-center mb-4">Key Bible Questions &amp; Answers</h1>
+        <div id="sticky-controls" class="bg-white pb-2"
+            style="position:sticky;top:0;z-index:100;border-bottom:1px solid #eee;">
+            <input type="text" id="search" class="form-control mb-2" placeholder="Search by question or answer..." />
+            <div class="controls-bar">
+                <button id="showBoth" class="icon-btn" title="Show Both"><i class="fa-solid fa-list"></i></button>
+                <button id="showVerseOnly" class="icon-btn" title="Show Question Only"><i
+                        class="fa-solid fa-font"></i></button>
+                <button id="showRefOnly" class="icon-btn" title="Show Answer Only"><i
+                        class="fa-solid fa-book-bible"></i></button>
+                <button id="toggleViewMode" class="icon-btn" title="Single View"><i
+                        class="fa-solid fa-clone"></i></button>
+                <button id="toggleFavorites" class="icon-btn" title="View Favorites"><i
+                        class="fa-solid fa-star"></i></button>
+                <div class="more-menu" id="moreMenu">
+                    <button class="icon-btn" title="More Options" id="moreMenuBtn"><i
+                            class="fa-solid fa-ellipsis"></i></button>
+                    <div class="more-dropdown" id="moreDropdown">
+                        <button id="aboutBtn">About</button>
+                        <button id="helpBtn">Help</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="verseList" class="row"></div>
+        <div id="singleNav" class="mb-2 text-center" style="display:none;">
+            <button id="prevBtn" class="btn btn-outline-secondary btn-sm me-2">Previous</button>
+            <span id="singleCounter"></span>
+            <button id="nextBtn" class="btn btn-outline-secondary btn-sm ms-2">Next</button>
+        </div>
+    </div>
+    <footer class="footer">
+        <small>
+            &copy; <span id="footerYear"></span> MTE &mdash; "Thy word have I hid in mine heart..."<br>
+            <span>
+                Product of MTE &mdash; oburu ephraim (<a href="mailto:oburuephraim2@gmail.com" id="footerEmail">oburuephraim2@gmail.com</a>)<br>
+                <button id="footerWhatsapp" class="btn btn-link p-0" style="color:#25d366;text-decoration:underline;">Chat on WhatsApp</button>
+                <button id="footerDonate" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Support This Ministry</button>
+            </span>
+        </small>
+    </footer>
+
+    <!-- Modal Structure -->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="infoModalLabel"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="infoModalBody"></div>
+          <div class="modal-footer" id="infoModalFooter"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+        // Replace with your questions and answers
+        const questions = [
+            { question: "Who created the heavens and the earth?", answer: "God (Genesis 1:1)" },
+            { question: "What is the greatest commandment?", answer: "Love the Lord your God with all your heart, soul, and mind. (Matthew 22:37)" },
+            { question: "Who is the way, the truth, and the life?", answer: "Jesus (John 14:6)" },
+            { question: "What must you do to be saved?", answer: "Believe in the Lord Jesus Christ. (Acts 16:31)" },
+            { question: "What is the fruit of the Spirit?", answer: "Love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control. (Galatians 5:22-23)" },
+            { question: "What are the wages of sin?", answer: "Death (Romans 6:23)" },
+            { question: "Who was thrown into the lion's den?", answer: "Daniel (Daniel 6:16)" },
+            { question: "Who led the Israelites out of Egypt?", answer: "Moses (Exodus 3:10)" },
+            { question: "Who denied Jesus three times?", answer: "Peter (Luke 22:61)" },
+            { question: "What is faith?", answer: "The assurance of things hoped for, the conviction of things not seen. (Hebrews 11:1)" },
+            { question: "How should we treat our enemies?", answer: "Love your enemies and pray for those who persecute you. (Matthew 5:44)" },
+            { question: "What is the first commandment?", answer: "You shall have no other gods before me. (Exodus 20:3)" },
+            { question: "What does the Lord require of you?", answer: "To act justly and to love mercy and to walk humbly with your God. (Micah 6:8)" },
+            { question: "Who was the strongest man in the Bible?", answer: "Samson (Judges 16:6)" },
+            { question: "Who was swallowed by a big fish?", answer: "Jonah (Jonah 1:17)" },
+            { question: "Who is the Good Shepherd?", answer: "Jesus (John 10:11)" },
+            { question: "What is the root of all evil?", answer: "The love of money. (1 Timothy 6:10)" },
+            { question: "How many books are in the Bible?", answer: "66 books" },
+            { question: "Who was the mother of Jesus?", answer: "Mary (Luke 1:30-31)" },
+            { question: "What did Jesus do for our sins?", answer: "He died on the cross. (Romans 5:8)" },
+            { question: "What is the armor of God?", answer: "Belt of truth, breastplate of righteousness, shoes of peace, shield of faith, helmet of salvation, sword of the Spirit. (Ephesians 6:14-17)" },
+            { question: "Who was the first king of Israel?", answer: "Saul (1 Samuel 9:17)" },
+            { question: "What is the purpose of prayer?", answer: "To communicate with God and seek His will. (Philippians 4:6-7)" },
+            { question: "What is the Bible?", answer: "The inspired word of God. (2 Timothy 3:16-17)" },
+            { question: "Who is the author of salvation?", answer: "Jesus (Hebrews 5:9)" },
+            { question: "What is the meaning of life?", answer: "To glorify God and enjoy Him forever. (1 Corinthians 10:31)" },
+            { question: "Who is the Prince of Peace?", answer: "Jesus (Isaiah 9:6)" },
+            { question: "What is eternal life?", answer: "Knowing God and Jesus Christ. (John 17:3)" },
+            { question: "Who is the Holy Spirit?", answer: "The third person of the Trinity, our Comforter and Guide. (John 14:26)" },
+            { question: "What is the significance of the resurrection?", answer: "It proves Jesus is the Son of God and gives us hope of eternal life. (Romans 1:4)" },
+            { question: "Who was the first man?", answer: "Adam (Genesis 2:7)" },
+            { question: "Who was the first woman?", answer: "Eve (Genesis 2:22)" },
+            { question: "What was the sign of God's covenant with Noah?", answer: "A rainbow (Genesis 9:13)" },
+            { question: "Who received the Ten Commandments from God?", answer: "Moses (Exodus 31:18)" },
+            { question: "Who was known as a man after God's own heart?", answer: "David (1 Samuel 13:14)" },
+            { question: "Who betrayed Jesus?", answer: "Judas Iscariot (Luke 22:48)" },
+            { question: "What did Jesus turn water into?", answer: "Wine (John 2:9)" },
+            { question: "How many disciples did Jesus have?", answer: "Twelve (Matthew 10:1-4)" },
+            { question: "Who was the tax collector that climbed a tree to see Jesus?", answer: "Zacchaeus (Luke 19:2-4)" },
+            { question: "Who was thrown into a fiery furnace?", answer: "Shadrach, Meshach, and Abednego (Daniel 3:23)" },
+            { question: "Who succeeded Moses as leader of Israel?", answer: "Joshua (Deuteronomy 31:7)" },
+            { question: "Who was the weeping prophet?", answer: "Jeremiah (Jeremiah 9:1)" },
+            { question: "What happened on the Day of Pentecost?", answer: "The Holy Spirit came on the believers. (Acts 2:1-4)" },
+            { question: "Who was the disciple known as the doubter?", answer: "Thomas (John 20:27)" },
+            { question: "What is the shortest verse in the Bible?", answer: "Jesus wept. (John 11:35)" },
+            { question: "Who was the oldest man in the Bible?", answer: "Methuselah (Genesis 5:27)" },
+            { question: "Who interpreted Pharaoh's dreams?", answer: "Joseph (Genesis 41:15)" },
+            { question: "How many days and nights did it rain during the flood?", answer: "40 days and 40 nights (Genesis 7:12)" },
+            { question: "What does 'Emmanuel' mean?", answer: "God with us (Matthew 1:23)" },
+            { question: "Who baptized Jesus?", answer: "John the Baptist (Matthew 3:13-17)" },
+            { question: "What did Jesus feed the 5,000 with?", answer: "Five loaves and two fish (John 6:9-10)" },
+            { question: "Who was Paul before he became an apostle?", answer: "Saul (Acts 9:1)" },
+            { question: "Who wrote most of the Psalms?", answer: "David" },
+            { question: "What is the Golden Rule?", answer: "Do to others what you would have them do to you. (Matthew 7:12)" },
+            { question: "Which apostle was a doctor?", answer: "Luke (Colossians 4:14)" },
+            { question: "How did God speak to Moses in the desert?", answer: "Through a burning bush (Exodus 3:2)" },
+            { question: "Who built the ark?", answer: "Noah (Genesis 6:14)" },
+            { question: "What river was Jesus baptized in?", answer: "Jordan River (Matthew 3:13)" },
+            { question: "What was the name of Adam and Eve's third son?", answer: "Seth (Genesis 4:25)" },
+            { question: "How many days did God take to create the world?", answer: "Six days (Genesis 1)" },
+            { question: "On what day did God rest?", answer: "The seventh day (Genesis 2:2)" },
+            { question: "Who was the first murderer?", answer: "Cain (Genesis 4:8)" },
+            { question: "What did Jesus ride into Jerusalem on?", answer: "A donkey (Matthew 21:5)" },
+            { question: "What did God give the Israelites to eat in the wilderness?", answer: "Manna (Exodus 16:15)" },
+            { question: "Who dreamed of a ladder reaching to heaven?", answer: "Jacob (Genesis 28:12)" },
+            { question: "How did Jesus die?", answer: "By crucifixion (Matthew 27:35)" },
+            { question: "What did Jesus say on the cross before he died?", answer: "It is finished. (John 19:30)" },
+            { question: "Who was raised from the dead after four days?", answer: "Lazarus (John 11:43-44)" },
+            { question: "Who was the first person to see Jesus after His resurrection?", answer: "Mary Magdalene (John 20:14-16)" },
+            { question: "What is the Great Commission?", answer: "Go and make disciples of all nations. (Matthew 28:19)" },
+            { question: "What was Paul's occupation?", answer: "Tentmaker (Acts 18:3)" },
+            { question: "Who was the first Christian martyr?", answer: "Stephen (Acts 7:59-60)" },
+            { question: "What book has the Ten Commandments?", answer: "Exodus (Exodus 20)" },
+            { question: "What is the gift of God?", answer: "Eternal life through Jesus Christ our Lord. (Romans 6:23)" },
+            { question: "What will set you free?", answer: "The truth (John 8:32)" },
+
+            // Old Testament Stories
+            { question: "Who killed Goliath with a sling and a stone?", answer: "David (1 Samuel 17:50)" },
+            { question: "Who was sold by his brothers and became a ruler in Egypt?", answer: "Joseph (Genesis 37:28, 41:41)" },
+            { question: "Who saw a burning bush that was not consumed?", answer: "Moses (Exodus 3:2)" },
+            { question: "Who led the Israelites around Jericho until the walls fell?", answer: "Joshua (Joshua 6:20)" },
+            { question: "Who was the judge who defeated the Midianites with 300 men?", answer: "Gideon (Judges 7:7)" },
+            { question: "Who anointed Saul and David as kings?", answer: "Samuel (1 Samuel 10:1, 16:13)" },
+            { question: "Who was the woman judge and prophetess who led Israel to victory?", answer: "Deborah (Judges 4:4-9)" },
+            { question: "Who was Ruth's mother-in-law?", answer: "Naomi (Ruth 1:3-4)" },
+            { question: "Who rebuilt the walls of Jerusalem?", answer: "Nehemiah (Nehemiah 2:17)" },
+            { question: "Who was thrown into a den of lions for praying to God?", answer: "Daniel (Daniel 6:16)" },
+            { question: "Who interpreted the writing on the wall for King Belshazzar?", answer: "Daniel (Daniel 5:25-28)" },
+            { question: "Who was the queen who saved her people from destruction?", answer: "Esther (Esther 4:14, 7:3-6)" },
+            { question: "Who lost everything but remained faithful to God?", answer: "Job (Job 1:21-22)" },
+
+            // New Testament Stories
+            { question: "Who climbed a sycamore tree to see Jesus?", answer: "Zacchaeus (Luke 19:2-4)" },
+            { question: "Who walked on water toward Jesus?", answer: "Peter (Matthew 14:29)" },
+            { question: "Who doubted Jesus' resurrection until he saw Him?", answer: "Thomas (John 20:27-28)" },
+            { question: "Who was blinded on the road to Damascus?", answer: "Saul/Paul (Acts 9:3-9)" },
+            { question: "Who was the first Gentile to receive the Holy Spirit?", answer: "Cornelius (Acts 10:44-48)" },
+            { question: "Who wrote the Book of Revelation?", answer: "John (Revelation 1:1, 1:9)" },
+            { question: "Who was the first European convert to Christianity?", answer: "Lydia (Acts 16:14-15)" },
+            { question: "Who fell asleep during Paul's sermon and fell from a window?", answer: "Eutychus (Acts 20:9)" },
+
+            // Doctrine & Key Teachings
+            { question: "What is the Trinity?", answer: "One God in three persons: Father, Son, and Holy Spirit (Matthew 28:19)" },
+            { question: "What is justification by faith?", answer: "Being declared righteous by God through faith in Jesus Christ (Romans 5:1)" },
+            { question: "What is sanctification?", answer: "The process of becoming holy, set apart for God (1 Thessalonians 4:3)" },
+            { question: "What is the Great Commandment?", answer: "Love God and love your neighbor (Matthew 22:37-39)" },
+            { question: "What is the New Covenant?", answer: "God's promise of forgiveness and relationship through Jesus (Luke 22:20, Hebrews 8:6-13)" },
+            { question: "What is the meaning of baptism?", answer: "A public declaration of faith, symbolizing death to sin and new life in Christ (Romans 6:3-4)" },
+            { question: "What is the Lord's Supper (Communion)?", answer: "A remembrance of Jesus' sacrifice (1 Corinthians 11:23-26)" },
+            { question: "What is the resurrection of the dead?", answer: "Believers will be raised to eternal life (1 Corinthians 15:52)" },
+            { question: "What is the greatest of faith, hope, and love?", answer: "Love (1 Corinthians 13:13)" },
+            { question: "What is the fruit of repentance?", answer: "A changed life and good works (Acts 26:20)" },
+
+            // Prophets & Prophecy
+            { question: "Who prophesied the coming of the Messiah as a suffering servant?", answer: "Isaiah (Isaiah 53)" },
+            { question: "Who was taken up to heaven in a whirlwind?", answer: "Elijah (2 Kings 2:11)" },
+            { question: "Who saw a vision of dry bones coming to life?", answer: "Ezekiel (Ezekiel 37:1-10)" },
+            { question: "Who was called as a prophet while still a boy?", answer: "Samuel (1 Samuel 3:1-10)" },
+
+            // Women of the Bible
+            { question: "Who was the mother of Samuel?", answer: "Hannah (1 Samuel 1:20)" },
+            { question: "Who was the sister of Moses and Aaron?", answer: "Miriam (Exodus 15:20)" },
+            { question: "Who was the first person Jesus appeared to after His resurrection?", answer: "Mary Magdalene (John 20:16)" },
+
+            // Parables & Teachings of Jesus
+            { question: "What parable teaches about loving your neighbor?", answer: "The Good Samaritan (Luke 10:25-37)" },
+            { question: "What parable teaches about forgiveness?", answer: "The Prodigal Son (Luke 15:11-32)" },
+            { question: "What parable teaches about being prepared for Christ's return?", answer: "The Ten Virgins (Matthew 25:1-13)" },
+            { question: "What parable teaches about using our gifts for God?", answer: "The Talents (Matthew 25:14-30)" },
+
+            // Miscellaneous
+            { question: "Who was the oldest person in the Bible?", answer: "Methuselah (Genesis 5:27)" },
+            { question: "Who was the first martyr of the Christian church?", answer: "Stephen (Acts 7:59-60)" },
+            { question: "Who was the Roman governor who sentenced Jesus to death?", answer: "Pontius Pilate (Matthew 27:24-26)" },
+            { question: "Who was the disciple known as 'the beloved'?", answer: "John (John 13:23)" },
+
+            // More Old Testament Stories
+            { question: "Who was the first murderer in the Bible?", answer: "Cain (Genesis 4:8)" },
+            { question: "Who was the only man taken to heaven without dying?", answer: "Enoch (Genesis 5:24)" },
+            { question: "Who tricked his father Isaac to get the blessing?", answer: "Jacob (Genesis 27:19-29)" },
+            { question: "Who dreamed of seven fat cows and seven thin cows?", answer: "Pharaoh (Genesis 41:1-7)" },
+            { question: "Who parted the Red Sea?", answer: "Moses (Exodus 14:21-22)" },
+            { question: "Who brought water from a rock by striking it?", answer: "Moses (Numbers 20:11)" },
+            { question: "Who was the woman who hid Israelite spies in Jericho?", answer: "Rahab (Joshua 2:1-4)" },
+            { question: "Who was the left-handed judge who killed Eglon?", answer: "Ehud (Judges 3:15-21)" },
+            { question: "Who made a vow and sacrificed his daughter?", answer: "Jephthah (Judges 11:30-39)" },
+            { question: "Who lost his strength when his hair was cut?", answer: "Samson (Judges 16:19)" },
+            { question: "Who was the Moabite woman who became an ancestor of David?", answer: "Ruth (Ruth 4:13-17)" },
+            { question: "Who was the prophet who confronted King Ahab and Mount Carmel?", answer: "Elijah (1 Kings 18:17-40)" },
+            { question: "Who healed Naaman the leper?", answer: "Elisha (2 Kings 5:14)" },
+            { question: "Who was thrown into a cistern for prophesying?", answer: "Jeremiah (Jeremiah 38:6)" },
+            { question: "Who saw the Lord high and lifted up in the temple?", answer: "Isaiah (Isaiah 6:1)" },
+
+            // More New Testament Stories
+            { question: "Who was the Roman centurion whose servant Jesus healed?", answer: "The centurion of Capernaum (Matthew 8:5-13)" },
+            { question: "Who was the woman at the well?", answer: "The Samaritan woman (John 4:7-26)" },
+            { question: "Who anointed Jesus' feet with perfume?", answer: "Mary of Bethany (John 12:3)" },
+            { question: "Who was the rich man who gave his tomb for Jesus?", answer: "Joseph of Arimathea (Matthew 27:57-60)" },
+            { question: "Who was the disciple who found the boy with five loaves and two fish?", answer: "Andrew (John 6:8-9)" },
+            { question: "Who was the first martyr among the apostles?", answer: "James, brother of John (Acts 12:2)" },
+            { question: "Who was the couple who lied about their offering and died?", answer: "Ananias and Sapphira (Acts 5:1-10)" },
+            { question: "Who was bitten by a viper but was unharmed?", answer: "Paul (Acts 28:3-5)" },
+            { question: "Who was the young man who accompanied Paul and Barnabas and later caused a dispute?", answer: "John Mark (Acts 13:5, 15:37-39)" },
+
+            // More Doctrine & Key Teachings
+            { question: "What is original sin?", answer: "The sinful state inherited from Adam and Eve (Romans 5:12)" },
+            { question: "What is grace?", answer: "God's unearned favor and kindness (Ephesians 2:8-9)" },
+            { question: "What is repentance?", answer: "Turning away from sin and turning to God (Acts 3:19)" },
+            { question: "What is the Second Coming?", answer: "Jesus' promised return to earth (Acts 1:11, Revelation 22:20)" },
+            { question: "What is the greatest commandment after loving God?", answer: "Love your neighbor as yourself (Mark 12:31)" },
+            { question: "What is the role of the Holy Spirit?", answer: "To comfort, guide, and empower believers (John 14:26, Acts 1:8)" },
+            { question: "What is the church?", answer: "The body of believers in Christ (1 Corinthians 12:27)" },
+            { question: "What is the new birth?", answer: "Being born again by the Spirit (John 3:3-7)" },
+            { question: "What is the purpose of the Law?", answer: "To show us our sin and need for Christ (Galatians 3:24)" },
+
+            // More Parables & Teachings
+            { question: "What parable teaches about persistence in prayer?", answer: "The Persistent Widow (Luke 18:1-8)" },
+            { question: "What parable teaches about humility?", answer: "The Pharisee and the Tax Collector (Luke 18:9-14)" },
+            { question: "What parable teaches about God's forgiveness?", answer: "The Unforgiving Servant (Matthew 18:21-35)" },
+            { question: "What parable teaches about the value of the kingdom?", answer: "The Pearl of Great Price (Matthew 13:45-46)" },
+
+            // More Miscellaneous
+            { question: "Who was the king who wrote many Proverbs?", answer: "Solomon (Proverbs 1:1)" },
+            { question: "Who was the prophet who married a prostitute as a sign to Israel?", answer: "Hosea (Hosea 1:2-3)" },
+            { question: "Who was the king who saw the writing on the wall?", answer: "Belshazzar (Daniel 5:5)" },
+            { question: "Who was the tax collector who became an apostle and wrote a Gospel?", answer: "Matthew (Matthew 9:9)" },
+            { question: "Who was the disciple known as the 'rock'?", answer: "Peter (Matthew 16:18)" },
+            { question: "Who was the first Gentile convert to Christianity?", answer: "Cornelius (Acts 10:1-48)" },
+            { question: "Who was the king who rebuilt the temple after the exile?", answer: "Cyrus of Persia (Ezra 1:1-4)" },
+            { question: "Who was the prophet who saw a vision of a flying scroll?", answer: "Zechariah (Zechariah 5:1-2)" },
+            { question: "Who was the disciple who replaced Judas Iscariot?", answer: "Matthias (Acts 1:26)" }
+
+        ];
+
+
+        // Bootstrap modal helper
+        function showModal(title, body, footerHtml = "") {
+            document.getElementById('infoModalLabel').textContent = title;
+            document.getElementById('infoModalBody').innerHTML = body;
+            document.getElementById('infoModalFooter').innerHTML = footerHtml;
+            // Show modal (Bootstrap 5)
+            var modal = new bootstrap.Modal(document.getElementById('infoModal'));
+            modal.show();
+        }
+        // The rest of the JS is nearly identical to memory_verses.html, but use questions/answers instead of verses/ref
+        const verseList = document.getElementById('verseList');
+        const search = document.getElementById('search');
+        let displayMode = "both"; // "both", "verse", "ref"
+        let viewMode = "all"; // "all" or "single"
+        let filteredIndexes = [];
+        let singleIndex = 0;
+        let showFavoritesOnly = false;
+
+        function updateDisplayModeButtons() {
+            document.getElementById('showBoth').classList.toggle('active', displayMode === "both");
+            document.getElementById('showVerseOnly').classList.toggle('active', displayMode === "verse");
+            document.getElementById('showRefOnly').classList.toggle('active', displayMode === "ref");
+        }
+        function updateViewModeButton() {
+            const btn = document.getElementById('toggleViewMode');
+            btn.classList.toggle('active', viewMode === "single");
+            btn.title = viewMode === "single" ? "View All" : "Single View";
+            btn.querySelector('i').className = viewMode === "single" ? "fa-solid fa-table-cells-large" : "fa-solid fa-clone";
+        }
+        function updateFavoritesButton() {
+            const btn = document.getElementById('toggleFavorites');
+            btn.classList.toggle('active', showFavoritesOnly);
+            btn.title = showFavoritesOnly ? "View All Questions" : "View Favorites";
+            btn.querySelector('i').className = showFavoritesOnly ? "fa-solid fa-star" : "fa-regular fa-star";
+        }
+        const moreMenu = document.getElementById('moreMenu');
+        const moreMenuBtn = document.getElementById('moreMenuBtn');
+        moreMenuBtn.onclick = function (e) {
+            e.stopPropagation();
+            moreMenu.classList.toggle('show');
+        };
+        document.body.addEventListener('click', function () {
+            moreMenu.classList.remove('show');
+        });
+        
+        document.getElementById('aboutBtn').onclick = function (e) {
+            e.stopPropagation();
+            moreMenu.classList.remove('show');
+            showModal(
+                "About",
+                `<b>Essential Bible Stories</b><br>
+                by MTE<br>
+                A quick reference to the most important stories in the Bible.<br><br>
+                Product of MTE<br>
+                Contact: oburu ephraim<br>
+                <button id="modalEmail" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Email Me</button>
+                <button id="modalWhatsapp" class="btn btn-link p-0" style="color:#25d366;text-decoration:underline;">Chat on WhatsApp</button>
+                <button id="modalDonate" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Support This Ministry</button>
+                `,
+                ""
+            );
+            setTimeout(setupModalLinks, 100); // Wait for DOM
+        };
+
+        document.getElementById('helpBtn').onclick = function (e) {
+            e.stopPropagation();
+            moreMenu.classList.remove('show');
+            showModal(
+                "Help",
+                `• Search by story or reference.<br>
+                • Click the star to favorite a story.<br>
+                • Use the ellipsis for more options.<br><br>
+                <button id="modalEmail" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Email Me</button>
+                <button id="modalWhatsapp" class="btn btn-link p-0" style="color:#25d366;text-decoration:underline;">Chat on WhatsApp</button>
+                <button id="modalDonate" class="btn btn-link p-0" style="color:#0078d4;text-decoration:underline;">Support This Ministry</button>
+                `,
+                ""
+            );
+            setTimeout(setupModalLinks, 100);
+        };
+
+        function setupModalLinks() {
+            const whatsappMsg = encodeURIComponent("Hello Ephraim, I am contacting you from the Bible Study Initiative app.");
+            const emailSubject = encodeURIComponent("Bible Study Initiative - Contact");
+            const emailBody = encodeURIComponent("Hello Ephraim,\n\nI am reaching out from the Bible Study Initiative app.\n\n");
+            // WhatsApp
+            const whatsappBtn = document.getElementById('modalWhatsapp');
+            if (whatsappBtn) {
+                whatsappBtn.onclick = function () {
+                    window.open("https://wa.me/256777233322?text=" + whatsappMsg, "_blank");
+                };
+            }
+            // Email
+            const emailBtn = document.getElementById('modalEmail');
+            if (emailBtn) {
+                emailBtn.onclick = function () {
+                    window.location.href = "mailto:oburuephraim2@gmail.com?subject=" + emailSubject + "&body=" + emailBody;
+                };
+            }
+            // Donate
+            const donateBtn = document.getElementById('modalDonate');
+            if (donateBtn) {
+                donateBtn.onclick = function () {
+                    showModal(
+                        "Support This Ministry",
+                        `<b>Help us spread God's Word!</b><br>
+                        If this Bible Study Initiative has blessed you, please consider donating.<br>
+                        <span style="font-size:1.2em;color:#0078d4;">Mobile Money: <b>+256777233322</b></span><br>
+                        <small>Tap the button below to copy the number and open WhatsApp to confirm your support.</small>`,
+                        `<button class="btn btn-success" id="donateCopyBtn">Copy Number &amp; WhatsApp</button>`
+                    );
+                    setTimeout(() => {
+                        const btn = document.getElementById('donateCopyBtn');
+                        if (btn) {
+                            btn.onclick = function () {
+                                navigator.clipboard.writeText("+256777233322");
+                                window.open("https://wa.me/256777233322?text=" + encodeURIComponent("Hello Ephraim, I would like to support the Bible Study Initiative."), "_blank");
+                            };
+                        }
+                    }, 100);
+                };
+            }
+        }
+
+        // Footer WhatsApp and Email
+        document.getElementById('footerWhatsapp').onclick = function () {
+            window.open("https://wa.me/256777233322?text=" + encodeURIComponent("Hello Ephraim, I am contacting you from the Bible Study Initiative app."), "_blank");
+        };
+        document.getElementById('footerEmail').onclick = function (e) {
+            e.preventDefault();
+            window.location.href = "mailto:oburuephraim2@gmail.com?subject=" +
+                encodeURIComponent("Bible Study Initiative - Contact") +
+                "&body=" + encodeURIComponent("Hello Ephraim,\n\nI am reaching out from the Bible Study Initiative app.\n\n");
+        };
+        document.getElementById('footerDonate').onclick = function () {
+            showModal(
+                "Support This Ministry",
+                `<b>Help us spread God's Word!</b><br>
+                If this Bible Study Initiative has blessed you, please consider donating.<br>
+                <span style="font-size:1.2em;color:#0078d4;">Mobile Money: <b>+256777233322</b></span><br>
+                <small>Tap the button below to copy the number and open WhatsApp to confirm your support.</small>`,
+                `<button class="btn btn-success" id="donateCopyBtn">Copy Number &amp; WhatsApp</button>`
+            );
+            setTimeout(() => {
+                const btn = document.getElementById('donateCopyBtn');
+                if (btn) {
+                    btn.onclick = function () {
+                        navigator.clipboard.writeText("+256777233322");
+                        window.open("https://wa.me/256777233322?text=" + encodeURIComponent("Hello Ephraim, I would like to support the Bible Study Initiative."), "_blank");
+                    };
+                }
+            }, 100);
+        };
+        document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+        function restoreSingleViewState() {
+            const lastViewMode = localStorage.getItem('lastQViewMode');
+            if (lastViewMode === "single") {
+                viewMode = "single";
+                singleIndex = parseInt(localStorage.getItem('singleQIndex') || "0", 10);
+                search.value = localStorage.getItem('singleQSearch') || "";
+            }
+            const favState = localStorage.getItem('showQFavoritesOnly');
+            showFavoritesOnly = favState === "true";
+            const savedDisplayMode = localStorage.getItem('qDisplayMode');
+            if (savedDisplayMode === "verse" || savedDisplayMode === "ref" || savedDisplayMode === "both") {
+                displayMode = savedDisplayMode;
+            }
+            updateDisplayModeButtons();
+            updateViewModeButton();
+            updateFavoritesButton();
+        }
+        function saveSingleViewState() {
+            if (viewMode === "single") {
+                localStorage.setItem('lastQViewMode', 'single');
+                localStorage.setItem('singleQIndex', singleIndex);
+                localStorage.setItem('singleQSearch', search.value);
+            } else {
+                localStorage.setItem('lastQViewMode', 'all');
+            }
+        }
+        function getFavorites() {
+            return JSON.parse(localStorage.getItem('favoriteQuestions') || '[]');
+        }
+        function setFavorites(favs) {
+            localStorage.setItem('favoriteQuestions', JSON.stringify(favs));
+        }
+        function isFavorite(idx) {
+            const favs = getFavorites();
+            return favs.includes(idx);
+        }
+        function toggleFavorite(idx) {
+            let favs = getFavorites();
+            if (favs.includes(idx)) {
+                favs = favs.filter(i => i !== idx);
+            } else {
+                favs.push(idx);
+            }
+            setFavorites(favs);
+            displayQuestions(search.value);
+        }
+        function getFilteredIndexes(filter = "") {
+            const lowerFilter = filter.toLowerCase();
+            let indexes = questions
+                .map((q, idx) =>
+                    (q.question.toLowerCase().includes(lowerFilter) ||
+                        (q.answer && q.answer.toLowerCase().includes(lowerFilter)))
+                        ? idx
+                        : -1
+                )
+                .filter(idx => idx !== -1);
+            if (showFavoritesOnly) {
+                const favs = getFavorites();
+                indexes = indexes.filter(idx => favs.includes(idx));
+            }
+            return indexes;
+        }
+        function displayQuestions(filter = "") {
+            verseList.innerHTML = "";
+            filteredIndexes = getFilteredIndexes(filter);
+            if (viewMode === "single") {
+                document.getElementById('singleNav').style.display = "block";
+                verseList.className = "single-view-outer";
+                if (filteredIndexes.length === 0) {
+                    verseList.innerHTML = "<div class='text-center'>No questions found.</div>";
+                    document.getElementById('singleCounter').textContent = "";
+                    saveSingleViewState();
+                    return;
+                }
+                if (singleIndex >= filteredIndexes.length) singleIndex = filteredIndexes.length - 1;
+                if (singleIndex < 0) singleIndex = 0;
+                showSingleQuestion(filteredIndexes[singleIndex]);
+                document.getElementById('singleCounter').textContent =
+                    (singleIndex + 1) + " / " + filteredIndexes.length;
+                saveSingleViewState();
+            } else {
+                document.getElementById('singleNav').style.display = "none";
+                verseList.className = "row";
+                filteredIndexes.forEach(idx => showSingleQuestion(idx, true));
+                saveSingleViewState();
+            }
+        }
+        function showSingleQuestion(idx, isAllMode = false) {
+            const q = questions[idx];
+            const col = document.createElement('div');
+            col.className = isAllMode ? "col-md-6 verse-card" : "single-view-card";
+            const card = document.createElement('div');
+            card.className = "card shadow-sm";
+            const cardBody = document.createElement('div');
+            cardBody.className = "card-body";
+            // Favorite star button
+            const favBtn = document.createElement('button');
+            favBtn.className = "btn btn-sm btn-link p-0 float-end";
+            favBtn.title = isFavorite(idx) ? "Remove from favorites" : "Add to favorites";
+            favBtn.innerHTML = isFavorite(idx) ? "&#9733;" : "&#9734;";
+            favBtn.style.fontSize = "1.5rem";
+            favBtn.onclick = function (e) {
+                e.stopPropagation();
+                toggleFavorite(idx);
+            };
+            cardBody.appendChild(favBtn);
+            // Question and answer display
+            if (displayMode !== "verse" && q.answer) {
+                const ansEl = document.createElement('div');
+                ansEl.className = "verse-reference";
+                ansEl.textContent = q.answer;
+                cardBody.appendChild(ansEl);
+            }
+            if (displayMode !== "ref") {
+                const qEl = document.createElement('div');
+                qEl.className = "verse-text";
+                qEl.textContent = q.question;
+                cardBody.appendChild(qEl);
+            }
+            // Share button
+            const btnGroup = document.createElement('div');
+            btnGroup.className = "mt-2 d-flex gap-2";
+            const shareBtn = document.createElement('button');
+            shareBtn.className = "btn btn-sm btn-outline-secondary";
+            shareBtn.textContent = "Share";
+            shareBtn.onclick = function () {
+                let shareText = "";
+                if (displayMode === "both") {
+                    shareText = (q.question ? q.question + " — " : "") + (q.answer || "");
+                } else if (displayMode === "verse") {
+                    shareText = q.question;
+                } else if (displayMode === "ref") {
+                    shareText = q.answer || "";
+                }
+                if (navigator.share) {
+                    navigator.share({ text: shareText }).catch(() => { });
+                } else {
+                    navigator.clipboard.writeText(shareText).then(() => {
+                        shareBtn.textContent = "Copied!";
+                        setTimeout(() => { shareBtn.textContent = "Share"; }, 1200);
+                    });
+                }
+            };
+            btnGroup.appendChild(shareBtn);
+            cardBody.appendChild(btnGroup);
+            card.appendChild(cardBody);
+            col.appendChild(card);
+            verseList.appendChild(col);
+        }
+        document.getElementById('toggleFavorites').onclick = function () {
+            showFavoritesOnly = !showFavoritesOnly;
+            localStorage.setItem('showQFavoritesOnly', showFavoritesOnly);
+            updateFavoritesButton();
+            displayQuestions(search.value);
+        };
+        document.getElementById('showBoth').onclick = function () {
+            displayMode = "both";
+            localStorage.setItem('qDisplayMode', displayMode);
+            updateDisplayModeButtons();
+            displayQuestions(search.value);
+        };
+        document.getElementById('showVerseOnly').onclick = function () {
+            displayMode = "verse";
+            localStorage.setItem('qDisplayMode', displayMode);
+            updateDisplayModeButtons();
+            displayQuestions(search.value);
+        };
+        document.getElementById('showRefOnly').onclick = function () {
+            displayMode = "ref";
+            localStorage.setItem('qDisplayMode', displayMode);
+            updateDisplayModeButtons();
+            displayQuestions(search.value);
+        };
+        document.getElementById('toggleViewMode').onclick = function () {
+            if (viewMode === "all") {
+                viewMode = "single";
+                singleIndex = parseInt(localStorage.getItem('singleQIndex') || "0", 10);
+            } else {
+                viewMode = "all";
+            }
+            updateViewModeButton();
+            displayQuestions(search.value);
+        };
+        document.getElementById('prevBtn').onclick = function () {
+            if (singleIndex > 0) {
+                singleIndex--;
+                displayQuestions(search.value);
+            }
+        };
+        document.getElementById('nextBtn').onclick = function () {
+            if (singleIndex < filteredIndexes.length - 1) {
+                singleIndex++;
+                displayQuestions(search.value);
+            }
+        };
+        search.addEventListener('input', e => {
+            singleIndex = 0;
+            displayQuestions(e.target.value);
+        });
+        window.onload = () => {
+            restoreSingleViewState();
+            displayQuestions(search.value);
+        };
+        // Swipe navigation for single view
+        let touchStartX = null;
+        let touchEndX = null;
+        document.body.addEventListener('touchstart', function (e) {
+            if (e.touches.length === 1) {
+                touchStartX = e.touches[0].clientX;
+            }
+        });
+        document.body.addEventListener('touchend', function (e) {
+            if (touchStartX === null) return;
+            touchEndX = (e.changedTouches && e.changedTouches[0].clientX) || null;
+            if (touchEndX !== null && viewMode === "single" && filteredIndexes.length > 0) {
+                const dx = touchEndX - touchStartX;
+                if (Math.abs(dx) > 50) {
+                    if (dx < 0 && singleIndex < filteredIndexes.length - 1) {
+                        singleIndex++;
+                        displayQuestions(search.value);
+                    } else if (dx > 0 && singleIndex > 0) {
+                        singleIndex--;
+                        displayQuestions(search.value);
+                    }
+                }
+            }
+            touchStartX = null;
+            touchEndX = null;
+        });
+        // Register service worker for offline/PWA support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('service-worker.js');
+            });
+        }
+    </script>
+     <!-- Bootstrap JS for modal support -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
