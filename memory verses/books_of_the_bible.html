@@ -158,17 +158,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-6" id="visualListCol">
-        <h4>Visual List View</h4>
-        <div class="bible-section">
-          <div class="bible-group-title">Old Testament (39 books)</div>
-          <div class="book-list" id="oldTestamentList"></div>
-        </div>
-        <div class="bible-section">
-          <div class="bible-group-title">New Testament (27 books)</div>
-          <div class="book-list" id="newTestamentList"></div>
-        </div>
-      </div>
+      
       <div class="col-12">
         <h4>Drag-and-Drop Ordering Game</h4>
         <div class="game-controls">
@@ -230,19 +220,9 @@
       // Prophecy
       "Revelation"
     ];
-    // --- Visual List View ---
-    function renderBookList(list, containerId) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = "";
-      list.forEach(book => {
-        const el = document.createElement("span");
-        el.className = "book-pill";
-        el.textContent = book;
-        container.appendChild(el);
-      });
-    }
-    renderBookList(oldTestament, "oldTestamentList");
-    renderBookList(newTestament, "newTestamentList");
+    
+    
+    
 
     // --- Drag-and-Drop Ordering Game ---
     const allBooks = [...oldTestament, ...newTestament];
@@ -277,19 +257,8 @@
       updateStopwatch();
     }
 
-    // Visual List
-    function renderBookList(list, containerId) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = "";
-      list.forEach(book => {
-        const el = document.createElement("span");
-        el.className = "book-pill";
-        el.textContent = book;
-        container.appendChild(el);
-      });
-    }
-    renderBookList(oldTestament, "oldTestamentList");
-    renderBookList(newTestament, "newTestamentList");
+    
+    
 
     // Drag-and-drop game
     function shuffleBooks() {
@@ -406,7 +375,7 @@
       document.getElementById('checkBtn').classList.add('d-none');
       document.getElementById('resetBtn').classList.add('d-none');
       document.getElementById('startBtn').classList.remove('d-none');
-      document.getElementById('visualListCol').style.display = '';
+      
       stopStopwatch();
       updateStopwatch();
       // Show Memory Trick Tips
@@ -426,7 +395,7 @@
       document.getElementById('checkBtn').classList.remove('d-none');
       document.getElementById('resetBtn').classList.remove('d-none');
       document.getElementById('startBtn').classList.add('d-none');
-      document.getElementById('visualListCol').style.display = 'none';
+      
       document.getElementById('pauseBtn').innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
       // Hide Memory Trick Tips
       var tips = document.getElementById('memoryTrickTips');
