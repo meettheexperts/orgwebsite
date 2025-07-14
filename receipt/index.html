@@ -30,18 +30,96 @@
 
             #qr-container {
                 display: block !important;
+                page-break-inside: avoid;
             }
+
+            #save-pdf-btn {
+                display: none !important;
+            }
+
+            body,
+            .container {
+                margin: initial !important;
+                padding: initial !important;
+                box-shadow: none !important;
+                border: none !important;
+                background: white !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            /* Remove print-header completely */
+            .print-header {
+                display: none !important;
+            }
+
+            .no-break {
+                /* Remove page-break-inside from .no-break to avoid blank first page */
+                /* page-break-inside: avoid !important;
+                break-inside: avoid !important; */
+            }
+
+            .print-page {
+                page-break-after: always;
+                page-break-inside: avoid;
+            }
+
+            .card,
+            .card-body {
+                margin: 0 auto !important;
+                float: none !important;
+            }
+
+            .row {
+                justify-content: center !important;
+            }
+
+            .mb-3.text-center[style] {
+                margin-left: auto !important;
+                margin-right: auto !important;
+                display: block !important;
+                float: none !important;
+            }
+        }
+
+        .print-header {
+            display: none;
         }
 
         #qr-container {
             display: none;
             text-align: center;
-            
+            padding: 1.5rem 0;
         }
 
-        @media print {
+        #qrcode {
+            width: 8rem;
+            height: 8rem;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 767.98px) {
+
             #qr-container {
-                page-break-inside: avoid;
+                padding: 1rem 0;
+            }
+
+            #qrcode {
+                width: 6rem;
+                height: 6rem;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .preview-col {
+                border-left: 1px solid #eee;
+                min-height: 100vh;
+                background: #fff;
+            }
+
+            .input-col {
+                border-right: 1px solid #eee;
+                min-height: 100vh;
             }
         }
     </style>
@@ -50,121 +128,120 @@
 </head>
 
 <body class="bg-light py-4">
-    <div class="container">
-        <h2 class="text-center mb-4" id="main-heading">MTE SYNERGY SMC LTD - Receipt Generator</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Left column: Inputs -->
+            <div class="col-lg-6 input-col">
+                <h2 class="text-center mb-4" id="main-heading">MTE SYNERGY SMC LTD - Receipt Generator</h2>
 
-        <!-- Customer fields -->
-        <div class="card mb-4" id="customer-fields">
-            <div class="card-body">
-                <form class="row g-3">
-                    <div class="col-md-6">
-                        <input type="text" id="customer-name" class="form-control" placeholder="Customer Name"
-                            required />
+                <!-- Customer fields -->
+                <div class="card mb-4" id="customer-fields">
+                    <div class="card-body">
+                        <form class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" id="customer-name" class="form-control" placeholder="Customer Name"
+                                    required />
+                            </div>
+                            <div class="col-md-6">
+                                <input type="tel" id="customer-phone" class="form-control" placeholder="Telephone Number"
+                                    required />
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-md-6">
-                        <input type="tel" id="customer-phone" class="form-control" placeholder="Telephone Number"
-                            required />
+                </div>
+
+                <div class="card mb-4" id="item-form">
+                    <div class="card-body">
+                        <form class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" id="item-desc" class="form-control" placeholder="Item Description"
+                                    required />
+                            </div>
+                            <div class="col-md-4">
+                                <input type="number" id="item-amount" class="form-control" placeholder="Amount (UGX)"
+                                    required />
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary w-100">Add Item</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
+
+                <!-- Document type selector -->
+                <div class="mb-3" id="doc-type-selector">
+                    <label for="doc-type" class="form-label"><strong>Document Type:</strong></label>
+                    <select id="doc-type" class="form-select w-auto d-inline-block ms-2">
+                        <option value="Receipt">Receipt</option>
+                        <option value="Invoice">Invoice</option>
+                    </select>
+                </div>
             </div>
-        </div>
 
-        <div class="card mb-4" id="item-form">
-            <div class="card-body">
-                <form  class="row g-3">
-                    <div class="col-md-6">
-                        <input type="text" id="item-desc" class="form-control" placeholder="Item Description"
-                            required />
-                    </div>
-                    <div class="col-md-4">
-                        <input type="number" id="item-amount" class="form-control" placeholder="Amount (UGX)"
-                            required />
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary w-100">Add Item</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Document type selector -->
-        <div class="mb-3" id="doc-type-selector">
-            <label for="doc-type" class="form-label"><strong>Document Type:</strong></label>
-            <select id="doc-type" class="form-select w-auto d-inline-block ms-2">
-                <option value="Receipt">Receipt</option>
-                <option value="Invoice">Invoice</option>
-            </select>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Receipt Preview</h5>
-
-
-                <div class="row">
-                    <div class="col-md-4"></div>
-                    <!-- Receipt details (organization info) -->
-                    <div class="col-md-4">
-                        <div class="mb-3 text-center" style="font-weight:bold;">
-                            MTE SYNERGY SMC LTD<br>
-                            P.O Box 153572 Mukono
+            <!-- Right column: Preview -->
+            <div class="col-lg-6 preview-col">
+                <div class="card print-page mt-4 mt-lg-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Receipt Preview</h5>
+                        <div class="row justify-content-center">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <div class="mb-3 text-center" style="font-weight:bold;">
+                                    MTE SYNERGY SMC LTD<br>
+                                    P.O Box 153572 Mukono<br>
+                                    Tel: +256777233322
+                                </div>
+                                <div class="mb-2 text-center" style="font-size:1.3em;font-weight:bold;">
+                                    <span id="doc-type-display">Receipt</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12 d-flex justify-content-center align-items-start mt-3 mt-md-0">
+                                <div id="qr-container" class="w-auto">
+                                    <div id="qrcode"></div>
+                                    <br>
+                                    <br>
+                                    <div style="font-size:0.5em;">Scan to verify receipt/invoice</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <!-- QR code container (hidden except in print) -->
-                    <div class="col-md-4">
-                        <div id="qr-container">
-                            <div id="qrcode"></div>
-                            <div style="font-size:0.5em; margin-top:8px;">Scan to verify receipt/invoice</div>
+
+                        <!-- Customer info and date in receipt preview -->
+                        <div class="mb-3">
+                            <strong>Customer Name:</strong> <span id="preview-customer-name"></span><br>
+                            <strong>Telephone:</strong> <span id="preview-customer-phone"></span><br>
+                            <strong>Date:</strong> <span id="receipt-date"></span>
                         </div>
 
+                        <table class="table table-bordered" id="items-table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Amount (UGX)</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                        <div class="mb-3">
+                            <label for="amount-paid" class="form-label">Amount Paid (UGX)</label>
+                            <input type="number" id="amount-paid" class="form-control" value="0" />
+                        </div>
+
+                        <h5>Subtotal: UGX <span id="subtotal">0</span></h5>
+                        <h5>Balance Due: UGX <span id="balance">0</span></h5>
+
+                        <!-- Policy note -->
+                        <div class="alert alert-warning mt-4" id="policy-note" style="font-size:0.95em;">
+                            <strong>Policy:</strong> Services once offered or receipts once issued are not refundable or
+                            exchangeable.
+                        </div>
+
+                        <button class="btn btn-secondary mt-3 ms-2" id="save-pdf-btn" type="button">Save as PDF</button>
                     </div>
                 </div>
-
-
-
-                <!-- Document type display for print -->
-                <div class="mb-2 text-center" style="font-size:1.3em;font-weight:bold;">
-                    <span id="doc-type-display">Receipt</span>
-                </div>
-
-                <!-- Customer info and date in receipt preview -->
-                <div class="mb-3">
-                    <strong>Customer Name:</strong> <span id="preview-customer-name"></span><br>
-                    <strong>Telephone:</strong> <span id="preview-customer-phone"></span><br>
-                    <strong>Date:</strong> <span id="receipt-date"></span>
-                </div>
-
-                <table class="table table-bordered" id="items-table">
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Amount (UGX)</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-
-                <div class="mb-3">
-                    <label for="amount-paid" class="form-label">Amount Paid (UGX)</label>
-                    <input type="number" id="amount-paid" class="form-control" value="0" />
-                </div>
-
-                <h5>Subtotal: UGX <span id="subtotal">0</span></h5>
-                <h5>Balance Due: UGX <span id="balance">0</span></h5>
-
-                <!-- Policy note -->
-                <div class="alert alert-warning mt-4" id="policy-note" style="font-size:0.95em;">
-                    <strong>Policy:</strong> Services once offered or receipts once issued are not refundable or
-                    exchangeable.
-                </div>
-
-                <button class="btn btn-success mt-3" onclick="window.print()">Print Receipt</button>
-
-
             </div>
         </div>
-
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -219,10 +296,15 @@
                     const qrData = JSON.stringify(getReceiptData());
                     const qrDiv = document.getElementById("qrcode");
                     qrDiv.innerHTML = "";
+                    // Responsive QR size based on rem
+                    let qrSize = 128;
+                    if (window.innerWidth < 768) {
+                        qrSize = 96;
+                    }
                     qr = new QRCode(qrDiv, {
                         text: qrData,
-                        width: 128,
-                        height: 128
+                        width: qrSize,
+                        height: qrSize
                     });
                 }
 
@@ -273,10 +355,21 @@
                 docType.addEventListener('change', updateAll);
                 amountPaidEl.addEventListener('input', updateAll);
 
+                // Add Save as PDF functionality
+                const savePdfBtn = document.getElementById('save-pdf-btn');
+                const originalTitle = document.title;
+                savePdfBtn.addEventListener('click', function () {
+                    const name = customerNameInput.value.trim() || 'Receipt';
+                    document.title = name.replace(/[\\/:*?"<>|]/g, '') + ' - MTE Synergy';
+                    window.print();
+                    setTimeout(() => { document.title = originalTitle; }, 1000);
+                });
+
                 setTodayDate();
                 updateAll();
             });
         </script>
+    </div>
 </body>
 
 </html>
