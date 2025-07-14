@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MTE Synergy Receipt Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @media print {
+
+            #item-form,
+            #amount-paid,
+            .btn-success,
+            .btn-danger,
+            .form-label,
+            .form-control,
+            .card-title,
+            #customer-fields,
+            #main-heading,
+            #doc-type-selector {
+                display: none !important;
+            }
+
+            /* Hide the Action column in print */
+            #items-table th:last-child,
+            #items-table td:last-child {
+                display: none !important;
+            }
+
+            #qr-container {
+                display: block !important;
+            }
+        }
+
+        #qr-container {
+            display: none;
+            text-align: center;
+            
+        }
+
+        @media print {
+            #qr-container {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+    <!-- QRCode.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body class="bg-light py-4">
+    <div class="container">
+        <h2 class="text-center mb-4" id="main-heading">MTE SYNERGY SMC LTD - Receipt Generator</h2>
+
+        <!-- Customer fields -->
+        <div class="card mb-4" id="customer-fields">
+            <div class="card-body">
+                <form class="row g-3">
+                    <div class="col-md-6">
+                        <input type="text" id="customer-name" class="form-control" placeholder="Customer Name"
+                            required />
+                    </div>
+                    <div class="col-md-6">
+                        <input type="tel" id="customer-phone" class="form-control" placeholder="Telephone Number"
+                            required />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mb-4" id="item-form">
+            <div class="card-body">
+                <form  class="row g-3">
+                    <div class="col-md-6">
+                        <input type="text" id="item-desc" class="form-control" placeholder="Item Description"
+                            required />
+                    </div>
+                    <div class="col-md-4">
+                        <input type="number" id="item-amount" class="form-control" placeholder="Amount (UGX)"
+                            required />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Add Item</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Document type selector -->
+        <div class="mb-3" id="doc-type-selector">
+            <label for="doc-type" class="form-label"><strong>Document Type:</strong></label>
+            <select id="doc-type" class="form-select w-auto d-inline-block ms-2">
+                <option value="Receipt">Receipt</option>
+                <option value="Invoice">Invoice</option>
+            </select>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Receipt Preview</h5>
+
+
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <!-- Receipt details (organization info) -->
+                    <div class="col-md-4">
+                        <div class="mb-3 text-center" style="font-weight:bold;">
+                            MTE SYNERGY SMC LTD<br>
+                            P.O Box 153572 Mukono
+                        </div>
+                    </div>
+                    <!-- QR code container (hidden except in print) -->
+                    <div class="col-md-4">
+                        <div id="qr-container">
+                            <div id="qrcode"></div>
+                            <div style="font-size:0.5em; margin-top:8px;">Scan to verify receipt/invoice</div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <!-- Document type display for print -->
+                <div class="mb-2 text-center" style="font-size:1.3em;font-weight:bold;">
+                    <span id="doc-type-display">Receipt</span>
+                </div>
+
+                <!-- Customer info and date in receipt preview -->
+                <div class="mb-3">
+                    <strong>Customer Name:</strong> <span id="preview-customer-name"></span><br>
+                    <strong>Telephone:</strong> <span id="preview-customer-phone"></span><br>
+                    <strong>Date:</strong> <span id="receipt-date"></span>
+                </div>
+
+                <table class="table table-bordered" id="items-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Amount (UGX)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <div class="mb-3">
+                    <label for="amount-paid" class="form-label">Amount Paid (UGX)</label>
+                    <input type="number" id="amount-paid" class="form-control" value="0" />
+                </div>
+
+                <h5>Subtotal: UGX <span id="subtotal">0</span></h5>
+                <h5>Balance Due: UGX <span id="balance">0</span></h5>
+
+                <!-- Policy note -->
+                <div class="alert alert-warning mt-4" id="policy-note" style="font-size:0.95em;">
+                    <strong>Policy:</strong> Services once offered or receipts once issued are not refundable or
+                    exchangeable.
+                </div>
+
+                <button class="btn btn-success mt-3" onclick="window.print()">Print Receipt</button>
+
+
+            </div>
+        </div>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.getElementById('item-form');
+                const descInput = document.getElementById('item-desc');
+                const amountInput = document.getElementById('item-amount');
+                const tableBody = document.querySelector('#items-table tbody');
+                const subtotalEl = document.getElementById('subtotal');
+                const amountPaidEl = document.getElementById('amount-paid');
+                const balanceEl = document.getElementById('balance');
+                const customerNameInput = document.getElementById('customer-name');
+                const customerPhoneInput = document.getElementById('customer-phone');
+                const previewCustomerName = document.getElementById('preview-customer-name');
+                const previewCustomerPhone = document.getElementById('preview-customer-phone');
+                const receiptDate = document.getElementById('receipt-date');
+                const docType = document.getElementById('doc-type');
+                const docTypeDisplay = document.getElementById('doc-type-display');
+                let items = [];
+                let qr;
+
+                function setTodayDate() {
+                    const today = new Date();
+                    const yyyy = today.getFullYear();
+                    const mm = String(today.getMonth() + 1).padStart(2, '0');
+                    const dd = String(today.getDate()).padStart(2, '0');
+                    receiptDate.textContent = `${yyyy}-${mm}-${dd}`;
+                }
+
+                function updateCustomerPreview() {
+                    previewCustomerName.textContent = customerNameInput.value;
+                    previewCustomerPhone.textContent = customerPhoneInput.value;
+                }
+
+                function updateDocType() {
+                    docTypeDisplay.textContent = docType.value;
+                }
+
+                function getReceiptData() {
+                    return {
+                        docType: docType.value,
+                        customerName: customerNameInput.value,
+                        customerPhone: customerPhoneInput.value,
+                        date: receiptDate.textContent,
+                        items: items,
+                        subtotal: subtotalEl.textContent,
+                        paid: amountPaidEl.value,
+                        balance: balanceEl.textContent
+                    };
+                }
+
+                function updateQRCode() {
+                    const qrData = JSON.stringify(getReceiptData());
+                    const qrDiv = document.getElementById("qrcode");
+                    qrDiv.innerHTML = "";
+                    qr = new QRCode(qrDiv, {
+                        text: qrData,
+                        width: 128,
+                        height: 128
+                    });
+                }
+
+                function updateTable() {
+                    tableBody.innerHTML = '';
+                    let subtotal = 0;
+                    items.forEach((item, index) => {
+                        subtotal += item.amount;
+                        const row = `<tr>
+            <td>${item.description}</td>
+            <td>${item.amount.toLocaleString()}</td>
+            <td><button class="btn btn-danger btn-sm" onclick="removeItem(${index})">Remove</button></td>
+          </tr>`;
+                        tableBody.innerHTML += row;
+                    });
+                    subtotalEl.textContent = subtotal.toLocaleString();
+                    const paid = parseInt(amountPaidEl.value) || 0;
+                    const balance = subtotal - paid;
+                    balanceEl.textContent = balance.toLocaleString();
+                }
+
+                function updateAll() {
+                    updateTable();
+                    updateCustomerPreview();
+                    updateDocType();
+                    updateQRCode();
+                }
+
+                window.removeItem = function (index) {
+                    items.splice(index, 1);
+                    updateAll();
+                };
+
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const desc = descInput.value.trim();
+                    const amount = parseInt(amountInput.value);
+                    if (desc && amount) {
+                        items.push({ description: desc, amount });
+                        descInput.value = '';
+                        amountInput.value = '';
+                        updateAll();
+                    }
+                });
+
+                customerNameInput.addEventListener('input', updateAll);
+                customerPhoneInput.addEventListener('input', updateAll);
+                docType.addEventListener('change', updateAll);
+                amountPaidEl.addEventListener('input', updateAll);
+
+                setTodayDate();
+                updateAll();
+            });
+        </script>
+</body>
+
+</html>
