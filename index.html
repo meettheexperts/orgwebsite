@@ -1,1312 +1,271 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
-
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meet The Experts</title>
-
-  <!-- Open Graph meta tags for social media -->
-  <meta property="og:title" content="Meet The Experts - Professionals Within Reach" />
-  <meta property="og:description"
-    content="⚙️ IT Consulting and Training&#10;🌐 Websites and Database Systems Development&#10;👥 Connecting Experts in Various Fields&#10;📍 Located in Sonde, Mukono." />
-
-  <meta property="og:url" content="https://meetthexperts.com/" />
-  <meta property="og:image" content="https://i.imgur.com/KgQ0CvO.png" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Meet The Experts" />
-  <meta property="og:locale" content="en_US" />
-
-  <!-- Twitter (X) Card meta tags -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@MeetTheExperts" />
-  <meta name="twitter:title" content="Meet The Experts - Professionals Within Reach" />
-  <meta name="twitter:description"
-    content="⚙️ IT Consulting and Training | 🌐 Websites and Database Systems Development | 👥 Connecting Experts in Various Fields. Located in Sonde, Mukono." />
-  <meta name="twitter:image" content="https://i.imgur.com/KgQ0CvO.png" />
-
-  <!-- WhatsApp-specific meta tag -->
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-
-  <!-- LinkedIn meta tags -->
-  <meta property="og:title" content="Meet The Experts - Professionals Within Reach" />
-  <meta property="og:description"
-    content="⚙️ IT Consulting and Training | 🌐 Websites and Database Systems Development | 👥 Connecting Experts in Various Fields. Located in Sonde, Mukono." />
-  <meta property="og:image" content="https://i.imgur.com/KgQ0CvO.png" />
-  <meta property="og:type" content="website" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="https://i.imgur.com/IVc70CQ.png" type="image/x-icon" />
-
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
-
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
-
-  <link rel="stylesheet" href="org.css" />
+  <title>MTE Synergy SMC LTD – Meet The Xperts</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <style>
+    body {
+      background: linear-gradient(120deg, #f8fafc 0%, #e0f7fa 100%);
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      color: #22313a;
+      min-height: 100vh;
+    }
+    .header {
+      background: linear-gradient(90deg, #00796b 0%, #00b894 100%);
+      color: #fff;
+      padding: 60px 20px 36px 20px;
+      text-align: center;
+      border-bottom-left-radius: 60px 40px;
+      border-bottom-right-radius: 60px 40px;
+      box-shadow: 0 4px 24px rgba(0, 185, 148, 0.13);
+      position: relative;
+      z-index: 2;
+    }
+    .header-title {
+      font-size: 2.7rem;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      color: #fffbe6;
+      text-shadow: 0 2px 16px #00b89433;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    }
+    .header-desc {
+      font-size: 1.25rem;
+      color: #e0f7fa;
+      margin-bottom: 0;
+      font-weight: 500;
+    }
+    .company-info {
+      margin: 30px auto 40px auto;
+      max-width: 600px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 16px rgba(0,185,148,0.06);
+      padding: 24px 20px;
+      text-align: center;
+      font-size: 1.08rem;
+    }
+    .departments {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      justify-content: center;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+    /* Card themes for each department */
+    .dept-card {
+      border-radius: 22px;
+      padding: 32px 24px;
+      min-width: 260px;
+      max-width: 340px;
+      flex: 1 1 260px;
+      text-align: center;
+      transition: transform 0.15s, box-shadow 0.15s;
+      position: relative;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      border: 2px solid transparent;
+    }
+    .dept-card .bi {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
+    .dept-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    }
+    .dept-link {
+      display: inline-block;
+      margin-top: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .dept-link:hover {
+      text-decoration: underline;
+    }
+    /* Waste Power */
+    .dept-biogas {
+      background: #f5f9f6;
+      border-color: #1d643e;
+    }
+    .dept-biogas .bi { color: #1d643e; }
+    .dept-biogas .dept-title, .dept-biogas .dept-link { color: #1d643e; }
+    .dept-biogas:hover { box-shadow: 0 8px 32px rgba(29,100,62,0.13); }
+    /* Computer Training */
+    .dept-computer {
+      background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+      color: #f4f7fa;
+      border-color: #00ffe7;
+    }
+    .dept-computer .bi, .dept-computer .dept-title, .dept-computer .dept-link { color: #00ffe7; }
+    .dept-computer:hover { box-shadow: 0 8px 32px rgba(0,255,231,0.13); }
+    /* GIS */
+    .dept-gis {
+      background: linear-gradient(120deg, #e0f7fa 0%, #b2dfdb 100%);
+      border-color: #4dd0e1;
+    }
+    .dept-gis .bi, .dept-gis .dept-title, .dept-gis .dept-link { color: #00796b; }
+    .dept-gis:hover { box-shadow: 0 8px 32px rgba(76,175,80,0.13); }
+    /* WebDev */
+    .dept-webdev {
+      background: #181c24;
+      color: #e0e6ed;
+      border-color: #00ffe7;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+    }
+    .dept-webdev .bi, .dept-webdev .dept-title, .dept-webdev .dept-link { color: #ffe066; }
+    .dept-webdev:hover { box-shadow: 0 8px 32px rgba(0,255,231,0.13); }
+    /* Land Survey */
+    .dept-landsurvey {
+      background: linear-gradient(120deg, #f3ede3 0%, #e0d8c3 100%);
+      border-color: #bc986a;
+    }
+    .dept-landsurvey .bi, .dept-landsurvey .dept-title, .dept-landsurvey .dept-link { color: #8d8741; }
+    .dept-landsurvey:hover { box-shadow: 0 8px 32px rgba(140,120,65,0.13); }
+    /* Secretarial */
+    .dept-secretarial {
+      background: linear-gradient(90deg, #f7b267 0%, #f4845f 100%);
+      color: #fffbe6;
+      border-color: #f4845f;
+    }
+    .dept-secretarial .bi, .dept-secretarial .dept-title, .dept-secretarial .dept-link { color: #fffbe6; }
+    .dept-secretarial:hover { box-shadow: 0 8px 32px rgba(244,132,95,0.13); }
+    .footer {
+      background: #00796b;
+      color: #fffbe6;
+      padding: 22px;
+      text-align: center;
+      font-size: 0.98rem;
+      letter-spacing: 0.5px;
+      border-top-left-radius: 40px 30px;
+      border-top-right-radius: 40px 30px;
+      z-index: 2;
+      position: relative;
+      margin-top: 40px;
+    }
+    @media (max-width: 900px) {
+      .departments { flex-direction: column; align-items: center; }
+    }
+    @media (max-width: 600px) {
+      .header { padding: 40px 8px 24px 8px; }
+      .header-title { font-size: 2rem; }
+      .dept-card { min-width: 90vw; }
+    }
+  </style>
 </head>
-
 <body>
-  <!-- Destinations Section -->
-  <div class="d-flex" id="wrapper">
-    <!-- Sidebar -->
-    <div class="sidebar p-3">
-      <h4>Explore Our Services</h4>
-      <!-- Tab Navigation with Dropdowns -->
-      <ul class="nav nav-pills flex-column" id="myTab" role="tablist">
-        <!-- Home Tab -->
-        <li class="nav-item">
-          <a class="nav-link active" id="home-tab" data-bs-toggle="pill" href="#home" role="tab" aria-controls="home"
-            aria-selected="true">Home</a>
-        </li>
-
-        <!-- Dropdown for Services -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="services-tab" data-bs-toggle="dropdown" href="#" role="button"
-            aria-expanded="false">
-            Services
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="services-tab">
-            <li>
-              <a class="dropdown-item" id="systems-maintenance-tab" data-bs-toggle="pill" href="#systems-maintenance"
-                role="tab" aria-controls="systems-maintenance" aria-selected="true">Proactive Systems Maintenance</a>
-            </li>
-            <li>
-              <a class="dropdown-item" id="software-support-tab" data-bs-toggle="pill" href="#software-support"
-                role="tab" aria-controls="software-support" aria-selected="false">Software Installation & Support</a>
-            </li>
-            <li>
-              <a class="dropdown-item" id="data-security-tab" data-bs-toggle="pill" href="#data-security" role="tab"
-                aria-controls="data-security" aria-selected="false">Data Backup & Security</a>
-            </li>
-            <li>
-              <a class="dropdown-item" id="networking-tab" data-bs-toggle="pill" href="#networking" role="tab"
-                aria-controls="networking" aria-selected="false">Networking Setup & Support</a>
-            </li>
-            <li>
-              <a class="dropdown-item" id="gis-tab" data-bs-toggle="pill" href="#gis" role="tab" aria-controls="gis"
-                aria-selected="false">GIS & Data Visualization</a>
-            </li>
-            <li>
-              <a class="dropdown-item" id="web-development-tab" data-bs-toggle="pill" href="#web-development" role="tab"
-                aria-controls="web-development" aria-selected="false">Web & System Development</a>
-            </li>
-          </ul>
-        </li>
-
-        <!-- Dropdown for Products -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="products-tab" data-bs-toggle="dropdown" href="#" role="button"
-            aria-expanded="false">
-            Products
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="products-tab">
-            <li>
-              <a class="dropdown-item" id="safesail-tab" data-bs-toggle="pill" href="#safesail" role="tab"
-                aria-controls="safesail" aria-selected="true">SafeSail Embedded Tracker</a>
-            </li>
-            <li>
-              <a class="dropdown-item" id="nextdoor-tab" data-bs-toggle="pill" href="#nextdoor" role="tab"
-                aria-controls="nextdoor" aria-selected="false">NextDoor E-Commerce Platform</a>
-            </li>
-            <li>
-              <a class="dropdown-item" id="elder-care-tab" data-bs-toggle="pill" href="#elder-care" role="tab"
-                aria-controls="elder-care" aria-selected="false">Elder Care Initiative</a>
-            </li>
-            <li>
-              <a class="dropdown-item" id="it-solutions-tab" data-bs-toggle="pill" href="#it-solutions" role="tab"
-                aria-controls="it-solutions" aria-selected="false">Custom IT Solutions</a>
-            </li>
-            <li>
-              <a class="dropdown-item" id="data-management-tab" data-bs-toggle="pill" href="#data-management" role="tab"
-                aria-controls="data-management" aria-selected="false">Data Collection & Management Tools</a>
-            </li>
-          </ul>
-        </li>
-
-        <!-- Contact Tab -->
-        <li class="nav-item">
-          <a class="nav-link" id="contact-tab" data-bs-toggle="pill" href="#contact" role="tab" aria-controls="contact"
-            aria-selected="false">Contact Us</a>
-        </li>
-
-        <!-- About Tab -->
-        <li class="nav-item">
-          <a class="nav-link" id="about-tab" data-bs-toggle="pill" href="#about" role="tab" aria-controls="about"
-            aria-selected="false">About</a>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content w-100">
-      <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="z-index: 10001">
-        <div class="container-fluid">
-          <button class="navbar-toggler sidebar-toggle-btn" type="button" aria-controls="navbarNav"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <!-- Navbar Brand (Logo or Text) -->
-          <a class="navbar-brand d-flex align-items-center" href="#">
-            <img src="https://i.imgur.com/fLIooHz.png" alt="MTE Logo" width="50" height="50"
-              class="d-inline-block align-text-top me-2" />
-            <div style="line-height: 1">
-              <strong>Meet The Experts</strong><br />
-              <small style="font-size: 0.8rem; color: rgb(20, 2, 54)">Professionals Within Reach</small>
-            </div>
-          </a>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <!-- Tab Navigation -->
-            <ul class="nav nav-pills ms-auto" id="myTab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-bs-toggle="pill" href="#home" role="tab"
-                  aria-controls="home" aria-selected="true">Home</a>
-              </li>
-
-              <!-- Dropdown for Services -->
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="services-tab" data-bs-toggle="dropdown" href="#" role="button"
-                  aria-expanded="false">
-                  Services
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="services-tab">
-                  <li>
-                    <a class="dropdown-item" id="systems-maintenance-tab" data-bs-toggle="pill"
-                      href="#systems-maintenance" role="tab" aria-controls="systems-maintenance"
-                      aria-selected="true">Proactive Systems Maintenance</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" id="software-support-tab" data-bs-toggle="pill" href="#software-support"
-                      role="tab" aria-controls="software-support" aria-selected="false">Software Installation &
-                      Support</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" id="data-security-tab" data-bs-toggle="pill" href="#data-security"
-                      role="tab" aria-controls="data-security" aria-selected="false">Data Backup & Security</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" id="networking-tab" data-bs-toggle="pill" href="#networking" role="tab"
-                      aria-controls="networking" aria-selected="false">Networking Setup & Support</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" id="gis-tab" data-bs-toggle="pill" href="#gis" role="tab"
-                      aria-controls="gis" aria-selected="false">GIS & Data Visualization</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" id="web-development-tab" data-bs-toggle="pill" href="#web-development"
-                      role="tab" aria-controls="web-development" aria-selected="false">Web & System Development</a>
-                  </li>
-                </ul>
-              </li>
-
-              <!-- Dropdown for Products -->
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="products-tab" data-bs-toggle="dropdown" href="#" role="button"
-                  aria-expanded="false">
-                  Products
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="products-tab">
-                  <li>
-                    <a class="dropdown-item" id="safesail-tab" data-bs-toggle="pill" href="#safesail" role="tab"
-                      aria-controls="safesail" aria-selected="true">SafeSail Embedded Tracker</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" id="nextdoor-tab" data-bs-toggle="pill" href="#nextdoor" role="tab"
-                      aria-controls="nextdoor" aria-selected="false">NextDoor E-Commerce Platform</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" id="elder-care-tab" data-bs-toggle="pill" href="#elder-care" role="tab"
-                      aria-controls="elder-care" aria-selected="false">Elder Care Initiative</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" id="it-solutions-tab" data-bs-toggle="pill" href="#it-solutions" role="tab"
-                      aria-controls="it-solutions" aria-selected="false">Custom IT Solutions</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" id="data-management-tab" data-bs-toggle="pill" href="#data-management"
-                      role="tab" aria-controls="data-management" aria-selected="false">Data Collection & Management
-                      Tools</a>
-                  </li>
-                </ul>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-bs-toggle="pill" href="#contact" role="tab"
-                  aria-controls="contact" aria-selected="false">Contact Us</a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" id="about-tab" data-bs-toggle="pill" href="#about" role="tab" aria-controls="about"
-                  aria-selected="false">About</a>
-              </li>
-            </ul>
-          </div>
-
-          <!-- <button
-              id="theme-toggle"
-              class="btn btn-outline-secondary"
-              type="button"
-            >
-              <i id="theme-icon" class="bi bi-moon-stars"></i> Toggle Theme
-            </button> -->
-        </div>
-      </nav>
-
-      <!-- Tab Content -->
-      <div class="container p-3">
-        <!-- Here is the container class -->
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="row">
-              <!-- Services Section (Left Column) -->
-              <div id="services" class="col-md-8">
-                <h2 class="mb-4">Our Services</h2>
-                <div class="row g-3">
-                  <!-- Software Development -->
-                  <div class="col-md-6 h-100">
-                    <div class="card shadow-sm service-card h-100 d-flex flex-column">
-                      <div class="card-body d-flex flex-column">
-                        <div class="content flex-grow-1">
-                          <div class="image-wrapper mb-3">
-                            <img src="images/software.png" alt="Software Development" class="card-img-top" />
-                          </div>
-                          <h3 class="card-title">Software Development</h3>
-                          <p class="card-description">
-                            Delivering cutting-edge websites, robust database management systems, and expert IT
-                            consultation to empower businesses with seamless digital solutions.
-                          </p>
-                          <button class="btn btn-primary" onclick="toggleDetails(this)">
-                            Show Info
-                          </button>
-                          <div class="card-details mt-3">
-                            <p><strong>Service Cost:</strong> Contact for Pricing</p>
-                            <p><strong>Support:</strong> Comprehensive IT Consultation</p>
-                            <h4>Included Activities:</h4>
-                            <ul>
-                              <li>Custom website and web application development</li>
-                              <li>Database systems tailored to business needs</li>
-                              <li>Responsive user interfaces for optimal performance</li>
-                            </ul>
-                            <div class="mt-auto">
-                              <button class="btn btn-success request-quote">Request a Quote</button>
-                              <button class="btn btn-danger close-button" onclick="closeDetails(this)">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Computer Training -->
-                  <div class="col-md-6 h-100">
-                    <div class="card shadow-sm service-card h-100 d-flex flex-column">
-                      <div class="card-body d-flex flex-column">
-                        <div class="content flex-grow-1">
-                          <div class="image-wrapper mb-3">
-                            <img src="images/training.png" alt="Computer Training" class="card-img-top" />
-                          </div>
-                          <h3 class="card-title">Computer Training</h3>
-                          <p class="card-description">
-                            Equipping individuals with essential digital skills through hands-on training in office
-                            applications, programming, cybersecurity, and networking.
-                          </p>
-                          <button class="btn btn-primary" onclick="toggleDetails(this)">
-                            Show Info
-                          </button>
-                          <div class="card-details mt-3">
-                            <p><strong>Service Cost:</strong> Contact for Pricing</p>
-                            <p><strong>Support:</strong> Flexible Online and Physical Sessions</p>
-                            <h4>Included Activities:</h4>
-                            <ul>
-                              <li>Office applications and file management</li>
-                              <li>Programming languages and cloud computing</li>
-                              <li>Cybersecurity fundamentals and networking</li>
-                            </ul>
-                            <div class="mt-auto">
-                              <button class="btn btn-success request-quote">Explore Training</button>
-                              <button class="btn btn-danger close-button" onclick="closeDetails(this)">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Land Surveying -->
-                  <div class="col-md-6 h-100">
-                    <div class="card shadow-sm service-card h-100 d-flex flex-column">
-                      <div class="card-body d-flex flex-column">
-                        <div class="content flex-grow-1">
-                          <div class="image-wrapper mb-3">
-                            <img src="images/surveying.png" alt="Surveying Solutions" class="card-img-top" />
-                          </div>
-                          <h3 class="card-title">Land Surveying</h3>
-                          <p class="card-description">
-                            Delivering accurate and reliable land surveying services, including boundary opening, land
-                            titling, and topographic surveys.
-                          </p>
-                          <button class="btn btn-primary" onclick="toggleDetails(this)">
-                            Show Info
-                          </button>
-                          <div class="card-details mt-3">
-                            <p><strong>Service Cost:</strong> Contact for Pricing</p>
-                            <p><strong>Support:</strong> Advanced Surveying Technology</p>
-                            <h4>Included Activities:</h4>
-                            <ul>
-                              <li>LiDAR-based aerial surveys</li>
-                              <li>Engineering surveys for construction planning</li>
-                              <li>Mountain surveys in challenging terrains</li>
-                            </ul>
-                            <div class="mt-auto">
-                              <button class="btn btn-success request-quote">Learn More</button>
-                              <button class="btn btn-danger close-button" onclick="closeDetails(this)">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- GIS Solutions -->
-                  <div class="col-md-6 h-100">
-                    <div class="card shadow-sm service-card h-100 d-flex flex-column">
-                      <div class="card-body d-flex flex-column">
-                        <div class="content flex-grow-1">
-                          <div class="image-wrapper mb-3">
-                            <img src="images/gis.png" alt="GIS Solutions" class="card-img-top" />
-                          </div>
-                          <h3 class="card-title">GIS Solutions</h3>
-                          <p class="card-description">
-                            Transforming geographic data into actionable insights through advanced GIS systems, mapping,
-                            and spatial analysis.
-                          </p>
-                          <button class="btn btn-primary" onclick="toggleDetails(this)">
-                            Show Info
-                          </button>
-                          <div class="card-details mt-3">
-                            <p><strong>Service Cost:</strong> Contact for Pricing</p>
-                            <p><strong>Support:</strong> GIS Data Integration</p>
-                            <h4>Included Activities:</h4>
-                            <ul>
-                              <li>Custom-built GIS systems</li>
-                              <li>Professional maps and predictive models</li>
-                              <li>Training programs for GIS proficiency</li>
-                            </ul>
-                            <div class="mt-auto">
-                              <button class="btn btn-success request-quote">Discover GIS Solutions</button>
-                              <button class="btn btn-danger close-button" onclick="closeDetails(this)">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-
-              <div class="col-md-4" style="height: 100%">
-                <div class="text-center w-100">
-                  <div id="image-carousel" class="carousel slide border rounded" data-bs-ride="carousel"
-                    style="height: 100vh;">
-                    <div class="carousel-inner h-100">
-                      <div class="carousel-item active h-100">
-                        <a href="https://example.com/page1" target="_blank" class="d-block h-100">
-                          <div class="p-3 h-100">
-                            <img src="images/mte (1).png" class="d-block w-100 h-100 rounded object-fit-cover"
-                              alt="Image 1">
-                          </div>
-                        </a>
-                      </div>
-                      <div class="carousel-item h-100">
-                        <a href="https://example.com/page2" target="_blank" class="d-block h-100">
-                          <div class="p-3 h-100">
-                            <img src="images/mte (2).png" class="d-block w-100 h-100 rounded object-fit-cover"
-                              alt="Image 2">
-                          </div>
-                        </a>
-                      </div>
-                      <div class="carousel-item h-100">
-                        <a href="https://example.com/page3" target="_blank" class="d-block h-100">
-                          <div class="p-3 h-100">
-                            <img src="images/mte (3).png" class="d-block w-100 h-100 rounded object-fit-cover"
-                              alt="Image 3">
-                          </div>
-                        </a>
-                      </div>
-                      <div class="carousel-item h-100">
-                        <a href="https://example.com/page4" target="_blank" class="d-block h-100">
-                          <div class="p-3 h-100">
-                            <img src="images/mte (4).png" class="d-block w-100 h-100 rounded object-fit-cover"
-                              alt="Image 4">
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#image-carousel"
-                      data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#image-carousel"
-                      data-bs-slide="next">
-                      <span class="carousel-control-next-icon"></span>
-                      <span class="visually-hidden">Next</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-
-
-
-
-            </div>
-          </div>
-
-          <!-- Proactive Systems Maintenance Tab Content -->
-          <div class="tab-pane fade" id="systems-maintenance" role="tabpanel" aria-labelledby="systems-maintenance-tab">
-            <div class="card shadow-sm service-card">
-              <div class="card-body">
-                <div class="content">
-                  <div class="image-wrapper" style="position: relative">
-                    <img src="https://i.imgur.com/fA75801.jpeg" alt="IT Systems Maintenance" class="card-img-top" />
-                  </div>
-                  <h3 class="card-title">1. IT Systems Maintenance</h3>
-
-                  <h4>
-                    <i class="fas fa-cogs"></i> Proactive Systems Maintenance
-                  </h4>
-                  <p>
-                    Ensure the smooth operation of your systems with our
-                    proactive IT maintenance services. We offer regular system
-                    checks, updates, and maintenance tasks to keep your IT
-                    infrastructure running optimally, avoiding costly
-                    downtime.
-                  </p>
-
-                  <h5>What We Offer:</h5>
-                  <ul>
-                    <li>
-                      <strong>Scheduled Updates and Patches:</strong> Regular
-                      updates to keep your systems secure by preventing
-                      vulnerabilities.
-                    </li>
-                    <li>
-                      <strong>Health Checks and Diagnostics:</strong> Ongoing
-                      checks to identify potential issues early, ensuring
-                      systems run efficiently.
-                    </li>
-                    <li>
-                      <strong>Performance and Uptime Improvement:</strong>
-                      Boost your system’s reliability to maintain continuous
-                      operations with minimal downtime.
-                    </li>
-                  </ul>
-
-                  <h5>Key Benefits:</h5>
-                  <ul>
-                    <li>
-                      <strong>Reduced Downtime:</strong> Proactively prevent
-                      system issues that can lead to expensive downtime.
-                    </li>
-                    <li>
-                      <strong>Cost Savings:</strong> Regular maintenance helps
-                      you avoid costly emergency repairs and unplanned
-                      upgrades.
-                    </li>
-                    <li>
-                      <strong>Improved Efficiency:</strong> Optimized systems
-                      improve business efficiency and productivity, giving you
-                      a competitive edge.
-                    </li>
-                  </ul>
-
-                  <h5>Who Needs This Service?</h5>
-                  <ul>
-                    <li>
-                      <strong>Small to Mid-Sized Businesses:</strong> Ideal
-                      for businesses looking for reliable IT support to keep
-                      their operations running smoothly.
-                    </li>
-                    <li>
-                      <strong>Companies Focused on Security:</strong> Perfect
-                      for those aiming to reduce downtime and mitigate
-                      security threats.
-                    </li>
-                    <li>
-                      <strong>Organizations with Critical Systems:</strong>
-                      For companies that need expert monitoring and support to
-                      ensure mission-critical systems are always functional.
-                    </li>
-                  </ul>
-
-                  <h5>What Our Clients Say</h5>
-                  <blockquote>
-                    <p>
-                      "Thanks to their proactive maintenance service, we’ve
-                      experienced zero downtime this year. Our systems are
-                      always up and running!"
-                    </p>
-                    <footer>- John Doe, CEO of ABC Corp</footer>
-                  </blockquote>
-
-                  <h5>Pricing</h5>
-                  <p>
-                    Our IT Systems Maintenance starts from $150 per month.
-                    Contact us for a customized quote based on your business
-                    needs.
-                  </p>
-
-                  <h5>Frequently Asked Questions</h5>
-                  <ul>
-                    <li>
-                      <strong>How often will my systems be checked?</strong>
-                      We provide regular monthly checks, but you can opt for
-                      weekly or bi-weekly maintenance based on your needs.
-                    </li>
-                    <li>
-                      <strong>What if there's a critical issue outside of scheduled
-                        maintenance?</strong>
-                      We offer 24/7 support for any critical issues that may
-                      arise.
-                    </li>
-                    <li>
-                      <strong>How quickly do you respond to support
-                        requests?</strong>
-                      We respond to urgent support requests within 1 hour and
-                      non-urgent requests within 4 hours.
-                    </li>
-                  </ul>
-
-                  <p>
-                    Not sure where to start? Get a free system assessment to
-                    understand how we can help optimize your IT
-                    infrastructure.
-                  </p>
-                  <button class="btn btn-success request-quote">
-                    Contact Us for a Consultation
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Software Installation & Support Tab Content -->
-          <div class="tab-pane fade" id="software-support" role="tabpanel" aria-labelledby="software-support-tab">
-            <h4>
-              <i class="fas fa-laptop"></i> Software Installation & Support
-            </h4>
-            <p>
-              Get expert support for software installations, updates, and
-              troubleshooting. We ensure your software is properly installed,
-              configured, and optimized for performance. Our team provides
-              prompt technical support to resolve issues quickly.
-            </p>
-            <ul>
-              <li>
-                Expert installation and configuration of a wide range of
-                software applications
-              </li>
-              <li>
-                Ongoing updates and patches to keep your software up-to-date
-                and secure
-              </li>
-              <li>
-                Rapid troubleshooting and technical support to resolve issues
-                without delay
-              </li>
-            </ul>
-            <h5>Why Choose Experts?</h5>
-            <ul>
-              <li>
-                Ensures compatibility and smooth functionality across devices
-                and systems
-              </li>
-              <li>
-                Minimizes system errors and downtime for uninterrupted
-                business operations
-              </li>
-              <li>
-                Access to timely support for software issues, reducing your
-                operational risks
-              </li>
-            </ul>
-            <a href="#contact" class="btn btn-primary mt-3">Get Expert Help Today</a>
-          </div>
-
-          <!-- Data Backup & Security Tab Content -->
-          <div class="tab-pane fade" id="data-security" role="tabpanel" aria-labelledby="data-security-tab">
-            <h4><i class="fas fa-shield-alt"></i> Data Backup & Security</h4>
-            <p>
-              Protect your critical business data with secure, automated
-              backup solutions and ensure its integrity. We provide
-              comprehensive data protection strategies to safeguard against
-              loss, corruption, and unauthorized access.
-            </p>
-            <ul>
-              <li>
-                Automated cloud backups for secure, reliable data protection
-              </li>
-              <li>
-                Real-time monitoring to detect and prevent data breaches and
-                cyberattacks
-              </li>
-              <li>
-                Encryption to protect sensitive information from unauthorized
-                access
-              </li>
-            </ul>
-            <h5>Who Needs This Service?</h5>
-            <ul>
-              <li>
-                Companies handling sensitive or confidential data that require
-                regulatory compliance (e.g., GDPR, HIPAA)
-              </li>
-              <li>
-                Organizations seeking robust disaster recovery and data
-                recovery solutions
-              </li>
-              <li>
-                Businesses needing secure, automated data backup to prevent
-                loss or damage
-              </li>
-            </ul>
-            <a href="#contact" class="btn btn-primary mt-3">Secure Your Data Now</a>
-          </div>
-
-          <!-- Networking Setup & Support Tab Content -->
-          <div class="tab-pane fade" id="networking" role="tabpanel" aria-labelledby="networking-tab">
-            <h4>
-              <i class="fas fa-network-wired"></i> Networking Setup & Support
-            </h4>
-            <p>
-              We offer comprehensive network setup and ongoing support to keep
-              your business connected and running smoothly. From local area
-              network (LAN) design to Wi-Fi optimization, our expert team
-              ensures your infrastructure is optimized for seamless
-              communication.
-            </p>
-            <ul>
-              <li>
-                Design and setup of scalable local area networks (LANs) for
-                your office
-              </li>
-              <li>
-                Wi-Fi setup, network optimization, and troubleshooting for
-                maximum speed and reliability
-              </li>
-              <li>
-                Ongoing network monitoring and expert support for quick
-                resolution of any issues
-              </li>
-            </ul>
-            <h5>Why Choose Us?</h5>
-            <ul>
-              <li>
-                Improve network performance and minimize disruptions to your
-                business operations
-              </li>
-              <li>
-                Scalable networking solutions that grow with your business
-                needs
-              </li>
-              <li>
-                Expert support available for troubleshooting and network
-                issues at any time
-              </li>
-            </ul>
-            <a href="#contact" class="btn btn-primary mt-3">Get Network Support</a>
-          </div>
-
-          <!-- GIS & Data Visualization Tab Content -->
-          <div class="tab-pane fade" id="gis" role="tabpanel" aria-labelledby="gis-tab">
-            <h4><i class="fas fa-globe"></i> GIS & Data Visualization</h4>
-            <p>
-              Unlock valuable insights with our GIS and data visualization
-              services. We help businesses analyze and visualize geographic
-              data for better decision-making. Our GIS solutions provide
-              real-time visual reports that enhance business strategies and
-              planning.
-            </p>
-            <ul>
-              <li>
-                Real-time geographic data analysis and dynamic visualizations
-              </li>
-              <li>
-                Customizable maps and data visualizations tailored to your
-                specific business needs
-              </li>
-              <li>
-                Insight-driven decision-making and reporting for better
-                strategic planning
-              </li>
-            </ul>
-            <h5>Who Needs This Service?</h5>
-            <ul>
-              <li>
-                Companies in logistics and transportation to optimize routes
-                and operations
-              </li>
-              <li>
-                Urban planning and infrastructure projects requiring spatial
-                data analysis
-              </li>
-              <li>
-                Organizations in environmental or geographical studies seeking
-                data-driven insights
-              </li>
-            </ul>
-            <a href="#contact" class="btn btn-primary mt-3">Discover GIS Solutions</a>
-          </div>
-
-          <!-- Web & System Development Tab Content -->
-          <div class="tab-pane fade" id="web-development" role="tabpanel" aria-labelledby="web-development-tab">
-            <h4><i class="fas fa-code"></i> Web & System Development</h4>
-            <p>
-              We specialize in building custom web solutions and system
-              development to meet your business goals. From responsive
-              websites to complex enterprise systems, we design, develop, and
-              maintain solutions that are tailored to your needs.
-            </p>
-            <ul>
-              <li>
-                Custom website and web application development, designed to
-                fit your business
-              </li>
-              <li>
-                Full-stack development expertise for both front-end and
-                back-end solutions
-              </li>
-              <li>
-                Ongoing maintenance and support to ensure your system's
-                success post-launch
-              </li>
-            </ul>
-            <h5>Why Choose Us?</h5>
-            <ul>
-              <li>
-                Scalable, tailored web solutions that grow with your business
-                and industry
-              </li>
-              <li>
-                Agile development processes for faster deployment and
-                flexibility
-              </li>
-              <li>
-                Post-launch support to ensure your system’s long-term
-                performance and success
-              </li>
-            </ul>
-            <a href="#contact" class="btn btn-primary mt-3">Start Your Project</a>
-          </div>
-
-          <!-- Contact Us Tab Content -->
-          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-            <h4><i class="fas fa-envelope"></i> Contact Us</h4>
-            <p>
-              If you have any questions or need assistance, feel free to reach
-              out. Our team is ready to help you with any inquiries, support
-              requests, or consultations. Get in touch through email, phone,
-              or by filling out our contact form.
-            </p>
-            <div class="accordion" id="contactAccordion">
-              <div class="card">
-                <div class="card-header" id="headingOne">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-target="#collapseOne"
-                      aria-expanded="true" aria-controls="collapseOne">
-                      How Can We Help You?
-                    </button>
-                  </h5>
-                </div>
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                  data-parent="#contactAccordion">
-                  <div class="card-body">
-                    Whether you need IT support, software installation, or a
-                    consultation for any of our services, we are here to
-                    assist. Simply reach out to us, and we will respond
-                    promptly.
-                  </div>
-                </div>
-              </div>
-            </div>
-            <a href="mailto:meetthexperts@gmail.com" class="btn btn-primary mt-3">Email Us</a>
-          </div>
-
-          <!-- About Section -->
-          <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
-            <h4><i class="fas fa-info-circle"></i> About Us</h4>
-            <p>
-              Meet The Experts (MTE) is a dynamic technology company dedicated to empowering businesses and individuals
-              through innovative solutions. Our expertise spans software development, embedded systems, professional
-              training, and GIS services. With a commitment to excellence, we deliver cutting-edge websites, robust
-              database systems, and tailored IT consultation to drive digital transformation.
-            </p>
-            <p>
-              At MTE, we believe in fostering growth, efficiency, and innovation. Whether you're seeking bespoke
-              software solutions, advanced GIS systems, or comprehensive training programs, MTE is your trusted partner
-              in technological advancement.
-            </p>
-            <h5>Our Mission</h5>
-            <p>
-              To empower businesses and individuals by providing innovative technology solutions and fostering digital
-              transformation.
-            </p>
-            <h5>Our Vision</h5>
-            <p>
-              To be a global leader in technology solutions, driving growth and efficiency through innovation.
-            </p>
-          </div>
-
-          <!-- Embedded Systems Tab-Pane -->
-          <div class="tab-pane fade" id="safesail" role="tabpanel" aria-labelledby="safesail-tab">
-            <h3>SafeSail Embedded Tracker</h3>
-            <p>
-              The SafeSail Embedded Tracker is an innovative system designed
-              for emergency response on water. It provides real-time tracking
-              and alerts to ensure safety during water-based activities.
-            </p>
-            <p><strong>Features:</strong></p>
-            <ul>
-              <li>Real-time GPS tracking</li>
-              <li>Emergency alert notifications</li>
-              <li>Waterproof design</li>
-              <li>Long battery life for extended use</li>
-            </ul>
-          </div>
-
-          <!-- E-Commerce Platforms Tab-Pane -->
-          <div class="tab-pane fade" id="nextdoor" role="tabpanel" aria-labelledby="nextdoor-tab">
-            <h3>NextDoor E-Commerce Platform</h3>
-            <p>
-              NextDoor is a web-based platform designed for the local
-              community to buy and sell items. The platform makes it easy for
-              users to share products and services with others in their
-              neighborhood.
-            </p>
-            <p><strong>Key Features:</strong></p>
-            <ul>
-              <li>User-friendly interface for buying and selling</li>
-              <li>Integrated payment systems for secure transactions</li>
-              <li>
-                Community-focused features like product posts and discussions
-              </li>
-              <li>Real-time notifications for new listings</li>
-            </ul>
-          </div>
-
-          <!-- Elder Care Tab-Pane -->
-          <div class="tab-pane fade" id="elder-care" role="tabpanel" aria-labelledby="elder-care-tab">
-            <h3>Elder Care Initiative Platform</h3>
-            <p>
-              The Elder Care Initiative Platform provides a comprehensive
-              solution for families and caregivers to monitor and manage the
-              well-being of elderly individuals. It connects healthcare
-              professionals and caregivers to ensure timely support.
-            </p>
-            <p><strong>Platform Features:</strong></p>
-            <ul>
-              <li>Real-time health monitoring</li>
-              <li>Caregiver management and scheduling</li>
-              <li>Medical history and medication tracking</li>
-              <li>Emergency alert and response system</li>
-            </ul>
-          </div>
-
-          <!-- IT Solutions Tab-Pane -->
-          <div class="tab-pane fade" id="it-solutions" role="tabpanel" aria-labelledby="it-solutions-tab">
-            <h3>Custom IT Solutions</h3>
-            <p>
-              Our IT Solutions are tailored to meet the unique needs of
-              businesses and organizations. We offer a wide range of services,
-              including website and system development, IT infrastructure
-              setup, and cloud solutions.
-            </p>
-            <p><strong>Services Offered:</strong></p>
-            <ul>
-              <li>Website and system development</li>
-              <li>Cloud solutions and data management</li>
-              <li>IT infrastructure setup and support</li>
-              <li>Consulting and technical support</li>
-            </ul>
-          </div>
-
-          <!-- Data Collection & Management Tab-Pane -->
-          <div class="tab-pane fade" id="data-management" role="tabpanel" aria-labelledby="data-management-tab">
-            <h3>Data Collection & Management Tools</h3>
-            <p>
-              Our data collection and management tools are designed to
-              streamline the process of gathering, organizing, and analyzing
-              data for various purposes. These tools are ideal for field
-              operations, research projects, and data-driven decision-making.
-            </p>
-            <p><strong>Features:</strong></p>
-            <ul>
-              <li>Mobile and web-based data collection</li>
-              <li>Geospatial data collection and analysis</li>
-              <li>Customizable forms and templates</li>
-              <li>Real-time data synchronization</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- IT Systems Maintenance Gallery -->
-      <div id="gallery-it-systems" class="gallery-overlay" style="display: none"
-        onclick="closeOverlay(event, 'gallery-it-systems')">
-        <div class="gallery-content">
-          <div id="carousel-it-systems" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=1" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=2" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=3" class="d-block w-100" loading="lazy" />
-              </div>
-            </div>
-
-            <!-- Previous button -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-it-systems"
-              data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-
-            <!-- Next button -->
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel-it-systems"
-              data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-
-            <button class="btn btn-danger" onclick="closeOverlay(event, 'gallery-it-systems')">
-              Close Gallery
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- GIS Services Gallery -->
-      <div id="gallery-gis" class="gallery-overlay" style="display: none" onclick="closeOverlay(event, 'gallery-gis')">
-        <div class="gallery-content">
-          <div id="carousel-gis" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=4" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=5" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=6" class="d-block w-100" loading="lazy" />
-              </div>
-            </div>
-
-            <!-- Previous button -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-gis" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-
-            <!-- Next button -->
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel-gis" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-
-            <button class="btn btn-danger" onclick="closeOverlay(event, 'gallery-gis')">
-              Close Gallery
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- IT Software Support Gallery -->
-      <div id="gallery-it-software" class="gallery-overlay" style="display: none"
-        onclick="closeOverlay(event, 'gallery-it-software')">
-        <div class="gallery-content">
-          <div id="carousel-it-software" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=7" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=8" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=9" class="d-block w-100" loading="lazy" />
-              </div>
-            </div>
-
-            <!-- Previous button -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-it-software"
-              data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-
-            <!-- Next button -->
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel-it-software"
-              data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-
-            <button class="btn btn-danger" onclick="closeOverlay(event, 'gallery-it-software')">
-              Close Gallery
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cloud Services Gallery -->
-      <div id="gallery-cloud" class="gallery-overlay" style="display: none"
-        onclick="closeOverlay(event, 'gallery-cloud')">
-        <div class="gallery-content">
-          <div id="carousel-cloud" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=10" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=11" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=12" class="d-block w-100" loading="lazy" />
-              </div>
-            </div>
-
-            <!-- Previous button -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-cloud" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-
-            <!-- Next button -->
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel-cloud" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-
-            <button class="btn btn-danger" onclick="closeOverlay(event, 'gallery-cloud')">
-              Close Gallery
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cybersecurity Services Gallery -->
-      <div id="gallery-cybersecurity" class="gallery-overlay" style="display: none"
-        onclick="closeOverlay(event, 'gallery-cybersecurity')">
-        <div class="gallery-content">
-          <div id="carousel-cybersecurity" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=13" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=14" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=15" class="d-block w-100" loading="lazy" />
-              </div>
-            </div>
-
-            <!-- Previous button -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-cybersecurity"
-              data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-
-            <!-- Next button -->
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel-cybersecurity"
-              data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-
-            <button class="btn btn-danger" onclick="closeOverlay(event, 'gallery-cybersecurity')">
-              Close Gallery
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- IT Consulting Gallery -->
-      <div id="gallery-it-consulting" class="gallery-overlay" style="display: none"
-        onclick="closeOverlay(event, 'gallery-it-consulting')">
-        <div class="gallery-content">
-          <div id="carousel-it-consulting" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=16" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=17" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=18" class="d-block w-100" loading="lazy" />
-              </div>
-            </div>
-
-            <!-- Previous button -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-it-consulting"
-              data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-
-            <!-- Next button -->
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel-it-consulting"
-              data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-
-            <button class="btn btn-danger" onclick="closeOverlay(event, 'gallery-it-consulting')">
-              Close Gallery
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Data Analytics Gallery -->
-      <div id="gallery-data-analytics" class="gallery-overlay" style="display: none"
-        onclick="closeOverlay(event, 'gallery-data-analytics')">
-        <div class="gallery-content">
-          <div id="carousel-data-analytics" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=19" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=20" class="d-block w-100" loading="lazy" />
-              </div>
-              <div class="carousel-item gallerysec_carousel-item">
-                <img src="https://picsum.photos/800/600?random=21" class="d-block w-100" loading="lazy" />
-              </div>
-            </div>
-
-            <!-- Previous button -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-data-analytics"
-              data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-
-            <!-- Next button -->
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel-data-analytics"
-              data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-
-            <button class="btn btn-danger" onclick="closeOverlay(event, 'gallery-data-analytics')">
-              Close Gallery
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Testimonials Section -->
-      <section id="testimonials" class="py-5">
-        <div class="container">
-          <h2 class="text-center mb-4">
-            What Our Clients Say About Our Experts
-          </h2>
-          <div class="row">
-            <div class="col-md-6 mb-4">
-              <div class="card testimonial shadow-sm">
-                <div class="card-body">
-                  <p class="blockquote">
-                    "The expertise of the team at Meet the Experts has
-                    transformed our business processes. Their knowledge is
-                    unmatched!"
-                  </p>
-                  <p class="blockquote-footer">
-                    Emily R., CEO of Tech Solutions
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 mb-4">
-              <div class="card testimonial shadow-sm">
-                <div class="card-body">
-                  <p class="blockquote">
-                    "Working with MTE was a game changer. Their advice and
-                    strategies have taken our digital transformation to the
-                    next level."
-                  </p>
-                  <p class="blockquote-footer">
-                    Michael W., CTO at Innovate Corp
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Footer for Dark Theme -->
-      <footer class="py-3 mt-auto" style="background-color: var(--navbar-bg-color)">
-        <div class="container text-center text-light">
-          <p>&copy; 2025 Meet the Experts. All Rights Reserved.</p>
-          <p>
-            Stay Connected:
-            <a href="#" style="color: var(--navbar-brand-color)">LinkedIn</a>
-            |
-            <a href="#" style="color: var(--navbar-brand-color)">GitHub</a> |
-            <a href="#" style="color: var(--navbar-brand-color)">Twitter</a>
-          </p>
-        </div>
-      </footer>
-    </div>
+  <div class="header">
+    <span class="header-title">MTE Synergy SMC LTD</span>
+    <p class="header-desc">Meet The Xperts – Integrated Solutions for a Better Tomorrow</p>
   </div>
 
+  <div class="company-info">
+    <div><strong>P.O Box 153572</strong></div>
+    <div>Sonde, Mukono, Uganda</div>
+    <div>Website: <a href="https://meetthexperts.com" target="_blank">https://meetthexperts.com</a></div>
+    <div>📞 Tel/WhatsApp: <a href="https://wa.me/256777233322" target="_blank">+256 777233322</a></div>
+  </div>
 
-  <!-- Modal for extra information -->
-  <div class="modal fade" id="quoteModal" tabindex="-1" aria-labelledby="quoteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="quoteModalLabel">Request a Quote</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p style="color: rgb(8, 3, 85)">
-            Provide additional information for the quote request:
-          </p>
-          <textarea id="additionalInfo" class="form-control" rows="4"
-            placeholder="Enter additional details like contacts, address, or questions here..."></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary" id="sendQuote">
-            Send Quote
-          </button>
-        </div>
+  <div class="container">
+    <h2 class="text-center mb-4" style="color:#00796b;font-weight:700;">Our Departments & Services</h2>
+    <div class="departments">
+      <div class="dept-card dept-biogas" id="card-biogas">
+        <i class="bi bi-lightning-charge-fill"></i>
+        <div class="dept-title">Biogas & Renewable Energy</div>
+        <div>Innovative biogas systems for homes and communities. Clean energy, environmental protection, and economic relief.</div>
+        <a class="dept-link" href="wasterpower/wastepower.html">Learn More</a>
+        <button class="btn btn-outline-success btn-sm mt-2 share-btn" data-card="card-biogas" data-link="wasterpower/wastepower.html">Share</button>
+      </div>
+      <div class="dept-card dept-computer" id="card-computer">
+        <i class="bi bi-mortarboard-fill"></i>
+        <div class="dept-title">Computer Training</div>
+        <div>Essential digital skills, coding, productivity, and internet safety for all ages. Practical, hands-on, and empowering.</div>
+        <a class="dept-link" href="computertraining.html">Learn More</a>
+        <button class="btn btn-outline-info btn-sm mt-2 share-btn" data-card="card-computer" data-link="computertraining.html">Share</button>
+      </div>
+      <div class="dept-card dept-gis" id="card-gis">
+        <i class="bi bi-globe-americas"></i>
+        <div class="dept-title">GIS Tool Design & Consulting</div>
+        <div>Custom GIS tools, professional training, and project management for spatial data and decision-making.</div>
+        <a class="dept-link" href="gis.html">Learn More</a>
+        <button class="btn btn-outline-primary btn-sm mt-2 share-btn" data-card="card-gis" data-link="gis.html">Share</button>
+      </div>
+      <div class="dept-card dept-webdev" id="card-webdev">
+        <i class="bi bi-code-slash"></i>
+        <div class="dept-title">Web & Database Systems</div>
+        <div>Responsive websites and web-based database management systems using PHP, MySQL, and modern UI/UX.</div>
+        <a class="dept-link" href="webdev.html">Learn More</a>
+        <button class="btn btn-outline-warning btn-sm mt-2 share-btn" data-card="card-webdev" data-link="webdev.html">Share</button>
+      </div>
+      <div class="dept-card dept-landsurvey" id="card-landsurvey">
+        <i class="bi bi-rulers"></i>
+        <div class="dept-title">Land Surveying & Titling</div>
+        <div>Boundary surveys, land titling, construction surveys, and expert consultation for individuals and organizations.</div>
+        <a class="dept-link" href="landsurvey.html">Learn More</a>
+        <button class="btn btn-outline-secondary btn-sm mt-2 share-btn" data-card="card-landsurvey" data-link="landsurvey.html">Share</button>
+      </div>
+      <div class="dept-card dept-secretarial" id="card-secretarial">
+        <i class="bi bi-printer"></i>
+        <div class="dept-title">Secretarial & Creative Services</div>
+        <div>Secretarial work, shirt printing, passport photos, and creative print solutions for business and personal needs.</div>
+        <a class="dept-link" href="secretarial.html">Learn More</a>
+        <button class="btn btn-outline-danger btn-sm mt-2 share-btn" data-card="card-secretarial" data-link="secretarial.html">Share</button>
       </div>
     </div>
   </div>
 
-  <!--script src="https://unpkg.com/ol@latest/dist/ol.js"></script-->
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="org.js"></script>
+  <div class="footer">
+    <p>&copy; 2025 MTE Synergy SMC LTD – Meet The Xperts</p>
+    <p>
+      <a href="https://meetthexperts.com" target="_blank" style="color:#fffbe6;">meetthexperts.com</a> |
+      WhatsApp: <a href="https://wa.me/256777233322" target="_blank" style="color:#fffbe6;">+256 777233322</a>
+    </p>
+    <p>P.O Box 153572, Sonde, Mukono, Uganda</p>
+  </div>
+  <script>
+    // Share card as image via WhatsApp (or fallback to link)
+    document.querySelectorAll('.share-btn').forEach(function(btn) {
+      btn.addEventListener('click', async function() {
+        const cardId = btn.getAttribute('data-card');
+        const card = document.getElementById(cardId);
+        const pageLink = location.origin + '/' + btn.getAttribute('data-link');
+        // Use html2canvas to render the card as image
+        html2canvas(card, {backgroundColor: null}).then(async function(canvas) {
+          try {
+            // Convert to base64 and upload to imgbb
+            const base64 = canvas.toDataURL('image/png').split(',')[1];
+            const formData = new FormData();
+            formData.append('image', base64);
+            // Replace with your own imgbb API key
+            const apiKey = 'cbe2b94421e6ceb5a303ec1670a72299';
+            const resp = await fetch('https://api.imgbb.com/1/upload?key=' + apiKey, {
+              method: 'POST',
+              body: formData
+            });
+            const data = await resp.json();
+            if (data && data.data && data.data.url) {
+              const imgUrl = data.data.url;
+              const text = encodeURIComponent('Check out this service from MTE Synergy SMC LTD:\n' + pageLink + '\n' + imgUrl);
+              window.open('https://wa.me/?text=' + text, '_blank');
+            } else {
+              // Fallback to just sharing the link
+              window.open('https://wa.me/?text=' + encodeURIComponent(pageLink), '_blank');
+            }
+          } catch (e) {
+            // Fallback to just sharing the link
+            window.open('https://wa.me/?text=' + encodeURIComponent(pageLink), '_blank');
+          }
+        });
+      });
+    });
+  </script>
 </body>
-
 </html>

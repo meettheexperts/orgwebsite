@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GeoIntellect – GIS Tool Design, Training & Project Consulting</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <style>
+    body {
+      background: linear-gradient(120deg, #e0f7fa 0%, #b2dfdb 100%);
+      color: #22313a;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    }
+    .header {
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      color: #fff;
+      padding: 70px 20px 40px 20px;
+      text-align: center;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+      position: relative;
+    }
+    .header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(34,49,63,0.55);
+      z-index: 1;
+    }
+    .header-content {
+      position: relative;
+      z-index: 2;
+    }
+    .header .bi-globe-americas {
+      font-size: 3rem;
+      color: #4dd0e1;
+      vertical-align: middle;
+      margin-bottom: 10px;
+    }
+    .section {
+      padding: 40px 20px;
+      background: #fff;
+      border-radius: 14px;
+      margin-bottom: 32px;
+      box-shadow: 0 2px 16px rgba(76,175,80,0.07);
+      border-left: 8px solid #4dd0e1;
+    }
+    .section-title {
+      color: #00796b;
+      font-weight: 700;
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+    }
+    .highlight {
+      color: #388e3c;
+      font-weight: 600;
+    }
+    .cta {
+      background: linear-gradient(90deg, #4dd0e1 0%, #00796b 100%);
+      color: #fff;
+      padding: 36px 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,150,136,0.10);
+      margin-bottom: 32px;
+    }
+    .cta .bi-compass {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      color: #fff176;
+    }
+    .expertise-list li {
+      margin-bottom: 12px;
+      font-size: 1.08rem;
+    }
+    .expertise-list i {
+      color: #4dd0e1;
+      margin-right: 8px;
+      font-size: 1.2rem;
+    }
+    .divider {
+      border-top: 2px dashed #b2dfdb;
+      margin: 40px 0 32px 0;
+    }
+    .footer {
+      background: #22313a;
+      color: #b2bec3;
+      padding: 22px;
+      text-align: center;
+      font-size: 0.98rem;
+      letter-spacing: 0.5px;
+    }
+    a, a:visited {
+      color: #00796b;
+      text-decoration: underline;
+    }
+    blockquote {
+      border-left: 5px solid #4dd0e1;
+      background: #e0f2f1;
+      color: #22313a;
+      padding: 18px 24px;
+      border-radius: 8px;
+      font-style: italic;
+    }
+    @media (max-width: 600px) {
+      .section, .cta { padding: 20px 8px; }
+      .header { padding: 40px 8px 24px 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-content">
+      <i class="bi bi-globe-americas"></i>
+      <h1 class="mt-2 mb-2">GeoIntellect</h1>
+      <p class="fs-5">Innovative GIS Tool Design, Training & Project Consulting</p>
+      <div style="margin-top:18px;">
+        <a href="index.html" class="btn btn-outline-light btn-sm">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-geo-alt-fill"></i> Our GIS Services</h2>
+      <ul class="expertise-list">
+        <li><i class="bi bi-tools"></i><strong>Custom GIS Tool Design:</strong> Interactive web maps, spatial dashboards, and automated workflows</li>
+        <li><i class="bi bi-mortarboard-fill"></i><strong>Professional GIS Training:</strong> ArcGIS, QGIS, Python for GIS, spatial databases, and remote sensing</li>
+        <li><i class="bi bi-diagram-3-fill"></i><strong>Project Consulting & Management:</strong> Needs assessment, solution architecture, implementation, and monitoring</li>
+        <li><i class="bi bi-collection-fill"></i><strong>Data Collection & Integration:</strong> Field apps, GPS, drone mapping, and geodatabase design</li>
+        <li><i class="bi bi-bar-chart-fill"></i><strong>Spatial Analysis & Reporting:</strong> Suitability modeling, network analysis, and publication-ready cartography</li>
+      </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-lightbulb-fill"></i> Why Work With Us?</h2>
+      <ul>
+        <li>Decades of combined experience in GIS for environment, urban planning, health, and development</li>
+        <li>Certified trainers and Esri/OSGeo professionals</li>
+        <li>Agile, client-focused approach with rapid prototyping</li>
+        <li>Secure, scalable, and future-proof solutions</li>
+        <li>Proven results for government, NGOs, and private sector</li>
+      </ul>
+    </div>
+
+    <div class="cta">
+      <i class="bi bi-compass"></i>
+      <h3 class="mb-3">Let's Map Your Success</h3>
+      <p>Contact us for a free project consultation or to enroll in our next GIS training cohort.</p>
+      <p class="highlight mb-1">📞 Call: <strong>0700 123 456</strong></p>
+      <p class="highlight mb-1">💬 WhatsApp: <a href="https://wa.me/256700123456" target="_blank" style="color:#fff176;">+256 700 123456</a></p>
+      <p class="mt-3"><a href="mailto:info@geointellect.com" style="color:#fff176;">Email us</a> for proposals, partnerships, or custom solutions.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-person-badge-fill"></i> From the Lead GIS Consultant: Alex N.</h2>
+      <blockquote>
+        “We believe that every organization can harness the power of location intelligence. Our mission is to deliver GIS solutions that are not only technically robust, but also practical, beautiful, and impactful.”
+        <br>
+        <span class="highlight">Alex N., Lead GIS Consultant</span>
+      </blockquote>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-gear-fill"></i> Platforms & Tools</h2>
+      <ul>
+        <li>ArcGIS Suite (Desktop, Online, Pro)</li>
+        <li>QGIS (Open Source)</li>
+        <li>PostGIS, GeoServer, MapServer</li>
+        <li>Python, R, and web mapping APIs</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-briefcase-fill"></i> Project Portfolio</h2>
+      <ul>
+        <li>Urban planning mapping for Mukono Municipality</li>
+        <li>Health facility mapping for NGOs</li>
+        <li>Environmental impact assessments</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-award-fill"></i> Certifications & Affiliations</h2>
+      <ul>
+        <li>Certified Esri Associate</li>
+        <li>OSGeo Community Member</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-chat-quote-fill"></i> Client Testimonial</h2>
+      <blockquote>
+        “GeoIntellect delivered a custom mapping solution that transformed our project planning.”<br>
+        <span class="highlight">— Project Manager, Local NGO</span>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 MTE Synergy SMC LTD</p>
+    <p>Meet The Xperts – Integrated Solutions for a Better Tomorrow</p>
+    <p>P.O Box 153572, Sonde, Mukono, Uganda</p>
+    <p>Website: <a href="https://meetthexperts.com" style="color: #4dd0e1;" target="_blank">meetthexperts.com</a></p>
+    <p>Tel/WhatsApp: <a href="https://wa.me/256777233322" style="color: #4dd0e1;" target="_blank">+256 777233322</a></p>
+  </div>
+</body>
+</html>

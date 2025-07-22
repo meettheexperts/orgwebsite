@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TerraMark – Land Surveying & Titling Experts</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <style>
+    body {
+      background: linear-gradient(120deg, #f3ede3 0%, #e0d8c3 100%);
+      color: #3e3a2f;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      min-height: 100vh;
+      position: relative;
+    }
+    /* Subtle contour lines background */
+    .contour-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.12;
+      background: url('https://www.transparenttextures.com/patterns/cartographer.png');
+    }
+    .header {
+      background: linear-gradient(90deg, #8d8741 60%, #bc986a 100%);
+      color: #fff;
+      padding: 60px 20px 36px 20px;
+      text-align: center;
+      border-bottom: 4px solid #bc986a;
+      box-shadow: 0 4px 24px rgba(140, 120, 65, 0.12);
+      position: relative;
+      z-index: 2;
+    }
+    .header-content {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .header .bi-rulers {
+      font-size: 2.7rem;
+      color: #f9d342;
+      vertical-align: middle;
+      margin-bottom: 10px;
+    }
+    .header-title {
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      color: #f9d342;
+      font-weight: 700;
+      text-shadow: 0 2px 16px #bc986a33;
+    }
+    .header-desc {
+      font-size: 1.25rem;
+      color: #fffbe6;
+      margin-bottom: 0;
+    }
+    .section {
+      padding: 38px 24px;
+      background: #fffbe6;
+      border-radius: 14px;
+      margin-bottom: 36px;
+      box-shadow: 0 2px 16px rgba(140, 120, 65, 0.07);
+      border-left: 6px solid #bc986a;
+      position: relative;
+      z-index: 2;
+    }
+    .section-title {
+      color: #8d8741;
+      font-weight: 700;
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+      font-size: 1.5rem;
+    }
+    .highlight {
+      color: #f9d342;
+      font-weight: 600;
+    }
+    .expertise-list li {
+      margin-bottom: 14px;
+      font-size: 1.08rem;
+    }
+    .expertise-list i {
+      color: #bc986a;
+      margin-right: 8px;
+      font-size: 1.2rem;
+    }
+    .divider {
+      border-top: 2px dashed #e0d8c3;
+      margin: 40px 0 32px 0;
+    }
+    .cta {
+      background: linear-gradient(90deg, #bc986a 0%, #f9d342 100%);
+      color: #3e3a2f;
+      padding: 36px 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(140,120,65,0.10);
+      margin-bottom: 32px;
+      font-weight: 500;
+    }
+    .cta .bi-geo-fill {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      color: #8d8741;
+    }
+    a, a:visited {
+      color: #8d8741;
+      text-decoration: underline;
+    }
+    .footer {
+      background: #8d8741;
+      color: #fffbe6;
+      padding: 22px;
+      text-align: center;
+      font-size: 0.98rem;
+      letter-spacing: 0.5px;
+      border-top: 2px solid #bc986a;
+      z-index: 2;
+      position: relative;
+    }
+    blockquote {
+      border-left: 5px solid #bc986a;
+      background: #f3ede3;
+      color: #3e3a2f;
+      padding: 18px 24px;
+      border-radius: 8px;
+      font-style: italic;
+    }
+    @media (max-width: 600px) {
+      .section, .cta { padding: 20px 8px; }
+      .header { padding: 40px 8px 24px 8px; }
+      .header-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="contour-bg"></div>
+  <div class="header">
+    <div class="header-content">
+      <i class="bi bi-rulers"></i>
+      <span class="header-title">TerraMark</span>
+      <p class="header-desc">Land Surveying, Consultation & Land Titling Services</p>
+      <div style="margin-top:18px;">
+        <a href="index.html" class="btn btn-outline-light btn-sm">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-geo-alt"></i> Our Land Surveying Services</h2>
+      <ul class="expertise-list">
+        <li><i class="bi bi-rulers"></i><strong>Boundary & Topographic Surveys:</strong> Accurate demarcation, mapping, and site plans for all property types</li>
+        <li><i class="bi bi-map"></i><strong>Land Titling & Registration:</strong> Guidance and support through the entire land titling process</li>
+        <li><i class="bi bi-compass"></i><strong>Subdivision & Consolidation:</strong> Professional handling of land splits, mergers, and documentation</li>
+        <li><i class="bi bi-building"></i><strong>Construction & Engineering Surveys:</strong> Setting out, as-built surveys, and monitoring for projects</li>
+        <li><i class="bi bi-person-lines-fill"></i><strong>Consultation:</strong> Expert advice on land disputes, documentation, and compliance</li>
+      </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-award-fill"></i> Why Choose TerraMark?</h2>
+      <ul>
+        <li>Registered and licensed land surveyors with decades of experience</li>
+        <li>State-of-the-art equipment for precision and reliability</li>
+        <li>Transparent, client-focused process from start to finish</li>
+        <li>Strict confidentiality and compliance with all legal standards</li>
+        <li>Trusted by individuals, developers, and institutions</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-gear-fill"></i> Equipment & Technology</h2>
+      <ul>
+        <li>Total stations, GPS/GNSS receivers</li>
+        <li>Drones for aerial mapping</li>
+        <li>Modern CAD & GIS software</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-list-ol"></i> How It Works</h2>
+      <ol>
+        <li>Initial consultation and site visit</li>
+        <li>Survey and data collection</li>
+        <li>Data processing and map production</li>
+        <li>Report delivery and guidance on next steps</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-clipboard-check"></i> Land Titling Checklist</h2>
+      <ul>
+        <li>Land ownership documents</li>
+        <li>National ID or passport</li>
+        <li>Site plan or sketch</li>
+        <li>Neighbor consent (where required)</li>
+      </ul>
+    </div>
+
+    <div class="cta">
+      <i class="bi bi-geo-fill"></i>
+      <h3 class="mb-3">Book a Consultation or Request a Quote</h3>
+      <p>Let our experts guide you through your land surveying or titling needs. Fast, accurate, and professional service guaranteed.</p>
+      <p class="highlight mb-1">📞 Call: <strong>0712 345 678</strong></p>
+      <p class="highlight mb-1">💬 WhatsApp: <a href="https://wa.me/256712345678" target="_blank" style="color:#8d8741;">+256 712 345678</a></p>
+      <p class="mt-3"><a href="mailto:info@terramark.com" style="color:#8d8741;">Email us</a> for appointments, inquiries, or partnership opportunities.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-person-badge-fill"></i> From the Principal Surveyor: Eng. Grace M.</h2>
+      <blockquote>
+        “Land is more than property—it's legacy, security, and opportunity. Our mission is to provide clarity, accuracy, and peace of mind for every client, every time.”
+        <br>
+        <span class="highlight">Eng. Grace M., Principal Surveyor</span>
+      </blockquote>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="bi bi-chat-quote-fill"></i> Client Testimonial</h2>
+      <blockquote>
+        “TerraMark handled our land titling efficiently and professionally. We felt supported every step of the way.”<br>
+        <span class="highlight">— J. Ssenyonga, Mukono</span>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 MTE Synergy SMC LTD</p>
+    <p>Meet The Xperts – Integrated Solutions for a Better Tomorrow</p>
+    <p>P.O Box 153572, Sonde, Mukono, Uganda</p>
+    <p>Website: <a href="https://meetthexperts.com" style="color: #f9d342;" target="_blank">meetthexperts.com</a></p>
+    <p>Tel/WhatsApp: <a href="https://wa.me/256777233322" style="color: #f9d342;" target="_blank">+256 777233322</a></p>
+  </div>
+</body>
+</html>
