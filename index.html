@@ -7,7 +7,9 @@
   <title>MTE Synergy SMC LTD – Meet The Xperts</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
   <style>
     body {
       background: linear-gradient(120deg, #f8fafc 0%, #e0f7fa 100%);
@@ -276,6 +278,30 @@
       padding: 40px 0;
     }
   </style>
+
+  <!-- Add this in your <head> -->
+  <style>
+    .about-section {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.7;
+      color: #333;
+    }
+
+    .about-section h4,
+    .about-section h5 {
+      color: #00796b;
+      font-weight: 700;
+    }
+
+    .about-section a {
+      color: #00796b;
+      text-decoration: underline;
+    }
+
+    .about-section ul {
+      padding-left: 1rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -283,94 +309,171 @@
     <span class="header-title">MTE Synergy SMC LTD</span>
     <p class="header-desc">Meet The Xperts – Integrated Solutions for a Better Tomorrow</p>
   </div>
+  <div class="container">
+    <!-- <h2 class="text-center mb-4" style="color:#00796b;font-weight:700;">Our Departments & Services</h2> -->
+
+    <div id="departmentsCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner text-center">
+
+        <div class="carousel-item active">
+          <div class="dept-card dept-biogas mx-auto" id="card-biogas">
+            <i class="bi bi-lightning-charge-fill"></i>
+            <div class="dept-title">Biogas & Renewable Energy</div>
+            <div>Innovative biogas systems for homes and communities. Clean energy, environmental protection, and
+              economic relief.</div>
+            <a class="dept-link" href="wasterpower/wastepower.html">Learn More</a>
+            <button class="btn btn-outline-success btn-sm mt-2 share-btn" data-card="card-biogas"
+              data-link="wasterpower/wastepower.html">Share</button>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="dept-card dept-computer mx-auto" id="card-computer">
+            <i class="bi bi-mortarboard-fill"></i>
+            <div class="dept-title">Computer Training</div>
+            <div>Essential digital skills, coding, productivity, and internet safety for all ages. Practical, hands-on,
+              and empowering.</div>
+            <a class="dept-link" href="computertraining.html">Learn More</a>
+            <button class="btn btn-outline-info btn-sm mt-2 share-btn" data-card="card-computer"
+              data-link="computertraining.html">Share</button>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="dept-card dept-gis mx-auto" id="card-gis">
+            <i class="bi bi-globe-americas"></i>
+            <div class="dept-title">GIS Tool Design, Training & Project Consulting</div>
+            <div>Custom GIS tools, professional training, and project management for spatial data and decision-making.
+            </div>
+            <a class="dept-link" href="gis.html">Learn More</a>
+            <button class="btn btn-outline-primary btn-sm mt-2 share-btn" data-card="card-gis"
+              data-link="gis.html">Share</button>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="dept-card dept-webdev mx-auto" id="card-webdev">
+            <i class="bi bi-code-slash"></i>
+            <div class="dept-title">Web & Sys Craft</div>
+            <div>Responsive websites and web-based database management systems using PHP, MySQL, and modern UI/UX.</div>
+            <a class="dept-link" href="webdev.html">Learn More</a>
+            <button class="btn btn-outline-warning btn-sm mt-2 share-btn" data-card="card-webdev"
+              data-link="webdev.html">Share</button>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="dept-card dept-landsurvey mx-auto" id="card-landsurvey">
+            <i class="bi bi-rulers"></i>
+            <div class="dept-title">Land Surveying & Titling</div>
+            <div>Boundary surveys, land titling, construction surveys, and expert consultation for individuals and
+              organizations.</div>
+            <a class="dept-link" href="landsurvey.html">Learn More</a>
+            <button class="btn btn-outline-secondary btn-sm mt-2 share-btn" data-card="card-landsurvey"
+              data-link="landsurvey.html">Share</button>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="dept-card dept-secretarial mx-auto" id="card-secretarial">
+            <i class="bi bi-printer"></i>
+            <div class="dept-title">Print & Serve – Secretarial & Creative Services</div>
+            <div>Secretarial work, shirt printing, passport photos, and creative print solutions for business and
+              personal needs.</div>
+            <a class="dept-link" href="secretarial.html">Learn More</a>
+            <button class="btn btn-outline-danger btn-sm mt-2 share-btn" data-card="card-secretarial"
+              data-link="secretarial.html">Share</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#departmentsCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#departmentsCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </div>
+
+
 
 
 
   <!-- About Us Section -->
-  <div class="container mt-4">
+  <div class="container mt-4 about-section">
     <div class="card shadow-sm border-0">
       <div class="card-body">
-        <h4 class="text-center mb-3" style="color:#00796b;font-weight:700;">About MTE Synergy SMC LTD</h4>
-        <p>
-          MTE Synergy SMC LTD is a dynamic organization dedicated to providing integrated solutions across
-          various sectors. We leverage expertise and innovation to drive positive change and create a better
-          tomorrow.
-        </p>
-        <p>
-          Our commitment lies in delivering high-quality services and fostering sustainable development in
-          the communities we serve. We strive to exceed expectations and build lasting partnerships with our
-          clients.
-        </p>
-        <p class="text-center">
-          <strong>"Empowering Communities Through Expertise and Innovation"</strong>
-        </p>
+        <h4 class="text-center mb-3">About MTE Synergy SMC LTD</h4>
+        <p class="text-center"><strong>"Innovative Solutions Through Collective Expertise"</strong></p>
+
+        <div class="row">
+          <!-- Left Column: Intro + Mission -->
+          <div class="col-md-6 mb-4">
+            <p style="text-align: justify;">
+              At <strong>MTE Synergy SMC LTD</strong>, we are a convergence of diverse professionals working
+              collaboratively
+              to deliver innovative and comprehensive solutions. Our strength lies in harnessing the collective
+              expertise
+              across sectors—including renewable energy, ICT, GIS, web development, land surveying, and creative
+              services—
+              to create tailored strategies that address complex challenges and foster sustainable community
+              development.
+            </p>
+
+            <p style="text-align: justify;">
+              We are dedicated to fostering partnerships, sharing knowledge, and leveraging multidisciplinary
+              collaboration
+              to promote technological advancement, social impact, and environmental sustainability.
+            </p>
+
+            <p>
+              <strong>Our mission:</strong> To enable organizations and communities to achieve their goals through
+              innovative, sustainable solutions crafted by a united, multidisciplinary team.
+            </p>
+
+            <p class="text-center"><em>We proudly serve clients across Uganda and beyond, ensuring timely, innovative,
+                and
+                sustainable solutions.</em></p>
+          </div>
+
+          <!-- Right Column: Departments & Services -->
+          <div class="col-md-6">
+            <h5 class="mb-3 text-center">Our Core Departments & Services</h5>
+            <ul class="mb-4">
+              <li><strong>Renewable Energy & Biogas Solutions:</strong> Environmentally friendly biogas systems for
+                homes and businesses.
+                <a href="https://meetthexperts.com/wasterpower/wastepower" target="_blank">Learn More</a>
+              </li>
+              <li><strong>ICT Training:</strong> Digital literacy and ICT skills for individuals and organizations.
+                <a href="https://meetthexperts.com/computertraining" target="_blank">Learn More</a>
+              </li>
+              <li><strong>GIS & Spatial Data:</strong> Tools, training, and consulting for data-driven decision making.
+                <a href="https://meetthexperts.com/gis" target="_blank">Learn More</a>
+              </li>
+              <li><strong>Web & System Development:</strong> Responsive, secure websites and systems.
+                <a href="https://meetthexperts.com/webdev" target="_blank">Learn More</a>
+              </li>
+              <li><strong>Land Surveying & Titling:</strong> Accurate land services and geospatial data.
+                <a href="https://meetthexperts.com/landsurvey" target="_blank">Learn More</a>
+              </li>
+              <li><strong>Creative & Print Media:</strong> Secretarial support, printing, and branding.
+                <a href="https://meetthexperts.com/secretarial" target="_blank">Learn More</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="container">
-    <h2 class="text-center mb-4" style="color:#00796b;font-weight:700;">Our Departments & Services</h2>
-    <div class="departments">
-      <div class="dept-card dept-biogas" id="card-biogas">
-        <i class="bi bi-lightning-charge-fill"></i>
-        <div class="dept-title">Biogas & Renewable Energy</div>
-        <div>Innovative biogas systems for homes and communities. Clean energy, environmental protection, and economic
-          relief.</div>
-        <a class="dept-link" href="wasterpower/wastepower.html">Learn More</a>
-        <button class="btn btn-outline-success btn-sm mt-2 share-btn" data-card="card-biogas"
-          data-link="wasterpower/wastepower.html">Share</button>
-      </div>
-      <div class="dept-card dept-computer" id="card-computer">
-        <i class="bi bi-mortarboard-fill"></i>
-        <div class="dept-title">Computer Training</div>
-        <div>Essential digital skills, coding, productivity, and internet safety for all ages. Practical, hands-on, and
-          empowering.</div>
-        <a class="dept-link" href="computertraining.html">Learn More</a>
-        <button class="btn btn-outline-info btn-sm mt-2 share-btn" data-card="card-computer"
-          data-link="computertraining.html">Share</button>
-      </div>
-      <div class="dept-card dept-gis" id="card-gis">
-        <i class="bi bi-globe-americas"></i>
-        <div class="dept-title">GIS Tool Design, Training & Project Consulting</div>
-        <div>Custom GIS tools, professional training, and project management for spatial data and decision-making.</div>
-        <a class="dept-link" href="gis.html">Learn More</a>
-        <button class="btn btn-outline-primary btn-sm mt-2 share-btn" data-card="card-gis"
-          data-link="gis.html">Share</button>
-      </div>
-      <div class="dept-card dept-webdev" id="card-webdev">
-        <i class="bi bi-code-slash"></i>
-        <div class="dept-title">Web & Sys Craft</div>
-        <div>Responsive websites and web-based database management systems using PHP, MySQL, and modern UI/UX.</div>
-        <a class="dept-link" href="webdev.html">Learn More</a>
-        <button class="btn btn-outline-warning btn-sm mt-2 share-btn" data-card="card-webdev"
-          data-link="webdev.html">Share</button>
-      </div>
 
-      <div class="dept-card dept-landsurvey" id="card-landsurvey">
-        
-          <i class="bi bi-rulers"></i>
-          <div class="dept-title">Land Surveying & Titling</div>
-          <div>Boundary surveys, land titling, construction surveys, and expert consultation for individuals and
-            organizations.</div>
-            <a class="dept-link" href="landsurvey.html" >
 
-          Learn More
-        </a>
-        <button class="btn btn-outline-secondary btn-sm mt-2 share-btn" data-card="card-landsurvey"
-          data-link="landsurvey.html">Share</button>
-      </div>
 
-      <div class="dept-card dept-secretarial" id="card-secretarial">
-        <i class="bi bi-printer"></i>
-        <div class="dept-title">Print & Serve – Secretarial & Creative Services</div>
-        <div>Secretarial work, shirt printing, passport photos, and creative print solutions for business and personal
-          needs.</div>
-        <a class="dept-link" href="secretarial.html">Learn More</a>
-        <button class="btn btn-outline-danger btn-sm mt-2 share-btn" data-card="card-secretarial"
-          data-link="secretarial.html">Share</button>
-      </div>
-    </div>
-  </div>
+
+
 
 
   <!-- Support & Services Section Combined -->
