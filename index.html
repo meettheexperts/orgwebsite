@@ -302,6 +302,107 @@
       padding-left: 1rem;
     }
   </style>
+
+  <style>
+    /* Carousel Styles */
+    .carousel-container {
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+
+    .carousel-wrapper {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-card {
+      flex: 0 0 auto;
+      width: calc(33.333% - 20px);
+      /* Adjust as needed */
+      margin: 10px;
+      border-radius: 22px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+      border: 2px solid transparent;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    /* Card themes - keep existing styles and apply to .carousel-card */
+    .carousel-card.dept-biogas {
+      background: #f5f9f6;
+      border-color: #1d643e;
+      color: #1d643e;
+    }
+
+    .carousel-card.dept-computer {
+      background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+      color: #f4f7fa;
+      border-color: #00ffe7;
+    }
+
+    .carousel-card.dept-gis {
+      background: linear-gradient(120deg, #e0f7fa 0%, #b2dfdb 100%);
+      border-color: #4dd0e1;
+      color: #00796b;
+    }
+
+    .carousel-card.dept-webdev {
+      background: #181c24;
+      color: #e0e6ed;
+      border-color: #00ffe7;
+    }
+
+    .carousel-card.dept-landsurvey {
+      background: linear-gradient(120deg, #f3ede3 0%, #e0d8c3 100%);
+      border-color: #bc986a;
+      color: #8d8741;
+    }
+
+    .carousel-card.dept-secretarial {
+      background: linear-gradient(90deg, #f7b267 0%, #f4845f 100%);
+      color: #fffbe6;
+      border-color: #f4845f;
+    }
+
+    .carousel-card .bi {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
+
+    .carousel-card .dept-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    }
+
+    .carousel-card .dept-link {
+      display: inline-block;
+      margin-top: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .carousel-card .dept-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .carousel-card {
+        width: calc(50% - 20px);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .carousel-card {
+        width: calc(100% - 20px);
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -312,95 +413,71 @@
   <div class="container">
     <!-- <h2 class="text-center mb-4" style="color:#00796b;font-weight:700;">Our Departments & Services</h2> -->
 
-    <div id="departmentsCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner text-center">
+    <div class="carousel-container">
+      <div class="carousel-wrapper" id="departmentsCarousel">
 
-        <div class="carousel-item active">
-          <div class="dept-card dept-biogas mx-auto" id="card-biogas">
-            <i class="bi bi-lightning-charge-fill"></i>
-            <div class="dept-title">Biogas & Renewable Energy</div>
-            <div>Innovative biogas systems for homes and communities. Clean energy, environmental protection, and
-              economic relief.</div>
-            <a class="dept-link" href="wasterpower/wastepower.html">Learn More</a>
-            <button class="btn btn-outline-success btn-sm mt-2 share-btn" data-card="card-biogas"
-              data-link="wasterpower/wastepower.html">Share</button>
-          </div>
+        <div class="carousel-card dept-biogas" id="card-biogas">
+          <i class="bi bi-lightning-charge-fill"></i>
+          <div class="dept-title">Biogas & Renewable Energy</div>
+          <div>Innovative biogas systems for homes and communities. Clean energy, environmental protection, and
+            economic relief.</div>
+          <a class="dept-link" href="wasterpower/wastepower.html">Learn More</a>
+          <button class="btn btn-outline-success btn-sm mt-2 share-btn" data-card="card-biogas"
+            data-link="wasterpower/wastepower.html">Share</button>
         </div>
 
-        <div class="carousel-item">
-          <div class="dept-card dept-computer mx-auto" id="card-computer">
-            <i class="bi bi-mortarboard-fill"></i>
-            <div class="dept-title">Computer Training</div>
-            <div>Essential digital skills, coding, productivity, and internet safety for all ages. Practical, hands-on,
-              and empowering.</div>
-            <a class="dept-link" href="computertraining.html">Learn More</a>
-            <button class="btn btn-outline-info btn-sm mt-2 share-btn" data-card="card-computer"
-              data-link="computertraining.html">Share</button>
-          </div>
+        <div class="carousel-card dept-computer" id="card-computer">
+          <i class="bi bi-mortarboard-fill"></i>
+          <div class="dept-title">Computer Training</div>
+          <div>Essential digital skills, coding, productivity, and internet safety for all ages. Practical, hands-on,
+            and empowering.</div>
+          <a class="dept-link" href="computertraining.html">Learn More</a>
+          <button class="btn btn-outline-info btn-sm mt-2 share-btn" data-card="card-computer"
+            data-link="computertraining.html">Share</button>
         </div>
 
-        <div class="carousel-item">
-          <div class="dept-card dept-gis mx-auto" id="card-gis">
-            <i class="bi bi-globe-americas"></i>
-            <div class="dept-title">GIS Tool Design, Training & Project Consulting</div>
-            <div>Custom GIS tools, professional training, and project management for spatial data and decision-making.
-            </div>
-            <a class="dept-link" href="gis.html">Learn More</a>
-            <button class="btn btn-outline-primary btn-sm mt-2 share-btn" data-card="card-gis"
-              data-link="gis.html">Share</button>
+        <div class="carousel-card dept-gis" id="card-gis">
+          <i class="bi bi-globe-americas"></i>
+          <div class="dept-title">GIS Tool Design, Training & Project Consulting</div>
+          <div>Custom GIS tools, professional training, and project management for spatial data and decision-making.
           </div>
+          <a class="dept-link" href="gis.html">Learn More</a>
+          <button class="btn btn-outline-primary btn-sm mt-2 share-btn" data-card="card-gis"
+            data-link="gis.html">Share</button>
         </div>
 
-        <div class="carousel-item">
-          <div class="dept-card dept-webdev mx-auto" id="card-webdev">
-            <i class="bi bi-code-slash"></i>
-            <div class="dept-title">Web & Sys Craft</div>
-            <div>Responsive websites and web-based database management systems using PHP, MySQL, and modern UI/UX.</div>
-            <a class="dept-link" href="webdev.html">Learn More</a>
-            <button class="btn btn-outline-warning btn-sm mt-2 share-btn" data-card="card-webdev"
-              data-link="webdev.html">Share</button>
-          </div>
+        <div class="carousel-card dept-webdev" id="card-webdev">
+          <i class="bi bi-code-slash"></i>
+          <div class="dept-title">Web & Sys Craft</div>
+          <div>Responsive websites and web-based database management systems using PHP, MySQL, and modern UI/UX.</div>
+          <a class="dept-link" href="webdev.html">Learn More</a>
+          <button class="btn btn-outline-warning btn-sm mt-2 share-btn" data-card="card-webdev"
+            data-link="webdev.html">Share</button>
         </div>
 
-        <div class="carousel-item">
-          <div class="dept-card dept-landsurvey mx-auto" id="card-landsurvey">
-            <i class="bi bi-rulers"></i>
-            <div class="dept-title">Land Surveying & Titling</div>
-            <div>Boundary surveys, land titling, construction surveys, and expert consultation for individuals and
-              organizations.</div>
-            <a class="dept-link" href="landsurvey.html">Learn More</a>
-            <button class="btn btn-outline-secondary btn-sm mt-2 share-btn" data-card="card-landsurvey"
-              data-link="landsurvey.html">Share</button>
-          </div>
+        <div class="carousel-card dept-landsurvey" id="card-landsurvey">
+          <i class="bi bi-rulers"></i>
+          <div class="dept-title">Land Surveying & Titling</div>
+          <div>Boundary surveys, land titling, construction surveys, and expert consultation for individuals and
+            organizations.</div>
+          <a class="dept-link" href="landsurvey.html">Learn More</a>
+          <button class="btn btn-outline-secondary btn-sm mt-2 share-btn" data-card="card-landsurvey"
+            data-link="landsurvey.html">Share</button>
         </div>
 
-        <div class="carousel-item">
-          <div class="dept-card dept-secretarial mx-auto" id="card-secretarial">
-            <i class="bi bi-printer"></i>
-            <div class="dept-title">Print & Serve – Secretarial & Creative Services</div>
-            <div>Secretarial work, shirt printing, passport photos, and creative print solutions for business and
-              personal needs.</div>
-            <a class="dept-link" href="secretarial.html">Learn More</a>
-            <button class="btn btn-outline-danger btn-sm mt-2 share-btn" data-card="card-secretarial"
-              data-link="secretarial.html">Share</button>
-          </div>
+        <div class="carousel-card dept-secretarial" id="card-secretarial">
+          <i class="bi bi-printer"></i>
+          <div class="dept-title">Print & Serve – Secretarial & Creative Services</div>
+          <div>Secretarial work, shirt printing, passport photos, and creative print solutions for business and
+            personal needs.</div>
+          <a class="dept-link" href="secretarial.html">Learn More</a>
+          <button class="btn btn-outline-danger btn-sm mt-2 share-btn" data-card="card-secretarial"
+            data-link="secretarial.html">Share</button>
         </div>
 
       </div>
-
-      <!-- Controls -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#departmentsCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#departmentsCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-      </button>
     </div>
   </div>
-
-
-
-
 
   <!-- About Us Section -->
   <div class="container mt-4 about-section">
@@ -468,13 +545,6 @@
       </div>
     </div>
   </div>
-
-
-
-
-
-
-
 
   <!-- Support & Services Section Combined -->
   <!-- Hero Section -->
@@ -600,15 +670,6 @@
     </div>
   </div>
 
-
-
-
-
-
-
-
-
-
   <div class="footer">
     <p class="mb-1">&copy; 2025 MTE Synergy SMC LTD – Meet The Xperts</p>
     <p class="mb-1">
@@ -722,6 +783,44 @@
       document.getElementById("alertBox").classList.remove("d-none");
       window.open(url, "_blank");
     }
+  </script>
+
+  <script>
+    const carousel = document.getElementById('departmentsCarousel');
+    const cards = Array.from(carousel.children);
+    const cardWidth = cards[0].offsetWidth + 20; // card width + margin
+    let currentIndex = 0;
+    let intervalId;
+
+    function slideCarousel() {
+      currentIndex++;
+      carousel.style.transform = `translateX(${-cardWidth * currentIndex}px)`;
+
+      if (currentIndex >= cards.length) {
+        currentIndex = 0;
+        setTimeout(() => {
+          carousel.style.transition = 'none';
+          carousel.style.transform = `translateX(0)`;
+          currentIndex = 0;
+          setTimeout(() => {
+            carousel.style.transition = 'transform 0.5s ease-in-out';
+          }, 50);
+        }, 500);
+      }
+    }
+
+    function startCarousel() {
+      intervalId = setInterval(slideCarousel, 3000); // Adjust timing as needed
+    }
+
+    function stopCarousel() {
+      clearInterval(intervalId);
+    }
+
+    carousel.addEventListener('mouseenter', stopCarousel);
+    carousel.addEventListener('mouseleave', startCarousel);
+
+    startCarousel();
   </script>
 </body>
 
